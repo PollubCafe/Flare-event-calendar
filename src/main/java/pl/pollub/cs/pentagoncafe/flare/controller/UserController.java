@@ -4,6 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.pollub.cs.pentagoncafe.flare.domain.Event;
+import pl.pollub.cs.pentagoncafe.flare.domain.User;
+import pl.pollub.cs.pentagoncafe.flare.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,7 +30,8 @@ public class UserController {
 
     @GetMapping("/{id}/events")
     public List<Event> getUserEvents(@PathVariable String id) {
-        return userService.getUsersList().getUser(id).getEventsList();
+        User user = userService.find(id);
+        return user.getEventsList();
     }
 
 }
