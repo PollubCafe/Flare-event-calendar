@@ -3,12 +3,17 @@ package pl.pollub.cs.pentagoncafe.flare.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 import pl.pollub.cs.pentagoncafe.flare.domain.Stats;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.service.EventService;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -16,37 +21,44 @@ import java.util.List;
 public class EventController {
 
     private final Logger log = LoggerFactory.getLogger(EventController.class);
-    private EventService eventService;
 
     @Autowired
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
-    }
+    private EventService eventService;
 
     @PostMapping("/")
-    public Event saveEvent(@RequestBody Event event) {
-        return eventService.save(event);
+    public ResponseEntity<Event> saveEvent(@RequestBody Event event, UriComponentsBuilder ucb) {
+        Event event1 = eventService.save(event);
+
+        HttpHeaders headers = new HttpHeaders();
+        URI locationUri =
+                ucb.path("/api/events/")
+                        .path(String.valueOf(event1.getId()))
+                        .build()
+                        .toUri();
+        headers.setLocation(locationUri);
+
+        return new ResponseEntity<>(event1, headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
-    public List<Event> getEvents() {
-        return eventService.getEventsList();
+    public ResponseEntity<List<Event>> getEvents() {
+        List<Event> events =eventService.getEventsList();
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/participation")
-    public Event applyParticipation(@PathVariable String id, @RequestBody User user) {
+    public ResponseEntity<Event> applyParticipation(@PathVariable String id, @RequestBody User user) {
+        Event event = eventService.applyParticipation(id, user);
 
-        Event event = eventService.find(id);
-        event.getEntrantsList().add(user);
-
-        return event;
+        return new ResponseEntity<Event>(event, HttpStatus.OK);
     }
 
-    @GetMapping("{id}/stats")
-    public Stats getStats(@PathVariable String id) {
+    @GetMapping("/{id}/stats")
+    public ResponseEntity<Stats> getStats(@PathVariable String id) {
         Event event = eventService.find(id);
+        Stats stats = new Stats(event).getStatistics();
 
-        return new Stats(event).getStatistics();
+        return new ResponseEntity<>(stats, HttpStatus.OK);
     }
 
 }

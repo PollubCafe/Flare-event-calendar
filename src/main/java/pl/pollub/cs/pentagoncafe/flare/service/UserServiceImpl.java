@@ -1,7 +1,10 @@
 package pl.pollub.cs.pentagoncafe.flare.service;
 
 import org.springframework.stereotype.Service;
+import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -13,6 +16,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User find(String id) {
+        return null;
+    }
+
+    @Override
+    public List<Event> getUserEventsList(String id) {
         return null;
     }
 }

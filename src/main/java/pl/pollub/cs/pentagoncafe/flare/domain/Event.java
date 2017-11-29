@@ -5,7 +5,17 @@ import java.util.List;
 
 public class Event {
 
+    private String id;
+
     List<User> entrantsList;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public List<User> getEntrantsList() {
         return entrantsList;
