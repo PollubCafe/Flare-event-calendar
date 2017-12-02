@@ -22,10 +22,11 @@ public class Event {
     private String Duration;
     private String Data;
     private String Creator;
-    private boolean Only_User;
+    private boolean OnlyUser;
     private List<Contestants> Contestants;
 
     /**Getter and Setter*/
+
     public String getId() {
         return id;
     }
@@ -106,28 +107,29 @@ public class Event {
         Creator = creator;
     }
 
-    public boolean isOnly_User() {
-        return Only_User;
+    public boolean isOnlyUser() {
+        return OnlyUser;
     }
 
-    public void setOnly_User(boolean only_User) {
-        Only_User = only_User;
+    public void setOnlyUser(boolean onlyUser) {
+        OnlyUser = onlyUser;
     }
 
-    public List<Contestants> getContestants() {
+    public List<pl.pollub.cs.pentagoncafe.flare.domain.Contestants> getContestants() {
         return Contestants;
     }
 
-    public void setContestants(List<Contestants> contestants) {
+    public void setContestants(List<pl.pollub.cs.pentagoncafe.flare.domain.Contestants> contestants) {
         Contestants = contestants;
     }
+
     /**Constructor*/
 
     public Event() {
 
     }
 
-    public Event(String title, String discribe, String status, String place, int week, int year, String duration, String data, String creator, boolean only_User, List<Contestants> contestants) {
+    public Event(String title, String discribe, String status, String place, int week, int year, String duration, String data, String creator, boolean onlyUser, List<Contestants> contestants) {
         Title = title;
         Discribe = discribe;
         Status = status;
@@ -137,7 +139,7 @@ public class Event {
         Duration = duration;
         Data = data;
         Creator = creator;
-        Only_User = only_User;
+        OnlyUser = onlyUser;
         Contestants = contestants;
     }
 }

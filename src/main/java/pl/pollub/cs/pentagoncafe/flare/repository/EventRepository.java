@@ -12,9 +12,13 @@ import java.util.List;
 public interface EventRepository extends MongoRepository<Event,String> {
     Event findById(String id);
     List<Event> findByTitle(String title);
-    List<Event> findByPlace(String place);
-    List<Event> findByWeek(String week);
-    List<Event> findByYear(String year);
+    List<Event> findByYear(int year);
+    List<Event> findByWeek(int week);
     List<Event> findByCreator(String creator);
+    List<Event> findByPlace(String place);
     List<Event> findByStatus(String status);
+    List<Event> findByWeekAfter(int weekAfter);
+    List<Event> findByWeekBefore(int weekAfter);
+
+
 }

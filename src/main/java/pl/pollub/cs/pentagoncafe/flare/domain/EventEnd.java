@@ -13,12 +13,13 @@ public class EventEnd {
     /**Variables*/
     @Id
     private String id;
-    private String Event_id;
+    private String Eventid;
     private String Data;
     private String Hour;
     private List<Participants> Participants;
 
     /**Getter and Setter*/
+
     public String getId() {
         return id;
     }
@@ -27,12 +28,12 @@ public class EventEnd {
         this.id = id;
     }
 
-    public String getEvent_id() {
-        return Event_id;
+    public String getEventid() {
+        return Eventid;
     }
 
-    public void setEvent_id(String event_id) {
-        Event_id = event_id;
+    public void setEventid(String eventid) {
+        Eventid = eventid;
     }
 
     public String getData() {
@@ -51,11 +52,11 @@ public class EventEnd {
         Hour = hour;
     }
 
-    public List<Participants> getParticipants() {
+    public List<pl.pollub.cs.pentagoncafe.flare.domain.Participants> getParticipants() {
         return Participants;
     }
 
-    public void setParticipants(List<Participants> participants) {
+    public void setParticipants(List<pl.pollub.cs.pentagoncafe.flare.domain.Participants> participants) {
         Participants = participants;
     }
 
@@ -64,8 +65,8 @@ public class EventEnd {
 
     }
 
-    public EventEnd(String event_id, String data, String hour, List<Participants> participants) {
-        Event_id = event_id;
+    public EventEnd(String eventid, String data, String hour, List<Participants> participants) {
+        Eventid = eventid;
         Data = data;
         Hour = hour;
         Participants = participants;

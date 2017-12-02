@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
-import pl.pollub.cs.pentagoncafe.flare.domain.Stats;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.service.EventService;
 
@@ -53,12 +52,6 @@ public class EventController {
         return new ResponseEntity<Event>(event, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/stats")
-    public ResponseEntity<Stats> getStats(@PathVariable String id) {
-        Event event = eventService.find(id);
-        Stats stats = new Stats(event).getStatistics();
 
-        return new ResponseEntity<>(stats, HttpStatus.OK);
-    }
 
 }

@@ -6,12 +6,13 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 public class Term {
     /**Variables*/
     private int Date;
-    private String Time_from;
-    private String Time_to;
+    private String From;
+    private String To;
     private int Count;
     private double perent;
 
     /**Getter and Setter*/
+
     public int getDate() {
         return Date;
     }
@@ -20,20 +21,20 @@ public class Term {
         Date = date;
     }
 
-    public String getTime_from() {
-        return Time_from;
+    public String getFrom() {
+        return From;
     }
 
-    public void setTime_from(String time_from) {
-        Time_from = time_from;
+    public void setFrom(String from) {
+        From = from;
     }
 
-    public String getTime_to() {
-        return Time_to;
+    public String getTo() {
+        return To;
     }
 
-    public void setTime_to(String time_to) {
-        Time_to = time_to;
+    public void setTto(String to) {
+        To = to;
     }
 
     public int getCount() {
@@ -57,10 +58,10 @@ public class Term {
 
     }
 
-    public Term(int date, String time_from, String time_to, int count, double perent) {
+    public Term(int date, String from, String to, int count, double perent) {
         Date = date;
-        Time_from = time_from;
-        Time_to = time_to;
+        From = from;
+        To = to;
         Count = count;
 
         this.perent = perent;

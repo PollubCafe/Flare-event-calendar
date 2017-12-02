@@ -13,11 +13,12 @@ public class User {
     private String id;
     private String Name;
     private String Surname;
-    private String E_mail;
+    private String Email;
     private String Nick;
     private String Password;
 
     /**Getter and Setter*/
+
     public String getId() {
         return id;
     }
@@ -42,12 +43,12 @@ public class User {
         Surname = surname;
     }
 
-    public String getE_mail() {
-        return E_mail;
+    public String getEmail() {
+        return Email;
     }
 
-    public void setE_mail(String e_mail) {
-        E_mail = e_mail;
+    public void setEmail(String email) {
+        Email = email;
     }
 
     public String getNick() {
@@ -71,11 +72,11 @@ public class User {
 
     }
 
-    public User(String name, String surname, String e_mail, String nick, String password) {
+    public User(String name, String surname, String email, String nick, String password) {
 
         Name = name;
         Surname = surname;
-        E_mail = e_mail;
+        Email = email;
         Nick = nick;
         Password = password;
     }

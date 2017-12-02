@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface EventAnaRepository extends MongoRepository<EventAna,String>{
-    EventAna findByEventId(String id);
-    EventAna findByEvent_id(String id);
-    List<EventAna> findByEvent_idIn(String[] idArray);
+    EventAna findById(String id);
+    EventAna findByEventid(String eventid);
 }

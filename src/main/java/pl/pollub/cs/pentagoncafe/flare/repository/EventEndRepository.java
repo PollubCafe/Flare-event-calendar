@@ -10,7 +10,9 @@ import java.util.List;
 
 @Repository
 public interface EventEndRepository extends MongoRepository<EventEnd,String> {
+
     EventEnd findById(String id);
-    EventEnd findByEvent_id(String id);
-    List<EventEnd> findByEvent_idIn(String[] idArray);
+    EventEnd findByEventid(String eventId);
+    EventEnd findByData(String data);
+
 }

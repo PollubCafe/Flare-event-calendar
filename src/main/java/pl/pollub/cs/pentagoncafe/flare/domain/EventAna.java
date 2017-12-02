@@ -14,10 +14,11 @@ public class EventAna {
     /**Variables*/
     @Id
     private String id;
-    private String Event_id;
+    private String Eventid;
     private List<Term> Term;
 
     /**Getter and Setter*/
+
     public String getId() {
         return id;
     }
@@ -26,19 +27,19 @@ public class EventAna {
         this.id = id;
     }
 
-    public String getEvent_id() {
-        return Event_id;
+    public String getEventid() {
+        return Eventid;
     }
 
-    public void setEvent_id(String event_id) {
-        Event_id = event_id;
+    public void setEventid(String eventid) {
+        Eventid = eventid;
     }
 
-    public List<Term> getTerm() {
+    public List<pl.pollub.cs.pentagoncafe.flare.domain.Term> getTerm() {
         return Term;
     }
 
-    public void setTerm(List<Term> term) {
+    public void setTerm(List<pl.pollub.cs.pentagoncafe.flare.domain.Term> term) {
         Term = term;
     }
 
@@ -47,8 +48,8 @@ public class EventAna {
 
     }
 
-    public EventAna(String event_id, List<Term> term) {
-        Event_id = event_id;
+    public EventAna(String eventid, List<Term> term) {
+        Eventid = eventid;
         Term = term;
     }
 }
