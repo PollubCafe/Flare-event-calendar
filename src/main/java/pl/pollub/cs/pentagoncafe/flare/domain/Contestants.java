@@ -3,7 +3,7 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
  *  Data Start 2017/11/29
  */
 import java.util.List;
-
+/*Participant*/
 public class Contestants {
     /**Variables*/
     private String Enteant;

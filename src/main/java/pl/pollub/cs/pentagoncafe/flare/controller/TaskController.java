@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/tasks")
+@Deprecated
 public class TaskController {
 
     private final Logger log = LoggerFactory.getLogger(TaskController.class);

@@ -19,9 +19,9 @@ public class EmailServiceImpl implements EmailService {
     private MailjetRequest email;
     private MailjetResponse response;
 
-    @Value("${spring.mail.username}")
+   // @Value("${spring.mail.username}")
     private String apiKey;
-    @Value(("${spring.mail.password}"))
+   // @Value(("${spring.mail.password}"))
     private String apiSecret;
 
     @Override

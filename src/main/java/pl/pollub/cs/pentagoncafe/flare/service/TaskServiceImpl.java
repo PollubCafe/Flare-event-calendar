@@ -5,6 +5,7 @@ import pl.pollub.cs.pentagoncafe.flare.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 @Service
+@Deprecated
 public class TaskServiceImpl implements TaskService {
 
     private TaskRepository taskRepository;

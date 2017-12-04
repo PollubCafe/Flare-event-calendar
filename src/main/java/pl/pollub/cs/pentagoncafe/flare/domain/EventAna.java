@@ -8,7 +8,7 @@ import java.util.List;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/11/29
  */
-
+/*Stat*/
 @Document(collection = "EventAna")
 public class EventAna {
     /**Variables*/

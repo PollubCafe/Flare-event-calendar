@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Data
 @AllArgsConstructor
+@Deprecated
 public class Task {
 
     @Id @GeneratedValue

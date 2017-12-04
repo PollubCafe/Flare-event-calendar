@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
+@Deprecated
 public class Stats {
 
     private Event event;
