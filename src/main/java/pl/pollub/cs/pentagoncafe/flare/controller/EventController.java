@@ -60,4 +60,5 @@ public class EventController {
 
         return new ResponseEntity<>(stats, HttpStatus.OK);
     }
+
 }
