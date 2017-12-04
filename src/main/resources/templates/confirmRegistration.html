@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Potwierdź rejestrację</title>
+</head>
+<body>
+<h1 th:text="${helloMessage}">Witaj użytkowniku!</h1>
+<p>Właśnie zarejestrowałeś się w Events.pl. Aby w pełni korzystać z konta należy kliknąć poniższy link w celu potwierdzenia rejestracji. </p>
+<a th:href="@{confirmRegistrationURL}">Link</a>
+</body>
+</html>
