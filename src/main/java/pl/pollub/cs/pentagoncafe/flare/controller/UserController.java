@@ -24,7 +24,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @PostMapping("/")
     public ResponseEntity<User> saveUser(@RequestBody User user, UriComponentsBuilder ucb) {
         User user1 = userService.save(user);
@@ -40,12 +39,10 @@ public class UserController {
         return new ResponseEntity<>(user1, headers, HttpStatus.CREATED);
     }
 
-
     @GetMapping("/{id}/events")
     public ResponseEntity<List<Event>> getUserEvents(@PathVariable String id) {
         List<Event> usersEvents = userService.getUserEventsList(id);
 
         return new ResponseEntity<>(usersEvents, HttpStatus.OK);
     }
-
 }

@@ -1,13 +1,12 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 public class Event {
 
     private String id;
 
-    List<User> entrantsList;
+    private List<User> entrantsList;
 
     public String getId() {
         return id;
