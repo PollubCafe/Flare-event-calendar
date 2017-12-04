@@ -2,7 +2,7 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 
 public class Stats {
 
-    Event event;
+    private Event event;
 
     public Stats(Event event) {
         this.event = event;

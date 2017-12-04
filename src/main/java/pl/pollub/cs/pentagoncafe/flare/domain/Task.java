@@ -21,7 +21,5 @@ public class Task {
     private LocalDate dueDate;
     private Boolean completed;
 
-    public Task () {
-        
-    }
+    public Task () {}
 }

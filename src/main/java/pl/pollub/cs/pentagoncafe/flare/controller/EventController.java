@@ -42,7 +42,7 @@ public class EventController {
 
     @GetMapping("/")
     public ResponseEntity<List<Event>> getEvents() {
-        List<Event> events =eventService.getEventsList();
+        List<Event> events = eventService.getEventsList();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
@@ -60,5 +60,4 @@ public class EventController {
 
         return new ResponseEntity<>(stats, HttpStatus.OK);
     }
-
 }
