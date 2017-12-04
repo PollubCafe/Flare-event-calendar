@@ -2,68 +2,63 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/11/29
  */
-/**Lista do EventAna*/
+
+import java.util.Date;
+
+/**Lista do EventStatistic
+ * Zawiera dane statystyczne do wydarzenia
+ * przedział czasowy
+ * liczbe chętnych
+ * procentowy udział*/
 public class Term {
     /**Variables*/
-    private int Date;
-    private String From;
-    private String To;
-    private int Count;
-    private double perent;
+    private Date from;        //początek przedziału
+    private Date to;          //koniec przedziału
+    private int count;          //zliczenie liczby osób
+    private double percent;      //wartość procentowa
 
     /**Getter and Setter*/
-
-    public int getDate() {
-        return Date;
+    public Date getFrom() {
+        return from;
     }
 
-    public void setDate(int date) {
-        Date = date;
+    public void setFrom(Date from) {
+        this.from = from;
     }
 
-    public String getFrom() {
-        return From;
+    public Date getTo() {
+        return to;
     }
 
-    public void setFrom(String from) {
-        From = from;
-    }
-
-    public String getTo() {
-        return To;
-    }
-
-    public void setTto(String to) {
-        To = to;
+    public void setTo(Date to) {
+        this.to = to;
     }
 
     public int getCount() {
-        return Count;
+        return count;
     }
 
     public void setCount(int count) {
-        Count = count;
+        this.count = count;
     }
 
-    public double getPerent() {
-        return perent;
+    public double getPercent() {
+        return percent;
     }
 
-    public void setPerent(double perent) {
-        this.perent = perent;
+    public void setPercent(double percent) {
+        this.percent = percent;
     }
 
     /**Constructor*/
-    public Term() {
 
+    public Term(Date from, Date to, int count, double percent) {
+        this.from = from;
+        this.to = to;
+        this.count = count;
+        this.percent = percent;
     }
 
-    public Term(int date, String from, String to, int count, double perent) {
-        Date = date;
-        From = from;
-        To = to;
-        Count = count;
-
-        this.perent = perent;
+    public Term() {
     }
 }

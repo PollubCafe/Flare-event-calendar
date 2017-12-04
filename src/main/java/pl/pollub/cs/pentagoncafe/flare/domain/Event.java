@@ -2,31 +2,37 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/11/29
  */
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
+import java.util.Date;
 import java.util.List;
 
-
+/**Główna kolekcja przechowuje informacje
+ * o wydarzeniu (komentarze przy zmiennych)
+ * liste osób które się zgłosiły
+ */
 @Document(collection = "Event")
 public class Event {
 
-    private String id;
-    private String Title;
-    private String Discribe;
-    private String Status;
-    private String Place;
-    private int Week;
-    private int Year;
-    private String Duration;
-    private String Data;
-    private String Creator;
-    private boolean OnlyUser;
-    private List<Contestants> Contestants;
+    /**Variables*/
+    private String id;                      //id
+    private String title;                   //nazwa
+    private String describe;                //opis
+    private String status;                  //status wydarzenia
+    private String town;                    //miejsce wydarzenia
+    private int zipCode;                    //adres miasta bez myślnika po środku
+    private String street;                  //nazwa ulicy
+    private String bloc;                    //numer bloku String bo w polsce może być np A
+    private String houseNumber;             //Numer pokoju mogą wystepować litery np 420J
+    private int week;                       //tydzień w roku w którym może się odbyć wydarezenie
+    private int year;                       //rok w którym odbędzie się wydarzenie
+    private Date duration;                  //długość trwania
+    private Date date;                      //data do której można się zgłaszać/wysyłać potwierdzenie w zależności od statusu
+    private String creator;                 //id twórcy
+    private boolean onlyUser;               //czy wydarzenie tylko dla zarejestrowanych uczestników
+    private List<Contestants> contestants;  //lista osób zgłaszających się
 
-    private List<User> entrantsList;
-
+    /**Getter and Setter*/
     public String getId() {
         return id;
     }
@@ -36,110 +42,144 @@ public class Event {
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
-    public String getDiscribe() {
-        return Discribe;
+    public String getDescribe() {
+        return describe;
     }
 
-    public void setDiscribe(String discribe) {
-        Discribe = discribe;
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 
-    public String getPlace() {
-        return Place;
+    public String getTown() {
+        return town;
     }
 
-    public void setPlace(String place) {
-        Place = place;
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBloc() {
+        return bloc;
+    }
+
+    public void setBloc(String bloc) {
+        this.bloc = bloc;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
     public int getWeek() {
-        return Week;
+        return week;
     }
 
     public void setWeek(int week) {
-        Week = week;
+        this.week = week;
     }
 
     public int getYear() {
-        return Year;
+        return year;
     }
 
     public void setYear(int year) {
-        Year = year;
+        this.year = year;
     }
 
-    public String getDuration() {
-        return Duration;
+    public Date getDuration() {
+        return duration;
     }
 
-    public void setDuration(String duration) {
-        Duration = duration;
+    public void setDuration(Date duration) {
+        this.duration = duration;
     }
 
-    public String getData() {
-        return Data;
+    public Date getDate() {
+        return date;
     }
 
-    public void setData(String data) {
-        Data = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getCreator() {
-        return Creator;
+        return creator;
     }
 
     public void setCreator(String creator) {
-        Creator = creator;
+        this.creator = creator;
     }
 
     public boolean isOnlyUser() {
-        return OnlyUser;
+        return onlyUser;
     }
 
     public void setOnlyUser(boolean onlyUser) {
-        OnlyUser = onlyUser;
+        this.onlyUser = onlyUser;
     }
 
-    public List<pl.pollub.cs.pentagoncafe.flare.domain.Contestants> getContestants() {
-        return Contestants;
+    public List<Contestants> getContestants() {
+        return contestants;
     }
 
-    public void setContestants(List<pl.pollub.cs.pentagoncafe.flare.domain.Contestants> contestants) {
-        Contestants = contestants;
+    public void setContestants(List<Contestants> contestants) {
+        this.contestants = contestants;
     }
 
     /**Constructor*/
-
     public Event() {
-
     }
 
-    public Event(String title, String discribe, String status, String place, int week, int year, String duration, String data, String creator, boolean onlyUser, List<Contestants> contestants) {
-        Title = title;
-        Discribe = discribe;
-        Status = status;
-        Place = place;
-        Week = week;
-        Year = year;
-        Duration = duration;
-        Data = data;
-        Creator = creator;
-        OnlyUser = onlyUser;
-        Contestants = contestants;
+    public Event(String title, String describe, String status, String town, int zipCode, String street, String bloc, String houseNumber, int week, int year, Date duration, Date date, String creator, boolean onlyUser, List<Contestants> contestants) {
+        this.title = title;
+        this.describe = describe;
+        this.status = status;
+        this.town = town;
+        this.zipCode = zipCode;
+        this.street = street;
+        this.bloc = bloc;
+        this.houseNumber = houseNumber;
+        this.week = week;
+        this.year = year;
+        this.duration = duration;
+        this.date = date;
+        this.creator = creator;
+        this.onlyUser = onlyUser;
+        this.contestants = contestants;
     }
 }

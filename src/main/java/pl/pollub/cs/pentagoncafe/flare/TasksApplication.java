@@ -7,6 +7,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -29,6 +36,20 @@ public class TasksApplication {
 			taskService.save( new Task(7L,"Run the Spring Boot Application", LocalDate.now().plus(12,ChronoUnit.DAYS), false) );
 			taskService.save( new Task(8L,"Check the H2 Console for the initial data", LocalDate.now().plus(13,ChronoUnit.DAYS), false) );
 		};
+	}
+
+	@Bean
+	public MongoTemplate mongoTemplate(MongoDbFactory mongoDbFactory,
+									   MongoMappingContext context) {
+
+		MappingMongoConverter converter =
+				new MappingMongoConverter(new DefaultDbRefResolver(mongoDbFactory), context);
+		converter.setTypeMapper(new DefaultMongoTypeMapper(null));
+
+		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory, converter);
+
+		return mongoTemplate;
+
 	}
 
 }

@@ -2,36 +2,41 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/11/29
  */
-/**Lista do EventAna Contestants*/
+
+import java.util.Date;
+
+/**Lista do Contestants
+ * zawiera informacje jakie terminy im odpowiadają*/
 public class Vote {
     /**Variables*/
-    private int Day;
-    private String From;
-    private String To;
+    private int day;        //dzień na który głosuję od 0-poniedziałek 6-niedziela
+    private Date from;      //godzina od której może
+    private Date to;        //godzina do której możę
 
     /**Getter and Setter*/
+
     public int getDay() {
-        return Day;
+        return day;
     }
 
     public void setDay(int day) {
-        Day = day;
+        this.day = day;
     }
 
-    public String getFrom() {
-        return From;
+    public Date getFrom() {
+        return from;
     }
 
-    public void setFrom(String from) {
-        From = from;
+    public void setFrom(Date from) {
+        this.from = from;
     }
 
-    public String getTo() {
-        return To;
+    public Date getTo() {
+        return to;
     }
 
-    public void setTo(String to) {
-        To = to;
+    public void setTo(Date to) {
+        this.to = to;
     }
 
     /**Constructor*/
@@ -39,9 +44,9 @@ public class Vote {
 
     }
 
-    public Vote(int day, String from, String to) {
-        Day = day;
-        From = from;
-        To = to;
+    public Vote(int day, Date from, Date to) {
+        this.day = day;
+        this.from = from;
+        this.to = to;
     }
 }

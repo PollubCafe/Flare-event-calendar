@@ -10,15 +10,13 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends MongoRepository<Event,String> {
-    Event findById(String id);
     List<Event> findByTitle(String title);
     List<Event> findByYear(int year);
     List<Event> findByWeek(int week);
     List<Event> findByCreator(String creator);
-    List<Event> findByPlace(String place);
     List<Event> findByStatus(String status);
     List<Event> findByWeekAfter(int weekAfter);
     List<Event> findByWeekBefore(int weekAfter);
-
-
+    List<Event> findByTown(String town);
+    List<Event> findByZipCode(int zipCode);
 }
