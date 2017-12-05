@@ -6,19 +6,23 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Zawiera informacje o użytkowniku
+ */
 @Document(collection = "User")
 public class User {
     /**Variables*/
     @Id
-    private String id;
-    private String Name;
-    private String Surname;
-    private String Email;
-    private String Nick;
-    private String Password;
+    private String id;          //id
+    private String name;        //imie uczestnika
+    private String surname;     //nazwisko uczesnika
+    private String email;       //mail
+    private String nick;        //login
+    private String password;    //hasło
 
-
+        /**Getter and Setter*/
     public String getId() {
+
         return id;
     }
 
@@ -27,56 +31,54 @@ public class User {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getSurname() {
-        return Surname;
+        return surname;
     }
 
     public void setSurname(String surname) {
-        Surname = surname;
+        this.surname = surname;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getNick() {
-        return Nick;
+        return nick;
     }
 
     public void setNick(String nick) {
-        Nick = nick;
+        this.nick = nick;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     /**Constructor*/
     public User() {
-
     }
 
     public User(String name, String surname, String email, String nick, String password) {
-
-        Name = name;
-        Surname = surname;
-        Email = email;
-        Nick = nick;
-        Password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.nick = nick;
+        this.password = password;
     }
 }
