@@ -11,8 +11,8 @@ import pl.pollub.cs.pentagoncafe.flare.domain.User;
 @Repository
 public interface UserRepository extends MongoRepository<User,String> {
 
-    User findByNick(String nick);
-    User findByEmail(String ema);
+    public User findByNick(String nick);
+    public User findByEmail(String email);
 
 
 }

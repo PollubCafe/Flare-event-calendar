@@ -1,8 +1,8 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.Date;
 import java.util.List;
 
@@ -17,26 +17,26 @@ import java.util.List;
 public class EventFinal {
     /**Variables*/
     @Id
-    private String id;                          //id
-    private String eventid;                     //id Wydarzenia
+    private ObjectId id;                          //id
+    private ObjectId eventid;                     //id Wydarzenia
     private Date data;                          //ostateczna data wydarzenia
     private String hour;                        //godzina wydarzenia
     private List<Participants> participants;    //lista kandydatów/osób które zaakceptowały
 
     /**Getter and Setter*/
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
-    public String getEventid() {
+    public ObjectId getEventid() {
         return eventid;
     }
 
-    public void setEventid(String eventid) {
+    public void setEventid(ObjectId eventid) {
         this.eventid = eventid;
     }
 
@@ -71,7 +71,8 @@ public class EventFinal {
     }
 
 
-    public EventFinal(String eventid, Date data, String hour, List<Participants> participants) {
+    public EventFinal(ObjectId eventid, Date data,
+                      String hour, List<Participants> participants) {
 
         this.eventid = eventid;
         this.data = data;

@@ -2,6 +2,9 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/11/29
  */
+
+import org.bson.types.ObjectId;
+
 /** Lista terminów EventFinal
  *  Zawiera informacje o tym
  *  kto się zgłosił na wydarzenie
@@ -11,15 +14,15 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
  *  */
 public class Participants {
     /**Variables*/
-    private String  entrant;     //id osoby zgłaszającej się
+    private ObjectId entrant;     //id osoby zgłaszającej się
     private boolean didAccept;  //czy osoba potwierdziła swoją obecność
 
     /**Getter and Setter*/
-    public String getEntrant() {
+    public ObjectId getEntrant() {
         return entrant;
     }
 
-    public void setEntrant(String entrant) {
+    public void setEntrant(ObjectId entrant) {
         this.entrant = entrant;
     }
 
@@ -36,7 +39,7 @@ public class Participants {
     public Participants() {
     }
 
-    public Participants(String entrant, boolean didAccept) {
+    public Participants(ObjectId entrant, boolean didAccept) {
         this.entrant = entrant;
         this.didAccept = didAccept;
     }

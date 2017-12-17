@@ -3,17 +3,19 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
  *  Data Start 2017/11/29
  */
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Zawiera informacje o użytkowniku
  */
+
 @Document(collection = "User")
 public class User {
     /**Variables*/
     @Id
-    private String id;          //id
+    private ObjectId id;          //id
     private String name;        //imie uczestnika
     private String surname;     //nazwisko uczesnika
     private String email;       //mail
@@ -21,12 +23,12 @@ public class User {
     private String password;    //hasło
 
         /**Getter and Setter*/
-    public String getId() {
+    public ObjectId getId() {
 
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

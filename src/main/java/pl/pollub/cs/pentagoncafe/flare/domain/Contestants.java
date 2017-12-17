@@ -2,6 +2,7 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/11/29
  */
+import org.bson.types.ObjectId;
 import java.util.List;
 /**Participant
  * niestety podobną nazwę już stosuję synnonim z translatora do uczestnik
@@ -12,16 +13,16 @@ import java.util.List;
  * */
 public class Contestants {
     /**Variables*/
-    private String      enteant;    //id uczestnika
+    private ObjectId entrant;    //id uczestnika
     private List<Vote>  vote;       //terminy które im pasują
 
     /**Getter and Setter*/
-    public String getEnteant() {
-        return enteant;
+    public ObjectId getEntrant() {
+        return entrant;
     }
 
-    public void setEnteant(String enteant) {
-        this.enteant = enteant;
+    public void setEntrant(ObjectId enteant) {
+        this.entrant = enteant;
     }
 
     public List<Vote> getVote() {
@@ -37,8 +38,8 @@ public class Contestants {
 
     }
 
-    public Contestants(String enteant, List<Vote> vote) {
-        this.enteant = enteant;
+    public Contestants(ObjectId entrant, List<Vote> vote) {
+        this.entrant = entrant;
         this.vote = vote;
     }
 }

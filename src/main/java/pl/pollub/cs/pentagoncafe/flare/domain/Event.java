@@ -2,8 +2,8 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/11/29
  */
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.Date;
 import java.util.List;
 
@@ -15,29 +15,29 @@ import java.util.List;
 public class Event {
 
     /**Variables*/
-    private String id;                      //id
+    private ObjectId id;                      //id typ bson
     private String title;                   //nazwa
     private String describe;                //opis
     private String status;                  //status wydarzenia
     private String town;                    //miejsce wydarzenia
     private int zipCode;                    //adres miasta bez myślnika po środku
     private String street;                  //nazwa ulicy
-    private String bloc;                    //numer bloku String bo w polsce może być np A
-    private String houseNumber;             //Numer pokoju mogą wystepować litery np 420J
+    private int bloc;                    //numer bloku String bo w polsce może być np A
+    private int houseNumber;             //Numer pokoju mogą wystepować litery np 420J
     private int week;                       //tydzień w roku w którym może się odbyć wydarezenie
     private int year;                       //rok w którym odbędzie się wydarzenie
-    private Date duration;                  //długość trwania
+    private int duration;                  //długość trwania
     private Date date;                      //data do której można się zgłaszać/wysyłać potwierdzenie w zależności od statusu
-    private String creator;                 //id twórcy
+    private ObjectId creator;                 //id twórcy
     private boolean onlyUser;               //czy wydarzenie tylko dla zarejestrowanych uczestników
     private List<Contestants> contestants;  //lista osób zgłaszających się
 
     /**Getter and Setter*/
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -89,19 +89,19 @@ public class Event {
         this.street = street;
     }
 
-    public String getBloc() {
+    public int getBloc() {
         return bloc;
     }
 
-    public void setBloc(String bloc) {
+    public void setBloc(int bloc) {
         this.bloc = bloc;
     }
 
-    public String getHouseNumber() {
+    public int getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(String houseNumber) {
+    public void setHouseNumber(int houseNumber) {
         this.houseNumber = houseNumber;
     }
 
@@ -121,11 +121,11 @@ public class Event {
         this.year = year;
     }
 
-    public Date getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Date duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -137,11 +137,11 @@ public class Event {
         this.date = date;
     }
 
-    public String getCreator() {
+    public ObjectId getCreator() {
         return creator;
     }
 
-    public void setCreator(String creator) {
+    public void setCreator(ObjectId creator) {
         this.creator = creator;
     }
 
@@ -165,7 +165,11 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String describe, String status, String town, int zipCode, String street, String bloc, String houseNumber, int week, int year, Date duration, Date date, String creator, boolean onlyUser, List<Contestants> contestants) {
+    public Event(String title, String describe,
+                 String status, String town, int zipCode,
+                 String street, int bloc, int houseNumber, int week,
+                 int year, int duration, Date date, ObjectId creator,
+                 boolean onlyUser, List<Contestants> contestants) {
         this.title = title;
         this.describe = describe;
         this.status = status;
