@@ -8,10 +8,13 @@ import { NavbarComponent} from "./navbar/navbar.component";
 import { EventsComponent } from './event/event.component';
 import { EventsListComponent } from './event/eventsList/eventsList.component';
 import {EventService} from "./event/event.service";
-import { EventsAddComponent } from './event/eventsAdd/eventsAdd.component';
+import {AccountMenuItemComponent} from "./navbar/accountDropdown/menuItem/accountMenuItems.component";
 import {NavOptionsComponent} from "./navbar/navOptions/navOptions.component";
 import {SearchBarComponent} from "./navbar/searchBar/searchBar.component";
 import {AccountDropdownComponent} from "./navbar/accountDropdown/accountDropdown.component";
+import {PaginationComponent} from "./footer/paggination/pagination.component";
+import {AddEventButtonComponent} from "./footer/addEventButton/addEventButton.component";
+import {FooterComponent} from "./footer/footer.component";
 import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
@@ -19,11 +22,14 @@ import { BsDropdownModule } from 'ngx-bootstrap';
         AppComponent,
         EventsComponent,
         EventsListComponent,
-        EventsAddComponent,
+        AccountMenuItemComponent,
+        PaginationComponent,
         NavbarComponent,
         NavOptionsComponent,
         SearchBarComponent,
-        AccountDropdownComponent
+        AccountDropdownComponent,
+        AddEventButtonComponent,
+        FooterComponent
     ],
     imports: [
         BsDropdownModule.forRoot(),

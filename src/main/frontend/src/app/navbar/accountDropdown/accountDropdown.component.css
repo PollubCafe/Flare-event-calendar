@@ -1,3 +1,8 @@
 .dropdown-toggle{
     margin: 8px;
 }
+
+.dropdown-menu{
+    width: 200px;
+    padding: 8px;
+}

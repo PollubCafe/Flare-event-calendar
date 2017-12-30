@@ -5,9 +5,9 @@ import {Event} from "../event.model";
 import {EventService} from "../event.service";
 
 @Component({
-    selector: 'app-tasks-list',
+    selector: 'eventsList',
     templateUrl: './eventsList.component.html',
-    styleUrls: ['./eventsLlist.component.css']
+    styleUrls: ['./eventsList.component.css']
 })
 export class EventsListComponent implements OnInit {
 
