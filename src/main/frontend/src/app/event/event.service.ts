@@ -1,17 +1,17 @@
 import {Http, Response} from "@angular/http";
 import "rxjs/Rx";
-import {Task} from "./task.model";
+import {Event} from "./event.model";
 import {EventEmitter, Injectable} from "@angular/core";
 
 @Injectable()
-export class TaskService {
+export class EventService {
 
-    onTaskAdded = new EventEmitter<Task>();
+    onEventAdded = new EventEmitter<Event>();
 
     constructor(private http: Http) {}
 
-    getTasks(){
-        return this.http.get('/api/tasks')
+    getEvents(){
+        return this.http.get('/api/events')
             .map(
                 (response: Response) => {
                     return response.json();
@@ -19,8 +19,8 @@ export class TaskService {
             );
     }
 
-    addTask(task: Task) {
-        return this.http.post('/api/tasks/save', task)
+    addEvent(event: Event) {
+        return this.http.post('/api/tasks/save', event)
             .map(
                 (response: Response) => {
                     return response.json();
@@ -28,10 +28,9 @@ export class TaskService {
             );
     }
 
-    saveTask(task: Task, checked: boolean) {
+    saveEvent(event: Event, checked: boolean) {
         // we are updating the task to what the value of checked is
-        task.completed = checked;
-        return this.http.post('/api/tasks/save', task)
+        return this.http.post('/api/tasks/save', event)
             .map(
                 (response: Response) => {
                     return response.json();

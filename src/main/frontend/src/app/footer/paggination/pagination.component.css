@@ -1,0 +1,13 @@
+.panel{
+    display: inline-block;
+    max-width: 80%;
+    float: left;
+}
+
+.panel-body{
+    margin:0;
+}
+
+.pagination{
+    margin:0;
+}

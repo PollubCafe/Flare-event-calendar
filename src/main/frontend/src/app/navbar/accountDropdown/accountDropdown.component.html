@@ -1,0 +1,18 @@
+<ul class="nav navbar-nav navbar-right">
+    <li class="dropdown"  dropdown>
+        <button dropdownToggle
+                class="btn btn-primary dropdown-toggle"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false">
+            My account <span class="caret"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <accountMenuItem [itemContent]=myProfileMenuItem></accountMenuItem>
+            <accountMenuItem *ngFor="let menuItem of menuItems" [itemContent]=menuItem></accountMenuItem>
+            <accountMenuItem [itemContent]=logoutMenuItem></accountMenuItem>
+        </ul>
+    </li>
+</ul>
+
