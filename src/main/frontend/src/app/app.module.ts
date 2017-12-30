@@ -4,24 +4,34 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
-import {TaskService} from "./tasks/task.service";
-import { TasksAddComponent } from './tasks/tasks-add/tasks-add.component';
+import { NavbarComponent} from "./navbar/navbar.component";
+import { EventsComponent } from './event/event.component';
+import { EventsListComponent } from './event/eventsList/eventsList.component';
+import {EventService} from "./event/event.service";
+import { EventsAddComponent } from './event/eventsAdd/eventsAdd.component';
+import {NavOptionsComponent} from "./navbar/navOptions/navOptions.component";
+import {SearchBarComponent} from "./navbar/searchBar/searchBar.component";
+import {AccountDropdownComponent} from "./navbar/accountDropdown/accountDropdown.component";
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TasksComponent,
-    TasksListComponent,
-    TasksAddComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
-  ],
-  providers: [TaskService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        EventsComponent,
+        EventsListComponent,
+        EventsAddComponent,
+        NavbarComponent,
+        NavOptionsComponent,
+        SearchBarComponent,
+        AccountDropdownComponent
+    ],
+    imports: [
+        BsDropdownModule.forRoot(),
+        BrowserModule,
+        FormsModule,
+        HttpModule
+    ],
+    providers: [EventService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

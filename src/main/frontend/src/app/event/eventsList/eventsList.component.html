@@ -1,0 +1,12 @@
+<ul class="list-group">
+  <li *ngFor="let event of events" class="list-group-item" >
+      <div class="task-checkbox">
+          <input type="checkbox"
+                 class="list-child"
+                 (change)="onTaskChange($event,task)"
+                 [checked]="event.onlyUser">
+          <span ngClass="{{event.onlyUser ? 'name completed' : 'name'}}">{{ event.title }}</span>
+          <span class="label {{ getDueDateLabel(event) }} pull-right"> {{ event.date }}</span>
+      </div>
+  </li>
+</ul>
