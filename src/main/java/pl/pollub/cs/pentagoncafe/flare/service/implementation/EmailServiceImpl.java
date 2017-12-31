@@ -1,4 +1,4 @@
-package pl.pollub.cs.pentagoncafe.flare.service;
+package pl.pollub.cs.pentagoncafe.flare.service.implementation;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
@@ -10,6 +10,7 @@ import com.mailjet.client.resource.Emailv31;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import pl.pollub.cs.pentagoncafe.flare.service.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService {

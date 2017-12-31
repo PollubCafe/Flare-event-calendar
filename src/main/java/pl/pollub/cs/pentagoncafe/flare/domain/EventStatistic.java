@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
+import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,6 +13,7 @@ import java.util.List;
  * lista odpowiedzialna jest za przechowywanie przedziałów i statystycznych
  */
 @Document(collection = "EventStatistic")
+@Data
 public class EventStatistic {
     /**Variables*/
     @Id
@@ -19,36 +21,7 @@ public class EventStatistic {
     private ObjectId eventid;     //id eventu analizowanego
     private List<Term> term;    //lista z przedziałami
 
-    /**Getter and Setter*/
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public ObjectId getEventid() {
-        return eventid;
-    }
-
-    public void setEventid(ObjectId eventid) {
-        this.eventid = eventid;
-    }
-
-    public List<Term> getTerm() {
-        return term;
-    }
-
-    public void setTerm(List<Term> term) {
-        this.term = term;
-    }
-    /**Constructor*/
-    public EventStatistic() {
-    }
-
     public EventStatistic(ObjectId eventid, List<Term> term) {
-
         this.eventid = eventid;
         this.term = term;
     }

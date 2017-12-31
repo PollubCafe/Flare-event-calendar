@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/eventFinal")
 public class EventFinalController {
 
-    EventFinalRepository eventFinalRepository;
+    private final EventFinalRepository eventFinalRepository;
 
     public EventFinalController(EventFinalRepository eventFinalRepository) {
         this.eventFinalRepository = eventFinalRepository;

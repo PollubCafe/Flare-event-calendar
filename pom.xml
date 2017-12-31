@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.therealdanvega</groupId>
-	<artifactId>tasks</artifactId>
+	<artifactId>eventClendar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>tasks</name>
+	<name>Event calendar</name>
 	<description>Spring Boot &amp; Angular 2 Demo</description>
 
 	<parent>
@@ -95,6 +95,12 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.7.0</version>
+		</dependency>
+
+		<!-- logger -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 
 	</dependencies>

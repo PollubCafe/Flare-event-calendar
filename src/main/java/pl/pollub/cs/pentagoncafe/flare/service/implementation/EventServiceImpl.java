@@ -1,4 +1,4 @@
-package pl.pollub.cs.pentagoncafe.flare.service;
+package pl.pollub.cs.pentagoncafe.flare.service.implementation;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.repository.EventRepository;
+import pl.pollub.cs.pentagoncafe.flare.service.EventService;
 
 import java.util.List;
 
 @Service
 public class EventServiceImpl implements EventService {
 
-    private final int DEFAULT_PAGE_SIZE = 10;
+    private final int DEFAULT_PAGE_SIZE = 7;
 
     private final EventRepository eventRepository;
 
