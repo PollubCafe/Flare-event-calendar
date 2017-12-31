@@ -17,6 +17,16 @@ import {AddEventButtonComponent} from "./footer/addEventButton/addEventButton.co
 import {FooterComponent} from "./footer/footer.component";
 import { BsDropdownModule } from 'ngx-bootstrap';
 import {PaginationService} from "./footer/paggination/pagination.service";
+import {ConfirmedEventComponent} from "./confirmedEvent/confirmedEvent.component";
+import {RouterModule,Routes} from "@angular/router";
+
+const appRoutes: Routes = [
+    { path: '', component: EventsComponent },
+    { path: 'events/new', component: EventsComponent },
+    { path: 'events/confirmed', component: ConfirmedEventComponent },
+    { path: 'events/past', component: ConfirmedEventComponent },
+    { path: 'users', component: ConfirmedEventComponent },
+];
 
 @NgModule({
     declarations: [
@@ -30,9 +40,11 @@ import {PaginationService} from "./footer/paggination/pagination.service";
         SearchBarComponent,
         AccountDropdownComponent,
         AddEventButtonComponent,
-        FooterComponent
+        FooterComponent,
+        ConfirmedEventComponent
     ],
     imports: [
+        RouterModule.forRoot(appRoutes),
         BsDropdownModule.forRoot(),
         BrowserModule,
         FormsModule,
