@@ -2,26 +2,33 @@ package pl.pollub.cs.pentagoncafe.flare.controller;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/12/12
  */
+import org.springframework.http.HttpHeaders;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.pollub.cs.pentagoncafe.flare.DTO.EventResponseDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
+import pl.pollub.cs.pentagoncafe.flare.mapper.EventToEventResponseDTOMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.EventRepository;
+import pl.pollub.cs.pentagoncafe.flare.service.EventService;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
 
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
+    private final EventToEventResponseDTOMapper eventToEventResponseDTOMapper;
+    private final EventService eventService;
 
-    public EventController(EventRepository eventRepository) {
+    public EventController(EventRepository eventRepository, EventToEventResponseDTOMapper eventToResponseMapper, EventService eventService) {
         this.eventRepository = eventRepository;
-    }
-
-    //Pobieranie danych
-    @GetMapping("/")
-    public List<Event> allEvent(){
-        return eventRepository.findAll();
+        this.eventToEventResponseDTOMapper = eventToResponseMapper;
+        this.eventService = eventService;
     }
 
     @GetMapping("/{id}")
@@ -72,6 +79,18 @@ public class EventController {
     @GetMapping("/zipcode/{zip}")
     public List<Event> eventByZip(@PathVariable("zip") int zip){
         return eventRepository.findByZipCode(zip);
+    }
+
+    @GetMapping()
+    public PageResponseDTO getPageOfEventsByPageNumber(@RequestParam("pageNumber") Integer pageNumber){
+        Page<Event> eventsPage = eventService.getPageOfEventsByPageNumber(pageNumber);
+
+        return PageResponseDTO.builder()
+                .totalPages(eventsPage.getTotalPages())
+                .currentPageNumber(eventsPage.getNumber())
+                .content(eventsPage.getContent().stream().map(eventToEventResponseDTOMapper::map).collect(Collectors.toList()))
+                .build();
+
     }
 
     //Dodawanie

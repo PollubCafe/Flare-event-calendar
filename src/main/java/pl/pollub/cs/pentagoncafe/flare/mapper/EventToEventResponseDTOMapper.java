@@ -5,7 +5,7 @@ import pl.pollub.cs.pentagoncafe.flare.DTO.EventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 
 @Component
-public class EventToResponseMapper {
+public class EventToEventResponseDTOMapper {
     public EventResponseDTO map(Event event){
         return EventResponseDTO.builder().
                 id(event.getId().toString()).

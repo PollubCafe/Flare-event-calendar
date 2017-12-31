@@ -3,6 +3,7 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
  *  Data Start 2017/11/29
  */
 
+import lombok.Data;
 import org.bson.types.ObjectId;
 
 /** Lista terminów EventFinal
@@ -12,35 +13,9 @@ import org.bson.types.ObjectId;
  *
  *  Przy ostatnim statusie zawiera liste osówb które na koniec wezmą udział w wydarzeniu
  *  */
+@Data
 public class Participants {
     /**Variables*/
     private ObjectId entrant;     //id osoby zgłaszającej się
     private boolean didAccept;  //czy osoba potwierdziła swoją obecność
-
-    /**Getter and Setter*/
-    public ObjectId getEntrant() {
-        return entrant;
-    }
-
-    public void setEntrant(ObjectId entrant) {
-        this.entrant = entrant;
-    }
-
-    public boolean isDidAccept() {
-        return didAccept;
-    }
-
-    public void setDidAccept(boolean didAccept) {
-        this.didAccept = didAccept;
-    }
-
-    /**Constructor*/
-
-    public Participants() {
-    }
-
-    public Participants(ObjectId entrant, boolean didAccept) {
-        this.entrant = entrant;
-        this.didAccept = didAccept;
-    }
 }

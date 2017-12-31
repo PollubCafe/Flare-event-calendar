@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/EventStatistic")
 public class EventStatisticController {
 
-    EventStatisticRepository eventStatisticRepository;
+    private final EventStatisticRepository eventStatisticRepository;
 
     public EventStatisticController(EventStatisticRepository eventStatisticRepository) {
         this.eventStatisticRepository = eventStatisticRepository;

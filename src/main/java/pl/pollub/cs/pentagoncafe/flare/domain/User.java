@@ -3,6 +3,7 @@ package pl.pollub.cs.pentagoncafe.flare.domain;
  *  Data Start 2017/11/29
  */
 
+import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document(collection = "User")
+@Data
 public class User {
     /**Variables*/
     @Id
@@ -21,60 +23,6 @@ public class User {
     private String email;       //mail
     private String nick;        //login
     private String password;    //hasło
-
-        /**Getter and Setter*/
-    public ObjectId getId() {
-
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**Constructor*/
-    public User() {
-    }
 
     public User(String name, String surname, String email, String nick, String password) {
         this.name = name;

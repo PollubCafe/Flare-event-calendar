@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
+import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +15,7 @@ import java.util.List;
  * zawiera informacje kiedy twórca chce przeprowadzić wydarzenie
  * oraz listę osób co mogą wziąść udział w wydarzeniu */
 @Document(collection = "EventFinal")
+@Data
 public class EventFinal {
     /**Variables*/
     @Id
@@ -22,54 +24,6 @@ public class EventFinal {
     private Date data;                          //ostateczna data wydarzenia
     private String hour;                        //godzina wydarzenia
     private List<Participants> participants;    //lista kandydatów/osób które zaakceptowały
-
-    /**Getter and Setter*/
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public ObjectId getEventid() {
-        return eventid;
-    }
-
-    public void setEventid(ObjectId eventid) {
-        this.eventid = eventid;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public String getHour() {
-        return hour;
-    }
-
-    public void setHour(String hour) {
-        this.hour = hour;
-    }
-
-    public List<Participants> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<Participants> participants) {
-        this.participants = participants;
-    }
-
-
-    /**Constructor*/
-
-    public EventFinal() {
-    }
-
 
     public EventFinal(ObjectId eventid, Date data,
                       String hour, List<Participants> participants) {

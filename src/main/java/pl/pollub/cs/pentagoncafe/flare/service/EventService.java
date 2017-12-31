@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.service;
 
+import org.springframework.data.domain.Page;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 
@@ -14,4 +15,6 @@ public interface EventService {
     Event find(String id);
 
     Event applyParticipation(String id, User user);
+
+    Page<Event> getPageOfEventsByPageNumber(int pageNumber);
 }
