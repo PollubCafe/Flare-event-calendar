@@ -4,6 +4,10 @@
     float: left;
 }
 
+li{
+    cursor: pointer;
+}
+
 .panel-body{
     margin:0;
 }
