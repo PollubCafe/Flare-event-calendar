@@ -2,17 +2,17 @@
     <div class="panel-body">
     <nav>
         <ul class="pagination">
-            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">8</a></li>
-            <li><a href="#">9</a></li>
-            <li><a href="#">10</a></li>
-            <li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            <li  *ngIf="paginationData.totalPages>0"  (click)="changePage(0)"><a aria-label="First">&laquo;</a></li>
+            <li *ngIf="paginationData.currentPageNumber-1>=0" (click)="changePage(paginationData.currentPageNumber-1)"><a aria-label="Previous">&lsaquo;</a></li>
+            <li *ngFor="let pageNumberModel of createPageNumbers(paginationData?.fistPageNumber,paginationData?.lastPageNumber)"
+                [ngClass]="(pageNumberModel.pageNumber==paginationData.currentPageNumber)?'active':''"
+                (click)="changePage(pageNumberModel.pageNumber)">
+                <a>{{pageNumberModel.pageNumber+1}}</a>
+            </li>
+            <li *ngIf="paginationData.currentPageNumber+1<paginationData.totalPages"
+                (click)="changePage(paginationData.currentPageNumber+1)"><a aria-label="Next">&rsaquo;</a></li>
+            <li *ngIf="paginationData.totalPages>0"
+                (click)="changePage(paginationData.totalPages - 1)"><a aria-label="Last">&raquo;</a></li>
         </ul>
     </nav>
     </div>

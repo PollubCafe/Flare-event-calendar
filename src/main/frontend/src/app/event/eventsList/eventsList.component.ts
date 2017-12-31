@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {Response} from "@angular/http";
 
 import {Event} from "../event.model";
 import {EventService} from "../event.service";
+import {PaginationService} from "../../footer/paggination/pagination.service";
+import {PaginationModel} from "../../footer/paggination/pagination.model";
 
 @Component({
     selector: 'eventsList',
@@ -13,30 +14,31 @@ export class EventsListComponent implements OnInit {
 
     events: Event[] = [];
 
-    constructor(private taskService: EventService) {
-
+    constructor(private eventService: EventService,private paginationService: PaginationService) {
+        paginationService.currentPageNumber$.subscribe(
+            pageNumber => {
+                this.getEventsPage(pageNumber);
+            },
+            (error) => console.log(error)
+        )
     }
 
     ngOnInit() {
-        // initial load of data
-        this.taskService.getEvents()
-            .subscribe(
-                (events: any[]) => {
-                    this.events = events
-                },
-                (error) => console.log(error)
-            );
-        // get notified when a new task has been added
-        this.taskService.onEventAdded.subscribe(
+        this.getEventsPage(0);
+
+        this.eventService.onEventAdded.subscribe(
             (event: Event) => this.events.push(event)
         );
     }
 
-    getDueDateLabel(task: Event){
-      return task.onlyUser ? 'label-success' : 'label-primary';
-    }
-
-    onTaskChange(event, task) {
-        this.taskService.saveEvent(task,event.target.checked).subscribe();
+    getEventsPage(pageNumber){
+        this.eventService.getEventsPage(pageNumber)
+            .subscribe(
+                (page) => {
+                    this.paginationService.changePaginationData(new PaginationModel(page.totalPages,page.currentPageNumber));
+                    this.events = page.content;
+                },
+                (error) => console.log(error)
+            );
     }
 }

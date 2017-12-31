@@ -16,6 +16,7 @@ import {PaginationComponent} from "./footer/paggination/pagination.component";
 import {AddEventButtonComponent} from "./footer/addEventButton/addEventButton.component";
 import {FooterComponent} from "./footer/footer.component";
 import { BsDropdownModule } from 'ngx-bootstrap';
+import {PaginationService} from "./footer/paggination/pagination.service";
 
 @NgModule({
     declarations: [
@@ -37,7 +38,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
         FormsModule,
         HttpModule
     ],
-    providers: [EventService],
+    providers: [EventService, PaginationService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
