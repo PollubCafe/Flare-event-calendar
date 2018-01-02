@@ -1,4 +1,5 @@
 {
+  "paths": { "@angular/*": ["../node_modules/@angular/*"] },
   "compilerOptions": {
     "baseUrl": "",
     "declaration": false,

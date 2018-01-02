@@ -1,0 +1,245 @@
+<button  (click)="openModal()" type="button" class="btn btn-default btn-circle btn-xl">
+    <i class="glyphicon glyphicon-plus"></i></button>
+
+<bs-modal #addEventPopup>
+    <form #addEventForm="ngForm">
+        <bs-modal-header [showDismiss]="true">
+            <h4 class="modal-title">Add event!</h4>
+        </bs-modal-header>
+        <bs-modal-body>
+            <div class="pre-scrollable">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text"
+                           value=""
+                           class="form-control"
+                           required minlength="1" maxlength="35"
+                           [(ngModel)]="createdEvent.title"
+                           name="title"
+                           id="title"
+                           #title="ngModel">
+                </div>
+                <div *ngIf="title.errors && (title.dirty || title.touched)" class="alert alert-danger">
+                    <div [hidden]="!title.errors.required">
+                        Title is required
+                    </div>
+                    <div [hidden]="!title.errors.minlength">
+                        Title must have more than 1 character
+                    </div>
+                    <div [hidden]="!title.errors.maxlength">
+                        Title must have less than 35 characters
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control"
+                              maxlength="200"
+                              [(ngModel)]="createdEvent.description"
+                              rows="3"
+                              name="description"
+                              id="description"
+                              #description="ngModel"> </textarea>
+                </div>
+                <div *ngIf="description.errors && (description.dirty || description.touched)" class="alert alert-danger">
+                    <div [hidden]="!description.errors.maxlength">
+                        Title must have less than 200 characters
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration</label>
+                    <input type="number"
+                           value="1"
+                           class="form-control"
+                           required min="1" max="6"
+                           [(ngModel)]="createdEvent.duration"
+                           name="duration"
+                           id="duration"
+                           #duration="ngModel">
+                </div>
+                <div *ngIf="duration.errors && (duration.dirty || duration.touched)" class="alert alert-danger">
+                    <div [hidden]="!duration.errors.required">
+                        Duration time is required
+                    </div>
+                    <div [hidden]="!duration.errors.min">
+                        Event must have more than 1 hours of duration
+                    </div>
+                    <div [hidden]="!duration.errors.max">
+                        Event can has only 6 hours of duration
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dateOfEventApproval">Date of approval</label>
+                    <div class='input-group date'>
+                        <input type='datetime-local'
+                               [(ngModel)]="createdEvent.dateOfEventApproval"
+                               required isNotPast
+                               name="dateOfEventApproval"
+                               class="form-control"
+                               id="dateOfEventApproval"
+                               #dateOfEventApproval="ngModel"/>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    </div>
+                </div>
+                <div *ngIf="dateOfEventApproval.errors && (dateOfEventApproval.dirty || dateOfEventApproval.touched)" class="alert alert-danger">
+                    <div [hidden]="!dateOfEventApproval.errors.required">
+                        Date of approval is required
+                    </div>
+                    <div [hidden]="!dateOfEventApproval.errors.isNotPast">
+                        Date of approval must be a future date
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="onlyForRegisteredUser">Only for registered users</label>
+                    <input  type="checkbox"
+                            [(ngModel)]="createdEvent.onlyForRegisteredUsers"
+                            class="checkbox"
+                            name="onlyForRegisteredUser"
+                            id="onlyForRegisteredUser">
+                </div>
+                <div class="form-group">
+                    <label for="address_town">Town</label>
+                    <input type="text"
+                           class="form-control"
+                           value=""
+                           required minlength="2" maxlength="40" pattern="^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]{1,39}$"
+                           [(ngModel)]="createdEvent.address_town"
+                           name="address_town"
+                           id="address_town"
+                           #address_town="ngModel">
+                </div>
+                <div *ngIf="address_town.errors && (address_town.dirty || address_town.touched)" class="alert alert-danger">
+                    <div [hidden]="!address_town.errors.required">
+                        Town name is required
+                    </div>
+                    <div [hidden]="!address_town.errors.minlength">
+                        Town name must has more than 2 characters
+                    </div>
+                    <div [hidden]="!address_town.errors.maxlength">
+                        Town name must has less than 40 characters
+                    </div>
+                    <div [hidden]="!address_town.errors.pattern">
+                        Town name must start with big latter and has from 2 to 40 characters
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address_zipCode">Zip code</label>
+                    <input type="text"
+                           class="form-control"
+                           value=""
+                           required pattern="^\d{2}-\d{3}$"
+                           [(ngModel)]="createdEvent.address_zipCode"
+                           name="address_zipCode"
+                           id="address_zipCode"
+                           #address_zipCode="ngModel">
+                </div>
+                <div *ngIf="address_zipCode.errors && (address_zipCode.dirty || address_zipCode.touched)" class="alert alert-danger">
+                    <div [hidden]="!address_zipCode.errors.required">
+                        Zip code is required
+                    </div>
+                    <div [hidden]="!address_zipCode.errors.pattern">
+                        Invalid zip code format
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address_province">Province</label>
+                    <select required [(ngModel)]="createdEvent.address_province"
+                            class="form-control"
+                            id="address_province"
+                            name="address_province">
+                        <option selected="selected">lubelskie</option>
+                        <option>dolnośląskie</option>
+                        <option>małopolskie</option>
+                        <option>śląskie</option>
+                        <option>zachodiopomorskie</option>
+                        <option>wielkopolskie</option>
+                        <option>opolskie</option>
+                        <option>łódzkie</option>
+                        <option>podlaskie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address_street">Street</label>
+                    <input type="text"
+                           value=""
+                           class="form-control"
+                           required minlength="2" maxlength="80" pattern="^[0-9A-ZĄĆĘŁŃÓŚŹŻ][\sA-ZĄĆĘŁŃÓŚŹŻ0-9a-ząćęłńóśźż. ]{1,79}$"
+                           [(ngModel)]="createdEvent.address_street"
+                           name="address_street"
+                           id="address_street"
+                           #address_street="ngModel">
+                </div>
+                <div *ngIf="address_street.errors && (address_street.dirty || address_street.touched)" class="alert alert-danger">
+                    <div [hidden]="!address_street.errors.required">
+                        Street name is required
+                    </div>
+                    <div [hidden]="!address_street.errors.minlength">
+                        Street name must has more than 2 characters
+                    </div>
+                    <div [hidden]="!address_street.errors.maxlength">
+                        Street name must has less than 80 characters
+                    </div>
+                    <div [hidden]="!address_street.errors.pattern">
+                        Invalid street name
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address_houseNumber">House number</label>
+                    <input type="text"
+                           value=""
+                           class="form-control"
+                           required pattern="^\d+/?\d*[a-zA-Z]?(?<!/)$"
+                           [(ngModel)]="createdEvent.address_houseNumber"
+                           name="street"
+                           id="address_houseNumber"
+                           #address_houseNumber="ngModel">
+                </div>
+                <div *ngIf="address_houseNumber.errors && (address_houseNumber.dirty || address_houseNumber.touched)" class="alert alert-danger">
+                    <div [hidden]="!address_houseNumber.errors.required">
+                        House number is required
+                    </div>
+                    <div [hidden]="!address_houseNumber.errors.pattern">
+                        Invalid block number
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address_blockNumber">Block number</label>
+                    <input type="text"
+                           value=""
+                           class="form-control"
+                           pattern="^\d+/?\d*[a-zA-Z]?(?<!/)$"
+                           [(ngModel)]="createdEvent.address_blockNumber"
+                           name="address_blockNumber"
+                           id="address_blockNumber"
+                           #address_blockNumber="ngModel">
+                </div>
+                <div *ngIf="address_blockNumber.errors && (address_blockNumber.dirty || address_blockNumber.touched)" class="alert alert-danger">
+                    <div [hidden]="!address_blockNumber.errors.pattern">
+                        Invalid block number
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address_additionalInformation">Additional information</label>
+                    <textarea class="form-control"
+                              [(ngModel)]="createdEvent.address_additionalInformation"
+                              maxlength="100"
+                              rows="3"
+                              name="address_additionalInformation"
+                              id="address_additionalInformation"
+                              #address_additionalInformation="ngModel"></textarea>
+                </div>
+                <div *ngIf="address_additionalInformation.errors && (address_additionalInformation.dirty || address_additionalInformation.touched)" class="alert alert-danger">
+                    <div [hidden]="!address_town.errors.maxlength">
+                        Additional information must has less than 80 characters
+                    </div>
+                </div>
+            </div>
+        </bs-modal-body>
+        <bs-modal-footer>
+            <button type="button" class="btn btn-default" data-dismiss="addEventForm" (click)="closeModal()">Cancel</button>
+            <button type="button" class="btn btn-primary" [disabled]="!addEventForm.valid" (click)="sendEventData()">Save</button>
+        </bs-modal-footer>
+    </form>
+</bs-modal>
+

@@ -1,7 +1,7 @@
 package pl.pollub.cs.pentagoncafe.flare.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.pollub.cs.pentagoncafe.flare.DTO.EventResponseDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 
 @Component
