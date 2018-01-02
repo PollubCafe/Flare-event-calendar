@@ -15,7 +15,7 @@ export class PaginationModel {
             else{
 
                 if(currentPageNumber + 4 > totalPages){
-                    this.fistPageNumber = currentPageNumber - 7;
+                    this.fistPageNumber = totalPages - 8;
                     this.lastPageNumber = totalPages;
                 }
                 else{

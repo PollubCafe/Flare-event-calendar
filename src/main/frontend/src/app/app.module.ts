@@ -1,7 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule,Routes } from "@angular/router";
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent} from "./navbar/navbar.component";
@@ -13,19 +15,19 @@ import {NavOptionsComponent} from "./navbar/navOptions/navOptions.component";
 import {SearchBarComponent} from "./navbar/searchBar/searchBar.component";
 import {AccountDropdownComponent} from "./navbar/accountDropdown/accountDropdown.component";
 import {PaginationComponent} from "./footer/paggination/pagination.component";
-import {AddEventButtonComponent} from "./footer/addEventButton/addEventButton.component";
+import {AddEventComponent} from "./event/addEvent/addEvent.component";
 import {FooterComponent} from "./footer/footer.component";
-import { BsDropdownModule } from 'ngx-bootstrap';
 import {PaginationService} from "./footer/paggination/pagination.service";
-import {ConfirmedEventComponent} from "./confirmedEvent/confirmedEvent.component";
-import {RouterModule,Routes} from "@angular/router";
+import {ApprovedEventComponent} from "./approvedEvent/approvedEvent.component";
+import {DateValidator} from "./event/addEvent/date.validator";
+import { BsModalModule } from 'ng2-bs3-modal';
 
 const appRoutes: Routes = [
     { path: '', component: EventsComponent },
     { path: 'events/new', component: EventsComponent },
-    { path: 'events/confirmed', component: ConfirmedEventComponent },
-    { path: 'events/past', component: ConfirmedEventComponent },
-    { path: 'users', component: ConfirmedEventComponent },
+    { path: 'events/approved', component: ApprovedEventComponent },
+    { path: 'events/past', component: ApprovedEventComponent },
+    { path: 'users', component: ApprovedEventComponent },
 ];
 
 @NgModule({
@@ -39,16 +41,19 @@ const appRoutes: Routes = [
         NavOptionsComponent,
         SearchBarComponent,
         AccountDropdownComponent,
-        AddEventButtonComponent,
+        AddEventComponent,
         FooterComponent,
-        ConfirmedEventComponent
+        ApprovedEventComponent,
+        DateValidator
     ],
     imports: [
         RouterModule.forRoot(appRoutes),
         BsDropdownModule.forRoot(),
         BrowserModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        ReactiveFormsModule,
+        BsModalModule
     ],
     providers: [EventService, PaginationService],
     bootstrap: [AppComponent]

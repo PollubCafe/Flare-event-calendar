@@ -2,8 +2,8 @@
     <li [ngClass]="{'active': location.path()=='/events/new' || location==''}">
         <a [routerLink] = "['/events/new']"><span class="glyphicon glyphicon-star"></span> New events</a>
     </li>
-    <li [ngClass]="{'active': location.path()=='/events/confirmed'}">
-        <a [routerLink] = "['/events/confirmed']"><span class="glyphicon glyphicon-ok"></span> Confirmed events</a>
+    <li [ngClass]="{'active': location.path()=='/events/approved'}">
+        <a [routerLink] = "['/events/confirmed']"><span class="glyphicon glyphicon-ok"></span> Approved events</a>
     </li>
     <li [ngClass]="{'active': location.path()=='/events/past'}">
         <a [routerLink] = "['/events/past']"><span class="glyphicon glyphicon-backward"></span> Past events</a>

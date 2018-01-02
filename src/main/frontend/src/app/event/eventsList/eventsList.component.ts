@@ -1,9 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 
-import {Event} from "../event.model";
+import {SimplifiedEvent} from "../simplifiedEvent.model";
 import {EventService} from "../event.service";
 import {PaginationService} from "../../footer/paggination/pagination.service";
 import {PaginationModel} from "../../footer/paggination/pagination.model";
+import monthsNames from "../../const/monthsNames";
 
 @Component({
     selector: 'eventsList',
@@ -12,7 +13,8 @@ import {PaginationModel} from "../../footer/paggination/pagination.model";
 })
 export class EventsListComponent implements OnInit {
 
-    events: Event[] = [];
+    events: SimplifiedEvent[] = [];
+    monthsNames: string[] = monthsNames;
 
     constructor(private eventService: EventService,private paginationService: PaginationService) {
         paginationService.currentPageNumber$.subscribe(
@@ -27,7 +29,7 @@ export class EventsListComponent implements OnInit {
         this.getEventsPage(0);
 
         this.eventService.onEventAdded.subscribe(
-            (event: Event) => this.events.push(event)
+            (event: SimplifiedEvent) => this.events.push(event)
         );
     }
 
