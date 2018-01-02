@@ -2,10 +2,10 @@
 <ul class="event-list">
     <li *ngFor="let event of events">
         <time datetime="2014-07-20 2000">
-            <span class="day">{{event.dateOfEventApproval.getDay()}}</span>
-            <span class="month">{{monthsNames[event.dateOfEventApproval.getMonth()]}}</span>
-            <span class="year">{{event.dateOfEventApproval.getFullYear()}}</span>
-            <span class="time">{{event.dateOfEventApproval.getHours()}}</span>
+            <span class="day">{{convertToDate(event.dateOfEventApproval).getDay()}}</span>
+            <span class="month">{{monthsNames[convertToDate(event.dateOfEventApproval).getMonth()]}}</span>
+            <span class="year">{{convertToDate(event.dateOfEventApproval).getFullYear()}}</span>
+            <span class="time">{{convertToDate(event.dateOfEventApproval).getTime()}}</span>
         </time>
         <img alt="{{event.title}}" src="https://farm5.staticflickr.com/4150/5045502202_1d867c8a41_q.jpg" />
         <div class="info">
@@ -18,7 +18,7 @@
                 <li style="width:33%;">{{event.duration}} <span class="glyphicon glyphicon-time"></span></li>
             </ul>
         </div>
-        <div class="social">
+        <div class="options">
             <ul>
                 <li class="sideButton" style="width:25%;"><a href="#"><span class="glyphicon glyphicon-arrow-right"></span></a></li>
                 <li class="sideButton" style="width:25%;"><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>

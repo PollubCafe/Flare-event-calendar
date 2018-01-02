@@ -38,9 +38,14 @@ export class EventsListComponent implements OnInit {
             .subscribe(
                 (page) => {
                     this.paginationService.changePaginationData(new PaginationModel(page.totalPages,page.currentPageNumber));
+                    console.log(page.content);
                     this.events = page.content;
                 },
                 (error) => console.log(error)
             );
+    }
+
+    convertToDate(value){
+        return new Date(value);
     }
 }
