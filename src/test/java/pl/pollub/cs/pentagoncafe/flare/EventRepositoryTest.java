@@ -62,11 +62,9 @@ public class EventRepositoryTest {
         Event createdEvent = eventRepository.save(event);
         organizer.getOrganizedEvents().add(createdEvent);
         userRepository.save(organizer);
-
         //then
         Page<Event> page = eventRepository.getPageOfNotApprovedEventsByPageNumber(
                 new PageRequest(0,DEFAULT_PAGE_SIZE, Sort.Direction.ASC,"dateOfCreation"));
-
         assertTrue(page.getContent().contains(createdEvent));//aa
     }
 }
