@@ -8,11 +8,18 @@ import java.util.List;
 
 @Data
 @Builder
-public class EventResponseDTO {
+public class SimplifiedEventResponseDTO {
     private String id;
     private String title;
     private String description;
     private String address;
-    private String organizerName;
-    private int linksNumber;
+    private int linksCount;
+    private int votesCount;
+    private boolean onlyForRegisteredUsers;
+    private int yearOfEventApproval;
+    private int dayOfEventApproval;
+    private String mouthOfEventApproval;
+    private String hourOfEventApproval;
+    private int duration;
+    private String imageURL;
 }

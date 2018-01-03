@@ -1,7 +1,8 @@
-package pl.pollub.cs.pentagoncafe.flare.DTO;
+package pl.pollub.cs.pentagoncafe.flare.DTO.response;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ import java.util.List;
 public class PageResponseDTO {
     private int totalPages;
     private int currentPageNumber;
+    @Singular("content")
     private List content;
 }

@@ -1,10 +1,10 @@
-package pl.edu.pollub.battleCraft.dataLayer.domain.Address;
+package pl.pollub.cs.pentagoncafe.flare.domain;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum Province{
+public enum Province {
     lubelskie("lubelskie"),
     dolnośląskie("dolnośląskie"),
     małopolskie("małopolskie"),

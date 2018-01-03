@@ -1,28 +1,37 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
-/** Twórca: Konrad Gryczko
- *  Data Start 2017/11/29
- */
+
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Zawiera informacje o użytkowniku
- */
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Document(collection = "User")
 @Data
+@EqualsAndHashCode(exclude = "organizedEvents")
 public class User {
-    /**Variables*/
+
     @Id
-    private ObjectId id;          //id
-    private String name;        //imie uczestnika
-    private String surname;     //nazwisko uczesnika
-    private String email;       //mail
-    private String nick;        //login
-    private String password;    //hasło
+    private ObjectId id;
+    private String name;
+    private String surname;
+    private String email;
+    private String nick;
+    private String password;
+
+    @DBRef
+    private List<Vote> votes = new ArrayList<>();
+
+    @DBRef
+    private List<Event> organizedEvents = new ArrayList<>();
 
     public User(String name, String surname, String email, String nick, String password) {
         this.name = name;
