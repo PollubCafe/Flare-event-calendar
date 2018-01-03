@@ -1,13 +1,16 @@
 package pl.pollub.cs.pentagoncafe.flare.DTO.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
+import pl.pollub.cs.pentagoncafe.flare.domain.Province;
 
 import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
 public class CreatedEventRequestDTO {
     @NonNull
     @Size(min = 1, max = 35, message="Title can has from 1 to 35 characters")
