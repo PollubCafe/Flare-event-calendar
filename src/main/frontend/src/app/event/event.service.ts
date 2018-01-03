@@ -21,6 +21,7 @@ export class EventService {
     }
 
     sendEventData(createdEventRequest: CreatedEventRequest) {
+        this.completeUndefinedFieldsOfEvent(createdEventRequest);
         return this.http.post('/api/events', createdEventRequest)
             .map(
                 (response: Response) => {
@@ -29,4 +30,9 @@ export class EventService {
             );
     }
 
+    private completeUndefinedFieldsOfEvent(createdEventRequest: CreatedEventRequest){
+        createdEventRequest.description = createdEventRequest.description === undefined ? "" : createdEventRequest.description;
+        createdEventRequest.address_blockNumber = createdEventRequest.address_blockNumber === undefined ? "" : createdEventRequest.address_blockNumber;
+        createdEventRequest.address_additionalInformation = createdEventRequest.address_additionalInformation === undefined ? "" : createdEventRequest.address_additionalInformation;
+    }
 }

@@ -4,7 +4,6 @@ import {SimplifiedEvent} from "../simplifiedEvent.model";
 import {EventService} from "../event.service";
 import {PaginationService} from "../../footer/paggination/pagination.service";
 import {PaginationModel} from "../../footer/paggination/pagination.model";
-import monthsNames from "../../const/monthsNames";
 
 @Component({
     selector: 'eventsList',
@@ -13,8 +12,7 @@ import monthsNames from "../../const/monthsNames";
 })
 export class EventsListComponent implements OnInit {
 
-    events: SimplifiedEvent[] = [];
-    monthsNames: string[] = monthsNames;
+    events: SimplifiedEvent[];
 
     constructor(private eventService: EventService,private paginationService: PaginationService) {
         paginationService.currentPageNumber$.subscribe(
@@ -38,14 +36,9 @@ export class EventsListComponent implements OnInit {
             .subscribe(
                 (page) => {
                     this.paginationService.changePaginationData(new PaginationModel(page.totalPages,page.currentPageNumber));
-                    console.log(page.content);
                     this.events = page.content;
                 },
                 (error) => console.log(error)
             );
-    }
-
-    convertToDate(value){
-        return new Date(value);
     }
 }

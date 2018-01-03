@@ -7,7 +7,7 @@ body {
 .event-list {
     list-style: none;
     font-family: 'Lato', sans-serif;
-    margin: 0;
+    margin: 0 0 110px;
     padding: 0;
 }
 .event-list > li {
@@ -16,7 +16,19 @@ body {
     padding: 0;
     margin: 0 0 20px;
 }
-.event-list > li > time {
+.year {
+    display: block;
+    font-size: 15pt;
+    font-weight: 100;
+    line-height: 1;
+}
+.hour {
+    display: block;
+    font-size: 15pt;
+    font-weight: 100;
+    line-height: 1;
+}
+.event-list > li > .time {
     display: inline-block;
     width: 100%;
     color: rgb(255, 255, 255);
@@ -25,19 +37,16 @@ body {
     text-align: center;
     text-transform: uppercase;
 }
-.event-list > li:nth-child(even) > time {
+.event-list > li:nth-child(even) > .time {
     background-color: rgb(165, 82, 167);
 }
-.event-list > li > time > span {
-    display: none;
-}
-.event-list > li > time > .day {
+.event-list > li > .time > .day {
     display: block;
     font-size: 56pt;
     font-weight: 100;
     line-height: 1;
 }
-.event-list > li time > .month {
+.event-list > li .time > .month {
     display: block;
     font-size: 24pt;
     font-weight: 900;
@@ -59,7 +68,7 @@ body {
     padding-left:10px;
 }
 .event-list > li > .info > .description {
-    font-size: 13pt;
+    font-size: 11pt;
     font-weight: 300;
     padding-left:10px;
     margin: 0;
@@ -121,11 +130,11 @@ body {
         height: 160px;
         padding: 0;
     }
-    .event-list > li > time,
+    .event-list > li > .time,
     .event-list > li > img  {
         display: inline-block;
     }
-    .event-list > li > time,
+    .event-list > li > .time,
     .event-list > li > img {
         width: 160px;
         float: left;
@@ -134,7 +143,7 @@ body {
         background-color: rgb(245, 245, 245);
         overflow: hidden;
     }
-    .event-list > li > time,
+    .event-list > li > .time,
     .event-list > li > img {
         width: 160px;
         height: 160px;
