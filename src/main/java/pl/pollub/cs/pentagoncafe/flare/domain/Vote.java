@@ -1,23 +1,31 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
-/** Twórca: Konrad Gryczko
- *  Data Start 2017/11/29
- */
 
 import lombok.Data;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.LocalTime;
 
-/**Lista do Contestants
- * zawiera informacje jakie terminy im odpowiadają*/
+@Document(collection = "Vote")
 @Data
 public class Vote {
-    /**Variables*/
-    private int day;        //dzień na który głosuję od 0-poniedziałek 6-niedziela
-    private Date from;      //godzina od której może
-    private Date to;        //godzina do której możę
+    @Id
+    private ObjectId id;
+    @DBRef
+    private Event event;
+    @DBRef
+    private User user;
 
-    public Vote(int day, Date from, Date to) {
-        this.day = day;
+    private int dayOfWeek;
+    private LocalTime from;
+    private LocalTime to;
+
+    public Vote(Event event, User user, int dayOfWeek, LocalTime from, LocalTime to) {
+        this.event = event;
+        this.user = user;
+        this.dayOfWeek = dayOfWeek;
         this.from = from;
         this.to = to;
     }

@@ -1,23 +1,17 @@
 package pl.pollub.cs.pentagoncafe.flare.repository;
-/** Twórca: Konrad Gryczko
- *  Data Start 2017/11/29
- */
+
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
-import java.util.List;
-
 @Repository
-public interface EventRepository extends MongoRepository<Event,String> {
-
-    List<Event> findByTitle(String title);
-    List<Event> findByYear(int year);
-    List<Event> findByCreator(ObjectId creator); //didn't work
-    List<Event> findByStatus(String status);
-    List<Event> findByWeek(int week);
-    List<Event> findByWeekAfter(int weekAfter);
-    List<Event> findByWeekBefore(int weekAfter);
-    List<Event> findByTown(String town);
-    List<Event> findByZipCode(int zipCode);
+@Transactional
+public interface EventRepository extends MongoRepository<Event,ObjectId> {
+    //Uzywajcie Optional
+    @Query(value="{ 'isApproved' : false }")
+    Page<Event> getPageOfNotApprovedEventsByPageNumber(Pageable page);
 }
