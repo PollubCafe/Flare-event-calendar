@@ -26,6 +26,8 @@ public class EventServiceIntegrationTest {
     private EventService eventService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     @Before
     public void initializeDatabase(){
@@ -66,5 +68,6 @@ public class EventServiceIntegrationTest {
     @After
     public void clearDatabase(){
         userRepository.deleteAll();
+        eventRepository.deleteAll();
     }
 }

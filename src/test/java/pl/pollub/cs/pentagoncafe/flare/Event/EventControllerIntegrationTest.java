@@ -2,6 +2,8 @@ package pl.pollub.cs.pentagoncafe.flare.Event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,18 +18,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreatedEventRequestDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.EventCalendarApplication;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventToSimplifiedEventResponseDTOMapper;
+import pl.pollub.cs.pentagoncafe.flare.repository.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.UserRepository;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -48,6 +50,9 @@ public class EventControllerIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EventRepository eventRepository;
+
     @Before
     public void initializeDatabase(){
         userRepository.findByNick("Barabasz").orElseGet(() -> userRepository.save(
@@ -61,7 +66,7 @@ public class EventControllerIntegrationTest {
     }
 
     @Test
-    public void whenISendCreateEventRequestIReciveCreatedEventResponse() throws Exception {
+    public void whenICreateEventThisEventWillBeInFirstPage() throws Exception {
         //given
 
         Calendar futureCalendar = Calendar.getInstance();
@@ -97,6 +102,7 @@ public class EventControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         SimplifiedEventResponseDTO simplifiedEventResponseDTO = gson.fromJson(responseEntity.getBody(),SimplifiedEventResponseDTO.class);
+
         //then basic data equal...
         assertNotNull(simplifiedEventResponseDTO.getId());
         assertEquals(createdEventRequestDTO.getTitle(),simplifiedEventResponseDTO.getTitle());
@@ -104,6 +110,7 @@ public class EventControllerIntegrationTest {
         assertEquals(createdEventRequestDTO.getDuration(),simplifiedEventResponseDTO.getDuration());
         assertEquals(createdEventRequestDTO.isOnlyForRegisteredUsers(),simplifiedEventResponseDTO.isOnlyForRegisteredUsers());
         assertEquals(createdEventRequestDTO.isOnlyForRegisteredUsers(),simplifiedEventResponseDTO.isOnlyForRegisteredUsers());
+
         //then dateOfApproval equal...
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(createdEventRequestDTO.getDateOfEventApproval());
@@ -112,6 +119,7 @@ public class EventControllerIntegrationTest {
         assertEquals(new SimpleDateFormat("MMM").format(calendar.getTime()),simplifiedEventResponseDTO.getMouthOfEventApproval());
         assertEquals(calendar.get(Calendar.YEAR),simplifiedEventResponseDTO.getYearOfEventApproval());
         assertEquals(eventToSimplifiedEventResponseDTOMapper.parseDate(calendar),simplifiedEventResponseDTO.getHourOfEventApproval());
+
         //then address equal...
         String parsedAddress = this.parseAddress(
                 createdEventRequestDTO.getAddress_street(),
@@ -120,6 +128,14 @@ public class EventControllerIntegrationTest {
                 createdEventRequestDTO.getAddress_zipCode(),
                 createdEventRequestDTO.getAddress_town());
         assertEquals(parsedAddress,simplifiedEventResponseDTO.getAddress());
+
+        //then this object is in page content...
+        ResponseEntity<String> responsePageEntity = restTemplate.getForEntity(this.createURLWithPort("/api/events?pageNumber=0"), String.class);
+
+        JSONObject pageResponseDTOJsonObject = new JSONObject(responsePageEntity.getBody());
+        JSONArray pageResponseDTOContentJsonObject = pageResponseDTOJsonObject.getJSONArray("content");
+        SimplifiedEventResponseDTO simplifiedEventResponseDTOFromPage = gson.fromJson(pageResponseDTOContentJsonObject.get(0).toString(), SimplifiedEventResponseDTO.class);
+        assertEquals(simplifiedEventResponseDTOFromPage,simplifiedEventResponseDTO);
     }
 
     private String parseAddress(String address_street,String address_blockNumber,String address_houseNumber,String address_ZipCode,String address_Town){
@@ -134,6 +150,7 @@ public class EventControllerIntegrationTest {
     @After
     public void clearDatabase(){
         userRepository.deleteAll();
+        eventRepository.deleteAll();
     }
 
     private String createURLWithPort(String uri) {
