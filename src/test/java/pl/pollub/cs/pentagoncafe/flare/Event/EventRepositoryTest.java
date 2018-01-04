@@ -1,14 +1,17 @@
-package pl.pollub.cs.pentagoncafe.flare;
+package pl.pollub.cs.pentagoncafe.flare.Event;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.pollub.cs.pentagoncafe.flare.domain.Address;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
@@ -21,8 +24,9 @@ import java.util.Date;
 
 import static junit.framework.TestCase.assertTrue;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(locations="classpath:application-test.properties")
+@DataMongoTest
 public class EventRepositoryTest {
     @Autowired
     private EventRepository eventRepository;
@@ -66,5 +70,10 @@ public class EventRepositoryTest {
         Page<Event> page = eventRepository.getPageOfNotApprovedEventsByPageNumber(
                 new PageRequest(0,DEFAULT_PAGE_SIZE, Sort.Direction.ASC,"dateOfCreation"));
         assertTrue(page.getContent().contains(createdEvent));//aa
+    }
+
+    @After
+    public void clearDatabase(){
+        userRepository.deleteAll();
     }
 }

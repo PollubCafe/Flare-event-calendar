@@ -1,5 +1,7 @@
-package pl.pollub.cs.pentagoncafe.flare;
+package pl.pollub.cs.pentagoncafe.flare.Event;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreatedEventRequestDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
+import pl.pollub.cs.pentagoncafe.flare.domain.User;
+import pl.pollub.cs.pentagoncafe.flare.repository.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.service.EventService;
 
@@ -16,10 +20,24 @@ import java.util.Date;
 import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-public class EventServiceTest {
+@SpringBootTest(properties = "spring.profiles.active=test")
+public class EventServiceIntegrationTest {
     @Autowired
     private EventService eventService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Before
+    public void initializeDatabase(){
+        userRepository.findByNick("Barabasz").orElseGet(() -> userRepository.save(
+                new User(
+                        "Janusz",
+                        "Tracz",
+                        "janusz@o2.pl",
+                        "Barabasz",
+                        "nieOdmawiaSieKiedyPieniadzWzywa"))
+        );
+    }
 
     @Test
     public void whenICreateEventThisEventWillBeInFirstPage(){
@@ -43,5 +61,10 @@ public class EventServiceTest {
         //then
         Page<Event> page = eventService.getPageOfNotApprovedEventsByPageNumber(0);
         assertTrue(page.getContent().contains(createdEvent));
+    }
+
+    @After
+    public void clearDatabase(){
+        userRepository.deleteAll();
     }
 }
