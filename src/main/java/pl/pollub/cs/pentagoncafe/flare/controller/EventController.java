@@ -28,15 +28,17 @@ public class EventController {
     }
 
     @GetMapping()
-    public ResponseEntity<PageResponseDTO> getPageOfNotApprovedEventsByPageNumber(@RequestParam("pageNumber") int pageNumber){
+    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfNotApprovedEventsByPageNumber(@RequestParam("pageNumber") int pageNumber){
         Page<Event> eventsPage = eventService.getPageOfNotApprovedEventsByPageNumber(pageNumber);
 
+        PageResponseDTO<SimplifiedEventResponseDTO> pageResponseDTO = new PageResponseDTO<>(
+                eventsPage.getTotalPages(),
+                eventsPage.getNumber(),
+                eventsPage.getContent().stream().map(eventToEventResponseDTOMapper::map).collect(Collectors.toList())
+        );
+
         return new ResponseEntity<>(
-                PageResponseDTO.builder()
-                .totalPages(eventsPage.getTotalPages())
-                .currentPageNumber(eventsPage.getNumber())
-                .content(eventsPage.getContent().stream().map(eventToEventResponseDTOMapper::map).collect(Collectors.toList()))
-                .build(),
+                pageResponseDTO,
                 HttpStatus.OK
         );
     }

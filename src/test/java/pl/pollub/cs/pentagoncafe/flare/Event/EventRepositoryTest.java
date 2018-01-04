@@ -68,12 +68,13 @@ public class EventRepositoryTest {
         userRepository.save(organizer);
         //then
         Page<Event> page = eventRepository.getPageOfNotApprovedEventsByPageNumber(
-                new PageRequest(0,DEFAULT_PAGE_SIZE, Sort.Direction.ASC,"dateOfCreation"));
-        assertTrue(page.getContent().contains(createdEvent));//aa
+                new PageRequest(0,DEFAULT_PAGE_SIZE, Sort.Direction.DESC,"dateOfCreation"));
+        assertTrue(page.getContent().contains(createdEvent));
     }
 
     @After
     public void clearDatabase(){
         userRepository.deleteAll();
+        eventRepository.deleteAll();
     }
 }

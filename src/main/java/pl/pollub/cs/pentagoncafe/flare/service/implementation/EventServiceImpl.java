@@ -62,6 +62,6 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Page<Event> getPageOfNotApprovedEventsByPageNumber(int pageNumber) {
-        return eventRepository.getPageOfNotApprovedEventsByPageNumber(new PageRequest(pageNumber,DEFAULT_PAGE_SIZE, Sort.Direction.ASC,"dateOfCreation"));
+        return eventRepository.getPageOfNotApprovedEventsByPageNumber(new PageRequest(pageNumber,DEFAULT_PAGE_SIZE, Sort.Direction.DESC,"dateOfCreation"));
     }
 }
