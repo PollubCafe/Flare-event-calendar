@@ -43,7 +43,7 @@ public class EventToSimplifiedEventResponseDTOMapper {
                 .append(address.getTown()).toString();
     }
 
-    private String parseDate(Calendar calendar){
+    public String parseDate(Calendar calendar){
         int hourInt = convertToLocalTimeFromUTC(calendar.get(Calendar.HOUR_OF_DAY));
         String hour = hourInt<10?"0"+hourInt:String.valueOf(hourInt);
         int minutesInt = calendar.get(Calendar.MINUTE);
