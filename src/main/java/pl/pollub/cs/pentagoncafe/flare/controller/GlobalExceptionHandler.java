@@ -10,6 +10,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.pollub.cs.pentagoncafe.flare.EventCalendarApplication;
+import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
+import pl.pollub.cs.pentagoncafe.flare.exception.auth.TooManyLoginsAttempts;
+import pl.pollub.cs.pentagoncafe.flare.exception.registration.RegistrationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -30,5 +33,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(
                 "There are unrecognized problems on the server side. Please contact with administrator.",
                 HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = {ObjectNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    protected ResponseEntity<String> handleNotFoundException(Exception ex, WebRequest req) {
+        System.out.println("exception: "+ex.getClass().getSimpleName()+" message: " + ex.getMessage());
+        ex.printStackTrace();
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {TooManyLoginsAttempts.class, RegistrationException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<String> handleBadRequest(Exception ex, WebRequest req) {
+        System.out.println("exception: "+ex.getClass().getSimpleName()+" message: " + ex.getMessage());
+        ex.printStackTrace();
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

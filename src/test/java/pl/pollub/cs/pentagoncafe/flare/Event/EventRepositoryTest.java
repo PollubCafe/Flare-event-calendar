@@ -38,7 +38,13 @@ public class EventRepositoryTest {
     @Test
     public void whenICreateEventThisEventWillBeInFirstPage(){
         //given
-        User organizer = new User("Jarek","Bielec","jery0@o2.pl","Jery","poziomc");
+        User organizer = User.builder().
+                name("Jarek").
+                surname("Bielec").
+                email("jery0@o2.pl").
+                nick("Jery").
+                password("poziomc")
+                .build();
 
         userRepository.save(organizer);
 

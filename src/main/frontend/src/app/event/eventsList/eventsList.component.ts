@@ -4,6 +4,7 @@ import {SimplifiedEvent} from "../simplifiedEvent.model";
 import {EventService} from "../event.service";
 import {PaginationService} from "../../footer/paggination/pagination.service";
 import {PaginationModel} from "../../footer/paggination/pagination.model";
+import {MessageService} from "../../message/message.service";
 
 @Component({
     selector: 'eventsList',
@@ -14,12 +15,14 @@ export class EventsListComponent implements OnInit {
 
     events: SimplifiedEvent[];
 
-    constructor(private eventService: EventService,private paginationService: PaginationService) {
+    constructor(private eventService: EventService,
+                private paginationService: PaginationService,
+                private messageService: MessageService) {
         paginationService.currentPageNumber$.subscribe(
             pageNumber => {
                 this.getEventsPage(pageNumber);
             },
-            (error) => console.log(error)
+            (error) => this.messageService.error(error._body)
         )
     }
 
@@ -38,7 +41,10 @@ export class EventsListComponent implements OnInit {
                     this.paginationService.changePaginationData(new PaginationModel(page.totalPages,page.currentPageNumber));
                     this.events = page.content;
                 },
-                (error) => console.log(error)
+                (error) => {
+                    console.log(error);
+                    this.messageService.error(error._body)
+                }
             );
     }
 }

@@ -29,9 +29,9 @@ public class Event {
     private Address address;
     @Singular("eventStatistic")
     private List<Term> eventStatistic;
-    @Singular("votes")
+    @Singular("participation")
     @DBRef
-    private List<Vote> votes;
+    private List<Participation> participation;
 
     private String title;
     private String description;

@@ -12,7 +12,8 @@ export class CreatedEventRequest {
     public address_houseNumber: string;
     public address_additionalInformation: string;
 
-    constructor(title: string, description: string, duration: number, dateOfEventApproval: Date, onlyForRegisteredUsers: boolean, address_town: string, address_zipCode: string, address_street: string, address_province: string, address_blockNumber: string, address_houseNumber: string, address_additionalInformation: string){
+    constructor()
+    constructor(title?: string, description?: string, duration?: number, dateOfEventApproval?: Date, onlyForRegisteredUsers?: boolean, address_town?: string, address_zipCode?: string, address_street?: string, address_province?: string, address_blockNumber?: string, address_houseNumber?: string, address_additionalInformation?: string){
         this.title = title;
         this.description = description;
         this.duration = duration;

@@ -13,7 +13,7 @@
                     <input type="text"
                            value=""
                            class="form-control"
-                           required minlength="1" maxlength="35"
+                           required minlength="1" maxlength="35"  pattern="^(?=.*\\S).+$"
                            [(ngModel)]="createdEvent.title"
                            name="title"
                            id="title"
@@ -23,6 +23,9 @@
                     <div [hidden]="!title.errors.required">
                         Title is required
                     </div>
+                    <div [hidden]="!title.errors.pattern">
+                        Title can not has only whitespaces
+                    </div>
                     <div [hidden]="!title.errors.minlength">
                         Title must have more than 1 character
                     </div>
@@ -31,7 +34,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">Description (optional)</label>
                     <textarea class="form-control"
                               maxlength="200"
                               [(ngModel)]="createdEvent.description"
@@ -204,7 +207,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="address_blockNumber">Block number</label>
+                    <label for="address_blockNumber">Block number (optional)</label>
                     <input type="text"
                            value=""
                            class="form-control"
@@ -220,7 +223,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="address_additionalInformation">Additional information</label>
+                    <label for="address_additionalInformation">Additional information (optional)</label>
                     <textarea class="form-control"
                               [(ngModel)]="createdEvent.address_additionalInformation"
                               maxlength="100"
@@ -238,7 +241,7 @@
         </bs-modal-body>
         <bs-modal-footer>
             <button type="button" class="btn btn-default" data-dismiss="addEventForm" (click)="closeModal()">Cancel</button>
-            <button type="button" class="btn btn-primary" [disabled]="!addEventForm.valid" (click)="sendEventData()">Save</button>
+            <button type="button" [disabled]="isEventInSaving || !addEventForm.valid" class="btn btn-primary" (click)="sendEventData()">{{saveButtonName}}</button>
         </bs-modal-footer>
     </form>
 </bs-modal>
