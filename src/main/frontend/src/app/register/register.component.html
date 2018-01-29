@@ -14,12 +14,12 @@
                            id="name"
                            #name="ngModel">
                 </div>
-                <div *ngIf="name.errors && (name.dirty || name.touched)" class="alert alert-danger">
+                <div *ngIf="name.errors && (name.dirty || name.touched)" class="error-block">
                     <div [hidden]="!name.errors.required">
                         Name is required
                     </div>
                     <div [hidden]="!name.errors.pattern">
-                        Name must start with big letter and have between 3 to 20 chars
+                        Name must start with big letter and have between 3 to 20 letters
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,12 +33,12 @@
                            id="surname"
                            #surname="ngModel">
                 </div>
-                <div *ngIf="surname.errors && (surname.dirty || surname.touched)" class="alert alert-danger">
+                <div *ngIf="surname.errors && (surname.dirty || surname.touched)" class="error-block">
                     <div [hidden]="!surname.errors.required">
                         Surname is required
                     </div>
                     <div [hidden]="!surname.errors.pattern">
-                        Surname must start with big letter and have between 3 to 20 chars
+                        Surname must start with big letter and have between 3 to 20 letters
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@
                            id="nick"
                            #nick="ngModel">
                 </div>
-                <div *ngIf="nick.errors && (nick.dirty || nick.touched)" class="alert alert-danger">
+                <div *ngIf="nick.errors && (nick.dirty || nick.touched)" class="error-block">
                     <div [hidden]="!nick.errors.required">
                         Nick is required
                     </div>
@@ -65,13 +65,13 @@
                     <input type="text"
                            value=""
                            class="form-control"
-                           required pattern="(^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.+[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@+(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$)"
+                           required pattern="(^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.+[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@+(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$)"
                            [(ngModel)]="registerModel.email"
                            name="email"
                            id="email"
                            #email="ngModel">
                 </div>
-                <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                <div *ngIf="email.errors && (email.dirty || email.touched)" class="error-block">
                     <div [hidden]="!email.errors.required">
                         E-mail is required
                     </div>
@@ -90,7 +90,7 @@
                            id="phoneNumber"
                            #phoneNumber="ngModel">
                 </div>
-                <div *ngIf="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)" class="alert alert-danger">
+                <div *ngIf="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)" class="error-block">
                     <div [hidden]="!phoneNumber.errors.pattern">
                         Invalid phone number format
                     </div>
@@ -100,20 +100,20 @@
                     <input type="password"
                            value=""
                            class="form-control"
-                           required confirmationEqualPassword="confirmPassword" reverse="true" [minlength]="5"
+                           required confirmationNotEqualPassword="passwordConfirm" reverse="true" [minlength]="5"
                            [(ngModel)]="registerModel.password"
                            name="password"
                            id="password"
                            #password="ngModel">
                 </div>
-                <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
+                <div *ngIf="password.errors && (password.dirty || password.touched)" class="error-block">
                     <div [hidden]="!password.errors.required">
                         Password is required
                     </div>
                     <div [hidden]="!password.errors.minlength">
                         Password must have more than 5 characters
                     </div>
-                    <div [hidden]="!password.errors.confirmationEqualPassword">
+                    <div [hidden]="!password.errors.confirmationNotEqualPassword">
                         Password and password confirmation must be equal
                     </div>
                 </div>
@@ -122,22 +122,22 @@
                     <input type="password"
                            value=""
                            class="form-control"
-                           required confirmationEqualPassword="password"
+                           required confirmationNotEqualPassword="password"
                            [(ngModel)]="registerModel.passwordConfirm"
                            name="passwordConfirm"
                            id="passwordConfirm"
                            #passwordConfirm="ngModel">
                 </div>
-                <div *ngIf="passwordConfirm.errors && (passwordConfirm.dirty || passwordConfirm.touched)" class="alert alert-danger">
+                <div *ngIf="passwordConfirm.errors && (passwordConfirm.dirty || passwordConfirm.touched)" class="error-block">
                     <div [hidden]="!passwordConfirm.errors.required">
                         Password confirmation is required
                     </div>
-                    <div [hidden]="!passwordConfirm.errors.confirmationEqualPassword">
+                    <div [hidden]="!passwordConfirm.errors.confirmationNotEqualPassword">
                         Password and password confirmation must be equal
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="button" [disabled]="isRegistrationInSaving || !registerForm.valid" class="btn btn-primary" (click)="register()">{{registerButtonName}}</button>
+                    <button type="button" [disabled]="isRegistrationInProgress || !registerForm.valid" class="btn btn-primary" (click)="register()">{{registerButtonName}}</button>
                     <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
                 </div>
             </form>

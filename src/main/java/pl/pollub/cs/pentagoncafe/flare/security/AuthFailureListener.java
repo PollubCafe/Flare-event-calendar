@@ -20,7 +20,7 @@ public class AuthFailureListener implements ApplicationListener<AuthenticationFa
     @Override
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent e) {
         WebAuthenticationDetails auth = (WebAuthenticationDetails)
-                SecurityContextHolder.getContext().getAuthentication().getDetails();
+                e.getAuthentication().getDetails();
 
         loginAttemptService.loginFailed(auth.getRemoteAddress());
     }

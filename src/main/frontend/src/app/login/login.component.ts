@@ -12,7 +12,8 @@ import {MessageService} from "../message/message.service";
 
 export class LoginComponent{
     model: any = {};
-    loading = false;
+    isLoginInProgress = false;
+    loginButtonName = "Login";
 
     constructor(
         private route: ActivatedRoute,
@@ -21,15 +22,21 @@ export class LoginComponent{
         private messageService: MessageService) { }
 
     login() {
-        this.loading = true;
+        this.loginButtonName = "In progress...";
+        this.isLoginInProgress = true;
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
+                    this.loginButtonName = "Login";
+                    this.isLoginInProgress = false;
+                    console.log(data);
                     this.router.navigate(['events/new']);
                 },
                 error => {
+                    this.loginButtonName = "Login";
+                    this.isLoginInProgress = false;
+                    console.log(error);
                     this.messageService.error(error._body);
-                    this.loading = false;
                 });
     }
 }

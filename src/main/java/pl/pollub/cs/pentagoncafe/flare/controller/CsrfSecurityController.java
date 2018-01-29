@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller("/api/csrf")
+@Controller
 public class CsrfSecurityController {
 
-    @GetMapping(value = "/index.html")
-    @ResponseBody
+    @GetMapping(value = "/api/csrf/index.html")
     public String secureBehindCsrfAttack(){
-        return "index.html";
+        return "index";
     }
 }

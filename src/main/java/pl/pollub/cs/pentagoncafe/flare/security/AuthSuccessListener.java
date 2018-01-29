@@ -19,11 +19,8 @@ public class AuthSuccessListener implements ApplicationListener<AuthenticationSu
 
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent e) {
-        WebAuthenticationDetails auth = (WebAuthenticationDetails)
-                SecurityContextHolder.getContext().getAuthentication().getDetails();
+        WebAuthenticationDetails auth = (WebAuthenticationDetails) e.getAuthentication().getDetails();
 
         loginAttemptService.loginSucceeded(auth.getRemoteAddress());
-
-
     }
 }

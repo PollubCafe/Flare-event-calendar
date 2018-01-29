@@ -21,7 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     private Boolean accountNonLocked = true;
     private Boolean enabled = true;
 
-    public UserDetailsImpl(String username, String password, String email, boolean enabled, boolean accountNonLocked, Role role) {
+    UserDetailsImpl(String username, String password, String email, boolean enabled, boolean accountNonLocked, Role role) {
         this.setUsername(username);
         this.setPassword(password);
         this.setEmail(email);

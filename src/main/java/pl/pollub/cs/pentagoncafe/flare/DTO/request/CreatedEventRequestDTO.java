@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreatedEventRequestDTO {
     @NonNull
-    @Pattern(regexp = "^(?=.*\\S).+$")
+    @Pattern(regexp = "^.*\\S.*$")
     @Size(min = 1, max = 35, message="Title can has from 1 to 35 characters")
     private String title;
     @NonNull

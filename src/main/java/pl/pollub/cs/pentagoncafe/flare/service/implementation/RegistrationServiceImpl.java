@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.RegistrationRequestDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.ResendTokenDTO;
+import pl.pollub.cs.pentagoncafe.flare.domain.Role;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.domain.VerificationToken;
 import pl.pollub.cs.pentagoncafe.flare.exception.*;
-import pl.pollub.cs.pentagoncafe.flare.exception.registration.PasswordConfirmNotMatchToPassword;
 import pl.pollub.cs.pentagoncafe.flare.exception.registration.TokenExpired;
-import pl.pollub.cs.pentagoncafe.flare.exception.registration.UserWithThisEmailAlreadyExist;
-import pl.pollub.cs.pentagoncafe.flare.exception.registration.UserWithThisNickAlreadyExist;
+import pl.pollub.cs.pentagoncafe.flare.exception.registration.UserWithThisEmailAlreadyExistException;
+import pl.pollub.cs.pentagoncafe.flare.exception.registration.UserWithThisNickAlreadyExistException;
 import pl.pollub.cs.pentagoncafe.flare.repository.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.service.EmailService;
 import pl.pollub.cs.pentagoncafe.flare.service.RegistrationService;
@@ -37,8 +37,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 
     public void register(RegistrationRequestDTO registrationRequestDTO){
-        userRepository.findByNick(registrationRequestDTO.getNick()).ifPresent((user) -> {throw new UserWithThisNickAlreadyExist(user.getNick());});
-        userRepository.findByNick(registrationRequestDTO.getEmail()).ifPresent((user) -> {throw new UserWithThisEmailAlreadyExist(user.getEmail());});
+        userRepository.findByNick(registrationRequestDTO.getNick()).ifPresent((user) -> {throw new UserWithThisNickAlreadyExistException(user.getNick());});
+        userRepository.findByNick(registrationRequestDTO.getEmail()).ifPresent((user) -> {throw new UserWithThisEmailAlreadyExistException(user.getEmail());});
 
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token);
@@ -50,12 +50,13 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .email(registrationRequestDTO.getEmail())
                 .phoneNumber(registrationRequestDTO.getPhoneNumber())
                 .password(passwordEncoder.encode(registrationRequestDTO.getPassword()))
+                .role(Role.UNVERIFIED)
                 .verificationToken(verificationToken)
                 .build();
 
         userRepository.save(user);
 
-        emailService.sendVerificationEmail(user.getEmail(),token);
+        emailService.sendVerificationMail(user.getEmail(),token);
     }
 
     public void resendToken(ResendTokenDTO resendTokenDTO){
@@ -71,7 +72,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         String recipientAddress = user.getEmail();
 
-        emailService.sendVerificationEmail(recipientAddress,newToken.getToken());
+        emailService.sendVerificationMail(recipientAddress,newToken.getToken());
     }
 
     public void confirmRegistration(String token){
@@ -88,6 +89,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         user.setVerificationToken(null);
         user.setEnabled(true);
+        user.setRole(Role.USER);
 
         userRepository.save(user);
 

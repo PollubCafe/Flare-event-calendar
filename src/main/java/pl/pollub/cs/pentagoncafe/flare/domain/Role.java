@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum  Role {
-    admin("ADMIN"),
-    user("USER");
+    ADMIN("ADMIN"),
+    UNVERIFIED("UNVERIFIED"),
+    USER("USER");
 
     String name;
 

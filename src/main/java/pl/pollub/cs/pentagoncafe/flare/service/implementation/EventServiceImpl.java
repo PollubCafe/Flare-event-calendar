@@ -3,6 +3,8 @@ package pl.pollub.cs.pentagoncafe.flare.service.implementation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreatedEventRequestDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.*;
@@ -29,7 +31,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event createEvent(CreatedEventRequestDTO createdEventRequestDTO) {
-        User mockOrganizer = userRepository.findByNick("Barabasz").orElseThrow(()->new ObjectNotFoundException(User.class,"Barabasz"));
+        String authenticatedUserNick = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User mockOrganizer = userRepository.findByNick(authenticatedUserNick)
+                .orElseThrow(()->new ObjectNotFoundException(User.class,authenticatedUserNick));
 
         Address address = Address.builder()
                 .town(createdEventRequestDTO.getAddress_town())

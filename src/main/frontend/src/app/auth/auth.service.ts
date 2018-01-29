@@ -7,16 +7,11 @@ import 'rxjs/add/operator/map'
 export class AuthenticationService {
     constructor(private http: Http) { }
 
-    login(username: string, password: string): Observable<boolean> {
+    login(username: string, password: string){
         let body = `username=${username}&password=${password}`;
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post('/api/login', body, { headers: headers })
-            .map((response: Response): boolean => {
-                console.log(response);
-                return true;
-            })
-            .catch((error: any):any => {console.log(error)});
+        return this.http.post('/api/login', body, { headers: headers });
     }
 
     logout() {

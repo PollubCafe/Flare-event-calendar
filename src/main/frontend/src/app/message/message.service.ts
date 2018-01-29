@@ -10,7 +10,7 @@ export class MessageService {
     private timer;
 
     constructor(private router: Router) {
-        this.timer = Observable.timer(1500);
+        this.timer = Observable.timer(3000);
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
                 if (this.keepAfterNavigationChange) {
@@ -31,6 +31,7 @@ export class MessageService {
     }
 
     error(message: string, keepAfterNavigationChange = false) {
+        console.log(message);
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'error', text: message });
         this.timer.subscribe(t=>this.subject.next());

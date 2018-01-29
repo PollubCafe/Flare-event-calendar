@@ -13,7 +13,7 @@ import {RegisterModel} from "./register.model";
 export class RegisterComponent {
     registerModel: RegisterModel = new RegisterModel();
     registerButtonName:string = "Register";
-    isRegistrationInSaving:boolean = false;
+    isRegistrationInProgress:boolean = false;
 
     constructor(
         private router: Router,
@@ -22,19 +22,19 @@ export class RegisterComponent {
 
     register() {
         this.registerButtonName = "Registering...";
-        this.isRegistrationInSaving = true;
+        this.isRegistrationInProgress = true;
         this.registerService.create(this.registerModel)
             .subscribe(
                 data => {
                     this.messageService.success('Registration successful', true);
                     this.registerButtonName = "Register";
-                    this.isRegistrationInSaving = false;
+                    this.isRegistrationInProgress = false;
                     this.router.navigate(['/login']);
                 },
                 error => {
                     this.messageService.error(error._body);
                     this.registerButtonName = "Register";
-                    this.isRegistrationInSaving = false;
+                    this.isRegistrationInProgress = false;
                 });
     }
 }

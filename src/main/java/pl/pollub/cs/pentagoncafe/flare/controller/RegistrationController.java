@@ -11,6 +11,7 @@ import pl.pollub.cs.pentagoncafe.flare.DTO.request.ResendTokenDTO;
 import pl.pollub.cs.pentagoncafe.flare.service.RegistrationService;
 
 @RestController
+@RequestMapping("/api/registration")
 public class RegistrationController {
 
     private final RegistrationService registrationService;
@@ -20,22 +21,22 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @PostMapping(value = "/registration", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void registration(@RequestBody @NonNull RegistrationRequestDTO registrationRequestDTO) {
         registrationService.register(registrationRequestDTO);
     }
 
-    @PostMapping(value = "/registration/resendToken")
+    @PostMapping(value = "/resendToken")
     @ResponseStatus(HttpStatus.OK)
     public void resendToken(@RequestBody ResendTokenDTO resendTokenDTO){
         registrationService.resendToken(resendTokenDTO);
     }
 
-    @GetMapping(value = "/registration/confirm")
+    @GetMapping(value = "/confirm")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity confirmRegistration(@RequestParam("token") String token){
         registrationService.confirmRegistration(token);
-        return ResponseEntity.ok("Registration completed. Please wait for a second e-mail");
+        return ResponseEntity.ok("Registration completed. Please login to your account");
     }
 }

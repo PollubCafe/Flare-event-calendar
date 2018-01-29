@@ -47,19 +47,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user;
         if(usernameOrEmail.contains("@")){
-            user = userRepository.findByNick(usernameOrEmail).orElseThrow(() -> new UsernameNotFoundException("Bad username or password"));
+            user = userRepository.findByEmail(usernameOrEmail).orElseThrow(() -> new UsernameNotFoundException("Bad username or password"));
         }
         else{
-            user = userRepository.findByEmail(usernameOrEmail).orElseThrow(() -> new UsernameNotFoundException("Bad username or password"));
+            user = userRepository.findByNick(usernameOrEmail).orElseThrow(() -> new UsernameNotFoundException("Bad username or password"));
         }
 
         boolean enabled = user.isEnabled();
         boolean accountNonLocked = !user.isBanned();
 
-        ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().name()));
-
-
-        return new UserDetailsImpl(user.getName(), user.getPassword(), user.getEmail(), enabled, accountNonLocked, user.getRole());
+        return new UserDetailsImpl(user.getNick(), user.getPassword(), user.getEmail(), enabled, accountNonLocked, user.getRole());
     }
 }

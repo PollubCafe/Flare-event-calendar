@@ -16,6 +16,6 @@ public interface UserRepository extends MongoRepository<User,ObjectId> {
     Optional<User> findByNick(String nick);
     Optional<User> findByEmail(String email);
     Optional<User> findByEmailAndEnabled(String email,boolean enabled);
-    @Query(value="{ 'verificationToken' : {'token' : ?0} }")
+    @Query(value="{ 'verificationToken.token' : ?0 }")
     Optional<User> findByVerificationToken(String token);
 }

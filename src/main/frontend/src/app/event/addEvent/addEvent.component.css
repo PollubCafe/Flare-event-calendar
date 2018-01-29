@@ -1,3 +1,8 @@
+.error-block{
+    color: #b30000;
+    font-size: 12px;
+}
+
 button{
     border:0;
     display: inline-block;
