@@ -1,0 +1,47 @@
+<div id="login" class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h2>Login</h2>
+            <form #loginForm="ngForm">
+                <div class="form-group">
+                    <label for="username">Nick or email</label>
+                    <input type="text"
+                           value=""
+                           class="form-control"
+                           required
+                           [(ngModel)]="model.username"
+                           name="username"
+                           id="username"
+                           #username="ngModel">
+                </div>
+                <div *ngIf="username.errors && (username.dirty || username.touched)" class="error-block">
+                    <div [hidden]="!username.errors.required">
+                        Nick or email is required
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password"
+                           value=""
+                           class="form-control"
+                           required [minlength]="5"
+                           [(ngModel)]="model.password"
+                           name="password"
+                           id="password"
+                           #password="ngModel">
+                </div>
+                <div *ngIf="password.errors && (password.dirty || password.touched)" class="error-block">
+                    <div [hidden]="!password.errors.minlength">
+                        Password must have more than 5 characters
+                    </div>
+                    <div [hidden]="!password.errors.required">
+                        Password is required
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" [disabled]="isLoginInProgress || !loginForm.valid" class="btn btn-primary" (click)="login()">{{loginButtonName}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

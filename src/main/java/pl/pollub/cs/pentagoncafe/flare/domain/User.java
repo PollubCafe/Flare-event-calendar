@@ -1,8 +1,10 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Singular;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Document(collection = "User")
 @Data
 @EqualsAndHashCode(exclude = "organizedEvents")
+@Builder
 public class User {
 
     @Id
@@ -24,20 +27,19 @@ public class User {
     private String name;
     private String surname;
     private String email;
+    private String phoneNumber;
     private String nick;
     private String password;
+    private boolean banned;
+    private boolean enabled;
+    private Role role;
+    private VerificationToken verificationToken;
 
+    @Singular("participation")
     @DBRef
-    private List<Vote> votes = new ArrayList<>();
+    private List<Participation> participation;
 
+    @Singular("organizedEvents")
     @DBRef
-    private List<Event> organizedEvents = new ArrayList<>();
-
-    public User(String name, String surname, String email, String nick, String password) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.nick = nick;
-        this.password = password;
-    }
+    private List<Event> organizedEvents;
 }

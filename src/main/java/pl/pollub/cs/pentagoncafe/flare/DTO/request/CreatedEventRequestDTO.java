@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
-import pl.pollub.cs.pentagoncafe.flare.domain.Province;
 
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -13,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreatedEventRequestDTO {
     @NonNull
+    @Pattern(regexp = "^.*\\S.*$")
     @Size(min = 1, max = 35, message="Title can has from 1 to 35 characters")
     private String title;
     @NonNull

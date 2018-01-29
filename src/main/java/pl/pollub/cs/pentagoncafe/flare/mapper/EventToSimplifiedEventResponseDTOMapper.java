@@ -23,7 +23,7 @@ public class EventToSimplifiedEventResponseDTOMapper {
                 description(event.getDescription() == null? "":event.getDescription()).
                 address(this.parseAddress(event.getAddress())).
                 linksCount(event.getLinks().size()).
-                votesCount(event.getVotes().size()).
+                votesCount(event.getParticipation().size()).
                 yearOfEventApproval(calendar.get(Calendar.YEAR)).
                 mouthOfEventApproval(new SimpleDateFormat("MMM").format(calendar.getTime())).
                 dayOfEventApproval(calendar.get(Calendar.DAY_OF_MONTH)).

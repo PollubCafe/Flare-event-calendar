@@ -4,6 +4,7 @@ import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreatedEventRequestDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
@@ -27,8 +28,10 @@ public class EventController {
         this.eventService = eventService;
     }
 
+
     @GetMapping()
-    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfNotApprovedEventsByPageNumber(@RequestParam("pageNumber") int pageNumber){
+    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>>
+    getPageOfNotApprovedEventsByPageNumber(@RequestParam("pageNumber") int pageNumber){
         Page<Event> eventsPage = eventService.getPageOfNotApprovedEventsByPageNumber(pageNumber);
 
         PageResponseDTO<SimplifiedEventResponseDTO> pageResponseDTO = new PageResponseDTO<>(
@@ -43,6 +46,7 @@ public class EventController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @NonNull @Valid CreatedEventRequestDTO eventRequestDTO){
         return new ResponseEntity<>(eventToEventResponseDTOMapper.map(eventService.createEvent(eventRequestDTO)), HttpStatus.OK);

@@ -56,12 +56,13 @@ public class EventControllerIntegrationTest {
     @Before
     public void initializeDatabase(){
         userRepository.findByNick("Barabasz").orElseGet(() -> userRepository.save(
-                new User(
-                        "Janusz",
-                        "Tracz",
-                        "janusz@o2.pl",
-                        "Barabasz",
-                        "nieOdmawiaSieKiedyPieniadzWzywa"))
+                User.builder().
+                        name("Janusz").
+                        surname("Tracz").
+                        email("janusz@o2.pl").
+                        nick("Barabasz").
+                        password("nieOdmawiaSieKiedyPieniadzWzywa")
+                        .build())
         );
     }
 
