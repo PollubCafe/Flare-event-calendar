@@ -9,22 +9,22 @@ import javax.validation.constraints.Size;
 @Data
 public class RegistrationRequestDTO {
     @NonNull
-    @Pattern(regexp = "^[A-ZĄĆĘŁŃÓŚŹŻa-zzżźćńółęąś0-9]{3,30}$", message = "Nick must has between 3 to 30 letters or digits")
+    @Pattern(regexp = "^[A-ZĄĆĘŁŃÓŚŹŻa-zzżźćńółęąś0-9]{3,30}$", message = "validation.registration.nick.pattern")
     private String nick;
     @NonNull
-    @Pattern(regexp = "^[A-ZĄĆĘŁŃÓŚŹŻ][a-zzżźćńółęąś]{2,19}$", message = "Surname must start with big letter and have between 3 to 20 chars")
+    @Pattern(regexp = "^[A-ZĄĆĘŁŃÓŚŹŻ][a-zzżźćńółęąś]{2,19}$", message = "validation.registration.surname.pattern")
     private String surname;
     @NonNull
-    @Pattern(regexp = "^[A-ZĄĆĘŁŃÓŚŹŻ][a-zzżźćńółęąś]{2,19}$", message = "Name must start with big letter and have between 3 to 20 chars")
+    @Pattern(regexp = "^[A-ZĄĆĘŁŃÓŚŹŻ][a-zzżźćńółęąś]{2,19}$", message = "validation.registration.name.pattern")
     private String name;
     @NonNull
     @Pattern(regexp = "(^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.+[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@+(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$)",
-            message = "Invalid email format")
+            message = "validation.registration.email.pattern")
     private String email;
     @NonNull
-    @Pattern(regexp = "^$|^[0-9]{9,11}$", message = "Invalid phone number format")
+    @Pattern(regexp = "^$|^[0-9]{9,11}$", message = "validation.registration.phoneNumber.pattern")
     private String phoneNumber;
     @NonNull
-    @Size(min = 5, message = "Password must have more than 5 characters")
+    @Size(min = 5, message = "validation.registration.password.pattern")
     private String password;
 }

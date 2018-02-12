@@ -1,29 +1,21 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Singular;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pl.pollub.cs.pentagoncafe.flare.domain.enums.Role;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Document(collection = "User")
-@Data
-@EqualsAndHashCode(exclude = "organizedEvents")
-@Builder
-public class User {
 
-    @Id
-    private ObjectId id;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
+public class User extends BaseEntity{
     private String name;
     private String surname;
     private String email;
@@ -33,13 +25,21 @@ public class User {
     private boolean banned;
     private boolean enabled;
     private Role role;
-    private VerificationToken verificationToken;
+    private ActivationToken activationToken;
 
     @Singular("participation")
     @DBRef
-    private List<Participation> participation;
+    private Set<Participation> participation;
 
     @Singular("organizedEvents")
     @DBRef
-    private List<Event> organizedEvents;
+    private Set<Event> organizedEvents;
+
+    public void addEvent(Event event){
+        if(organizedEvents.contains(event))
+            throw new IllegalArgumentException("User: "+nick+" already has event "+event.id);
+
+        event.setOrganizer(this);
+        organizedEvents.add(event);
+    }
 }

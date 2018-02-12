@@ -1,54 +1,40 @@
 package pl.pollub.cs.pentagoncafe.flare.controller;
 
 import lombok.NonNull;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreatedEventRequestDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventRequestDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
-import pl.pollub.cs.pentagoncafe.flare.domain.Event;
-import pl.pollub.cs.pentagoncafe.flare.mapper.EventToSimplifiedEventResponseDTOMapper;
-import pl.pollub.cs.pentagoncafe.flare.service.EventService;
+import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
+import pl.pollub.cs.pentagoncafe.flare.service.event.EventService;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/events")
+@RequestMapping("/api/event")
 public class EventController {
 
-    private final EventToSimplifiedEventResponseDTOMapper eventToEventResponseDTOMapper;
     private final EventService eventService;
 
-    public EventController(EventToSimplifiedEventResponseDTOMapper eventToResponseMapper, EventService eventService) {
-        this.eventToEventResponseDTOMapper = eventToResponseMapper;
+    public EventController(EventService eventService) {
         this.eventService = eventService;
     }
 
 
-    @GetMapping()
-    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>>
-    getPageOfNotApprovedEventsByPageNumber(@RequestParam("pageNumber") int pageNumber){
-        Page<Event> eventsPage = eventService.getPageOfNotApprovedEventsByPageNumber(pageNumber);
-
-        PageResponseDTO<SimplifiedEventResponseDTO> pageResponseDTO = new PageResponseDTO<>(
-                eventsPage.getTotalPages(),
-                eventsPage.getNumber(),
-                eventsPage.getContent().stream().map(eventToEventResponseDTOMapper::map).collect(Collectors.toList())
-        );
-
-        return new ResponseEntity<>(
-                pageResponseDTO,
-                HttpStatus.OK
-        );
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfNotApprovedEventsByPageNumber(
+            @PathVariable("pageNumber") int pageNumber){
+        PageResponseDTO<SimplifiedEventResponseDTO> pageResponseDTO = eventService.getPageOfNotApprovedEventsByPageNumber(pageNumber);
+        return new ResponseEntity<>(pageResponseDTO, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping()
-    public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @NonNull @Valid CreatedEventRequestDTO eventRequestDTO){
-        return new ResponseEntity<>(eventToEventResponseDTOMapper.map(eventService.createEvent(eventRequestDTO)), HttpStatus.OK);
+    public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @NonNull @Valid CreateEventRequestDTO eventRequestDTO){
+        return new ResponseEntity<>(eventService.createEvent(eventRequestDTO), HttpStatus.OK);
     }
 }

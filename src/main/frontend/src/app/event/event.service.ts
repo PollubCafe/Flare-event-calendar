@@ -12,7 +12,7 @@ export class EventService {
     constructor(private http: Http) {}
 
     getEventsPage(pageNumber:number){
-        return this.http.get(`/api/events?pageNumber=${pageNumber}`)
+        return this.http.get(`/api/event/page/${pageNumber}`)
             .map(
                 (response: Response) => {
                     return response.json();
@@ -22,7 +22,7 @@ export class EventService {
 
     sendEventData(createdEventRequest: CreatedEventRequest) {
         this.completeUndefinedFieldsOfEvent(createdEventRequest);
-        return this.http.post('/api/events', createdEventRequest)
+        return this.http.post('/api/event', createdEventRequest)
             .map(
                 (response: Response) => {
                     return response.json();
@@ -31,8 +31,11 @@ export class EventService {
     }
 
     private completeUndefinedFieldsOfEvent(createdEventRequest: CreatedEventRequest){
-        createdEventRequest.description = createdEventRequest.description === undefined ? "" : createdEventRequest.description;
-        createdEventRequest.address_blockNumber = createdEventRequest.address_blockNumber === undefined ? "" : createdEventRequest.address_blockNumber;
-        createdEventRequest.address_additionalInformation = createdEventRequest.address_additionalInformation === undefined ? "" : createdEventRequest.address_additionalInformation;
+        createdEventRequest.description = createdEventRequest.description === undefined ?
+            "" : createdEventRequest.description;
+        createdEventRequest.address_blockNumber = createdEventRequest.address_blockNumber === undefined ?
+            "" : createdEventRequest.address_blockNumber;
+        createdEventRequest.address_additionalInformation = createdEventRequest.address_additionalInformation === undefined ?
+            "" : createdEventRequest.address_additionalInformation;
     }
 }

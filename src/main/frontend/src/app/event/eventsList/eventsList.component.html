@@ -3,7 +3,7 @@
     <li *ngFor="let event of events">
         <div class="time">
             <span class="day">{{event.dayOfEventApproval}}</span>
-            <span class="month">{{event.mouthOfEventApproval}}</span>
+            <span class="month">{{mouthNames[event.mouthOfEventApproval]}}</span>
             <span class="year">{{event.yearOfEventApproval}}</span>
             <span class="hour">{{event.hourOfEventApproval}}</span>
         </div>

@@ -32,7 +32,6 @@ export class AddEventComponent{
 
 
     createdEvent:CreatedEventRequest = new CreatedEventRequest();
-    currentDate: string = new Date().toJSON();
 
     constructor(private eventService: EventService,private messageService: MessageService) {
     }

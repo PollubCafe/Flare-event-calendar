@@ -18,7 +18,7 @@ public class SimplifiedEventResponseDTO {
     private boolean onlyForRegisteredUsers;
     private int yearOfEventApproval;
     private int dayOfEventApproval;
-    private String mouthOfEventApproval;
+    private int mouthOfEventApproval;
     private String hourOfEventApproval;
     private int duration;
     private String imageURL;

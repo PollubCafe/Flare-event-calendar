@@ -14,10 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import pl.pollub.cs.pentagoncafe.flare.security.AuthFailureHandler;
-import pl.pollub.cs.pentagoncafe.flare.security.AuthSuccessHandler;
-import pl.pollub.cs.pentagoncafe.flare.security.LogoutSuccessHandler;
-import pl.pollub.cs.pentagoncafe.flare.security.RestAuthenticationEntryPoint;
+import pl.pollub.cs.pentagoncafe.flare.component.security.authFailure.AuthFailureHandler;
+import pl.pollub.cs.pentagoncafe.flare.component.security.authSuccess.AuthSuccessHandler;
+import pl.pollub.cs.pentagoncafe.flare.component.security.logout.LogoutSuccessHandler;
+import pl.pollub.cs.pentagoncafe.flare.component.security.entryPoint.RestAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
