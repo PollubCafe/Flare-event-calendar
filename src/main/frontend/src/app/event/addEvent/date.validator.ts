@@ -1,6 +1,5 @@
-import { Directive, forwardRef, Attribute } from '@angular/core';
-import { NG_VALIDATORS,Validator,
-    Validators,AbstractControl,ValidatorFn } from '@angular/forms';
+import { Directive, forwardRef } from '@angular/core';
+import { NG_VALIDATORS,Validator, AbstractControl } from '@angular/forms';
 
 @Directive({
     selector: '[isNotPast][formControlName],[isNotPast][formControl],[isNotPast][ngModel]',

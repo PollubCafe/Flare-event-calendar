@@ -1,7 +1,8 @@
 <div id="login" class="col-md-6 col-md-offset-3">
     <div class="panel panel-default">
         <div class="panel-body">
-            <h2>Login</h2>
+            <h2>Welcome!</h2>
+            <h4>Please sign in to you account</h4>
             <form #loginForm="ngForm">
                 <div class="form-group">
                     <label for="username">Nick or email</label>
@@ -40,6 +41,7 @@
                 </div>
                 <div class="form-group">
                     <button type="button" [disabled]="isLoginInProgress || !loginForm.valid" class="btn btn-primary" (click)="login()">{{loginButtonName}}</button>
+                    <a [routerLink] = "['/register']"><button type="button" class="btn btn-primary">Sign up</button></a>
                 </div>
             </form>
         </div>

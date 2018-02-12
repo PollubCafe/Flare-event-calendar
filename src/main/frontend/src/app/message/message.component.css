@@ -1,7 +1,5 @@
 #message{
-    position: fixed;
-    z-index: 9999;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    text-align: center;
+    margin-top: 30px;
 }

@@ -5,6 +5,7 @@ import {EventService} from "../event.service";
 import {PaginationService} from "../../footer/paggination/pagination.service";
 import {PaginationModel} from "../../footer/paggination/pagination.model";
 import {MessageService} from "../../message/message.service";
+import mouthNames from "../../const/monthsNames"
 
 @Component({
     selector: 'eventsList',
@@ -14,6 +15,7 @@ import {MessageService} from "../../message/message.service";
 export class EventsListComponent implements OnInit {
 
     events: SimplifiedEvent[];
+    mouthNames = mouthNames;
 
     constructor(private eventService: EventService,
                 private paginationService: PaginationService,

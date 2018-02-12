@@ -4,21 +4,18 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 import pl.pollub.cs.pentagoncafe.flare.domain.Address;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
-import pl.pollub.cs.pentagoncafe.flare.domain.Province;
+import pl.pollub.cs.pentagoncafe.flare.domain.enums.Province;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
-import pl.pollub.cs.pentagoncafe.flare.repository.EventRepository;
-import pl.pollub.cs.pentagoncafe.flare.repository.UserRepository;
+import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
+import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 
 import java.util.Date;
 
@@ -62,10 +59,10 @@ public class EventRepositoryTest {
                 .title("Urodziny Jarka")
                 .description("Zorganizujmy wspaniale urodziny!")
                 .duration(3)
-                .dateOfEventApproval(new Date())
+                //.dateOfEventApproval(new Date())
                 .isApproved(false)
                 .onlyForRegisteredUsers(false)
-                .dateOfCreation(new Date())
+                //.dateOfCreation(new Date())
                 .build();
         //when
 

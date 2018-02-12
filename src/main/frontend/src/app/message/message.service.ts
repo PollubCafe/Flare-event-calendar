@@ -10,7 +10,7 @@ export class MessageService {
     private timer;
 
     constructor(private router: Router) {
-        this.timer = Observable.timer(3000);
+        this.timer = Observable.timer(5000);
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
                 if (this.keepAfterNavigationChange) {

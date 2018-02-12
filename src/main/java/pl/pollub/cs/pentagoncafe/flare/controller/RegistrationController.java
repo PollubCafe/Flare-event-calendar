@@ -8,17 +8,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.RegistrationRequestDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.ResendTokenDTO;
-import pl.pollub.cs.pentagoncafe.flare.service.RegistrationService;
+import pl.pollub.cs.pentagoncafe.flare.component.message.Messages;
+import pl.pollub.cs.pentagoncafe.flare.service.registration.RegistrationService;
 
 @RestController
 @RequestMapping("/api/registration")
 public class RegistrationController {
 
     private final RegistrationService registrationService;
+    private final Messages messages;
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService, Messages messages) {
         this.registrationService = registrationService;
+        this.messages = messages;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -33,10 +36,11 @@ public class RegistrationController {
         registrationService.resendToken(resendTokenDTO);
     }
 
-    @GetMapping(value = "/confirm")
+    @GetMapping(value = "/confirm/{token}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity confirmRegistration(@RequestParam("token") String token){
-        registrationService.confirmRegistration(token);
-        return ResponseEntity.ok("Registration completed. Please login to your account");
+    public ResponseEntity finishRegistration(@PathVariable("token") String token){
+        registrationService.finishRegistration(token);
+        //return html page
+        return ResponseEntity.ok(messages.get("registration.complete"));
     }
 }
