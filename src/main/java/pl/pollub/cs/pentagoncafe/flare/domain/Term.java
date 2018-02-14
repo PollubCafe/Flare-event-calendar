@@ -1,13 +1,17 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.Instant;
+import java.time.LocalTime;
+import java.util.Date;
 
 @Data
-class Term {
-    private Instant from;
-    private Instant to;
-    private int count;
-    private double percent;
+@AllArgsConstructor
+public class Term {
+    private LocalTime from;
+    private LocalTime to;
+    private Integer count;
+    private Integer dayOfTheWeek;
+    private Double percent;
 }

@@ -1,5 +1,7 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,7 +18,8 @@ import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,5 +81,58 @@ public class EventServiceImpl implements EventService {
                 eventsPage.getNumber(),
                 eventsPage.getContent().stream().map(eventMapper::mapToResponseDTO).collect(Collectors.toList())
         );
+    }
+
+    @Override
+    public Event generateStatisticForEvent(Event event){
+        event.setEventStatistic(getStatisticForParticipations(event.getParticipation()));
+        return event;
+    }
+
+    @Override
+    public Set<Term> getStatisticForParticipations(Set<Participation> participations){
+
+        @Data
+        @AllArgsConstructor
+        class TimePoint implements Comparable<TimePoint>{
+            private Integer dayOfTheWeek;
+            private LocalTime time;
+            private Integer type;
+
+            @Override
+            public int compareTo(TimePoint o) {
+                int weekDayCompare = getDayOfTheWeek().compareTo(o.getDayOfTheWeek());
+                return weekDayCompare==0 ? time.compareTo(o.time) : weekDayCompare;
+            }
+        }
+
+        long participantCount = participations.size();
+
+        List<TimePoint> timePoints = participations.stream().flatMap(p->p.getVotes().stream()).flatMap(v -> Arrays.asList(
+                new TimePoint(v.getDayOfWeek(), v.getFrom(), 0),
+                new TimePoint(v.getDayOfWeek(), v.getTo(), 1)).stream())
+                .sorted().collect(Collectors.toList());
+
+        Set<Term> termList=new HashSet<>();
+        TimePoint leftTimePoint=null;
+        int participantCurrentCount=0;
+
+        for(TimePoint tp:timePoints){
+            if(Objects.isNull(leftTimePoint)){
+                leftTimePoint=tp;
+                participantCurrentCount++;
+            }else{
+                Term term=new Term(leftTimePoint.time,tp.time,participantCurrentCount,
+                        leftTimePoint.dayOfTheWeek,(Double.valueOf(participantCurrentCount)/participantCount)*100);
+                termList.add(term);
+
+                leftTimePoint=tp;
+
+                if(tp.type==0) participantCurrentCount++ ;
+                else participantCurrentCount--;
+            }
+        }
+
+        return termList;
     }
 }
