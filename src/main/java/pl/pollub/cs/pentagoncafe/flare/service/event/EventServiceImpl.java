@@ -1,7 +1,5 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,9 +14,11 @@ import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
+import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePoint;
+import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePointType;
 
+import javax.validation.executable.ValidateOnExecution;
 import java.time.Instant;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -85,33 +85,14 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event generateStatisticForEvent(Event event){
-        event.setEventStatistic(getStatisticForParticipations(event.getParticipation()));
+        List<TimePoint> timePointsForParticipations = getTimePointsForParticipations(event.getParticipation());
+        Set<Term> eventStatistic = generateStatisticForTimePoints(timePointsForParticipations,event.getParticipation().size());
+        event.setEventStatistic(eventStatistic);
         return event;
     }
 
     @Override
-    public Set<Term> getStatisticForParticipations(Set<Participation> participations){
-
-        @Data
-        @AllArgsConstructor
-        class TimePoint implements Comparable<TimePoint>{
-            private Integer dayOfTheWeek;
-            private LocalTime time;
-            private Integer type;
-
-            @Override
-            public int compareTo(TimePoint o) {
-                int weekDayCompare = getDayOfTheWeek().compareTo(o.getDayOfTheWeek());
-                return weekDayCompare==0 ? time.compareTo(o.time) : weekDayCompare;
-            }
-        }
-
-        long participantCount = participations.size();
-
-        List<TimePoint> timePoints = participations.stream().flatMap(p->p.getVotes().stream()).flatMap(v -> Arrays.asList(
-                new TimePoint(v.getDayOfWeek(), v.getFrom(), 0),
-                new TimePoint(v.getDayOfWeek(), v.getTo(), 1)).stream())
-                .sorted().collect(Collectors.toList());
+    public Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints,int participantCount){
 
         Set<Term> termList=new HashSet<>();
         TimePoint leftTimePoint=null;
@@ -122,17 +103,28 @@ public class EventServiceImpl implements EventService {
                 leftTimePoint=tp;
                 participantCurrentCount++;
             }else{
-                Term term=new Term(leftTimePoint.time,tp.time,participantCurrentCount,
-                        leftTimePoint.dayOfTheWeek,(Double.valueOf(participantCurrentCount)/participantCount)*100);
-                termList.add(term);
+                if(leftTimePoint.getDayOfTheWeek().equals(tp.getDayOfTheWeek())
+                        && participantCurrentCount>0 && !leftTimePoint.getTime().equals(tp.getTime())){
+                    Term term=new Term(leftTimePoint.getTime(),tp.getTime(),participantCurrentCount,
+                            leftTimePoint.getDayOfTheWeek(),(Double.valueOf(participantCurrentCount)/participantCount)*100);
+                    termList.add(term);
+                }
 
                 leftTimePoint=tp;
 
-                if(tp.type==0) participantCurrentCount++ ;
+                if(tp.getType()==TimePointType.START) participantCurrentCount++ ;
                 else participantCurrentCount--;
             }
         }
 
         return termList;
+    }
+
+    @Override
+    public List<TimePoint> getTimePointsForParticipations(Set<Participation> participations) {
+        return participations.stream().flatMap(p->p.getVotes().stream()).flatMap(v -> Arrays.asList(
+                    new TimePoint(v.getDayOfWeek(), v.getFrom(), TimePointType.START),
+                    new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)).stream())
+                    .sorted().collect(Collectors.toList());
     }
 }

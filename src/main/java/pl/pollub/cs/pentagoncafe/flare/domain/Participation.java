@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
