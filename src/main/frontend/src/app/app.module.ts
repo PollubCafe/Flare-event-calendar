@@ -30,10 +30,12 @@ import {PaginationService} from "./footer/paggination/pagination.service";
 import {MessageService} from "./message/message.service";
 import {RegisterService} from "./register/register.service";
 import {RegisterComponent} from "./register/register.component";
+import {ResendVerificationEMailComponent} from "./register/resendVerficationEmail/resend.component";
 
 const appRoutes: Routes = [
     { path: '', component: EventsComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'resendVerificationEMail', component: ResendVerificationEMailComponent },
     { path: 'login', component: LoginComponent },
     { path: 'events/new', component: EventsComponent },
     { path: 'events/approved', component: ApprovedEventComponent },
@@ -59,7 +61,8 @@ const appRoutes: Routes = [
         ConfirmPasswordValidator,
         MessageComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        ResendVerificationEMailComponent
     ],
     imports: [
         RouterModule.forRoot(appRoutes),

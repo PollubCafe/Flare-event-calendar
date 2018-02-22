@@ -139,6 +139,7 @@
                 <div class="form-group">
                     <button type="button" [disabled]="isRegistrationInProgress || !registerForm.valid" class="btn btn-primary" (click)="register()">{{registerButtonName}}</button>
                     <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
+                    <a [routerLink]="['/resendVerificationEMail']" class="btn btn-link">Resend mail</a>
                 </div>
             </form>
         </div>

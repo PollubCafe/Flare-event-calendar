@@ -8,10 +8,7 @@ import pl.pollub.cs.pentagoncafe.flare.domain.enums.Role;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.domain.ActivationToken;
 import pl.pollub.cs.pentagoncafe.flare.exception.*;
-import pl.pollub.cs.pentagoncafe.flare.exception.registration.SendingActivationEMailFailException;
-import pl.pollub.cs.pentagoncafe.flare.exception.registration.TokenExpiredException;
-import pl.pollub.cs.pentagoncafe.flare.exception.registration.UserWithThisEmailAlreadyExistException;
-import pl.pollub.cs.pentagoncafe.flare.exception.registration.UserWithThisNickAlreadyExistException;
+import pl.pollub.cs.pentagoncafe.flare.exception.registration.*;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.component.email.sender.EmailSender;
 
@@ -61,8 +58,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     public void resendToken(ResendTokenDTO resendTokenDTO){
 
-        User user= userRepository.findByEmailAndEnabled(resendTokenDTO.getEmail(),false)
+        User user= userRepository.findByEmail(resendTokenDTO.getEmail())
                 .orElseThrow(() -> new ObjectNotFoundException(User.class,"e-mail",resendTokenDTO.getEmail()));
+
+        if(user.isEnabled())
+            throw new UserAlreadyActivatedException(user.getNick());
 
         ActivationToken newToken = user.getActivationToken();
         newToken.setToken(UUID.randomUUID().toString());
@@ -80,13 +80,15 @@ public class RegistrationServiceImpl implements RegistrationService {
         User user = userRepository.findByActivationToken(token).orElseThrow(() ->
                 new ObjectNotFoundException(User.class));
 
+        if(user.isEnabled())
+            throw new UserAlreadyActivatedException(user.getNick());
+
         ActivationToken activationToken = user.getActivationToken();
 
         if (activationToken.getExpirationDate().isBefore(Instant.now())) {
             throw new TokenExpiredException();
         }
 
-        user.setActivationToken(null);
         user.setEnabled(true);
         user.setRole(Role.USER);
 

@@ -51,6 +51,8 @@ export class AddEventComponent{
             (error) => {
                 this.isSavingEventInProgress = false;
                 this.saveButtonName = "Save";
+                this.form.reset();
+                this.modal.dismiss();
                 this.messageService.error(error._body);
             }
         );

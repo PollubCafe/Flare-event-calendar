@@ -32,7 +32,7 @@ public class RegistrationController {
 
     @PostMapping(value = "/resendToken")
     @ResponseStatus(HttpStatus.OK)
-    public void resendToken(@RequestBody ResendTokenDTO resendTokenDTO){
+    public void resendToken(@RequestBody @NonNull ResendTokenDTO resendTokenDTO){
         registrationService.resendToken(resendTokenDTO);
     }
 
