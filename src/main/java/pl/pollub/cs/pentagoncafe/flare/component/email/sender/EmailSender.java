@@ -1,8 +1,10 @@
 package pl.pollub.cs.pentagoncafe.flare.component.email.sender;
 
 
+import pl.pollub.cs.pentagoncafe.flare.component.email.HtmlEmail;
+
 import javax.mail.MessagingException;
 
 public interface EmailSender {
-    void sendActivationEmail(String recipientAddress, String recipientNick, String activationToken) throws MessagingException;
+    void send(HtmlEmail email) throws MessagingException;
 }

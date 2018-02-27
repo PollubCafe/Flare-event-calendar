@@ -42,6 +42,7 @@
                 <div class="form-group">
                     <button type="button" [disabled]="isLoginInProgress || !loginForm.valid" class="btn btn-primary" (click)="login()">{{loginButtonName}}</button>
                     <a [routerLink] = "['/register']"><button type="button" class="btn btn-primary">Sign up</button></a>
+                    <a [routerLink]="['/forgotPassword']" class="btn btn-link">Forgot password?</a>
                 </div>
             </form>
         </div>

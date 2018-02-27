@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.pollub.cs.pentagoncafe.flare.DTO.response.UserResponseDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.AuthUserResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.Role;
 
 import java.util.Collection;
@@ -55,7 +55,7 @@ public class UserDetailsImpl implements UserDetails {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_"+role.name()));
     }
 
-    public UserResponseDTO getUserResponseDTO(){
-        return new UserResponseDTO(this.username,this.email,this.role.name());
+    public AuthUserResponseDTO getUserResponseDTO(){
+        return new AuthUserResponseDTO(this.username,this.email,this.role.name());
     }
 }

@@ -30,15 +30,19 @@ import {PaginationService} from "./footer/paggination/pagination.service";
 import {MessageService} from "./message/message.service";
 import {RegisterService} from "./register/register.service";
 import {RegisterComponent} from "./register/register.component";
+import {ResendVerificationEMailComponent} from "./register/resendVerficationEmail/resend.component";
+import {ForgotPasswordComponent} from "./login/forgotPassword/forgot.component";
 
 const appRoutes: Routes = [
     { path: '', component: EventsComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'forgotPassword', component: ForgotPasswordComponent},
+    { path: 'resendVerificationEMail', component: ResendVerificationEMailComponent },
     { path: 'login', component: LoginComponent },
     { path: 'events/new', component: EventsComponent },
     { path: 'events/approved', component: ApprovedEventComponent },
     { path: 'events/past', component: ApprovedEventComponent },
-    { path: 'users', component: ApprovedEventComponent },
+    { path: 'users', component: ApprovedEventComponent }
 ];
 
 @NgModule({
@@ -59,7 +63,9 @@ const appRoutes: Routes = [
         ConfirmPasswordValidator,
         MessageComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        ResendVerificationEMailComponent,
+        ForgotPasswordComponent
     ],
     imports: [
         RouterModule.forRoot(appRoutes),

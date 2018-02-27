@@ -15,7 +15,6 @@ import java.util.Optional;
 public interface UserRepository extends MongoRepository<User,ObjectId> {
     Optional<User> findByNick(String nick);
     Optional<User> findByEmail(String email);
-    Optional<User> findByEmailAndEnabled(String email,boolean enabled);
     @Query(value="{ 'activationToken.token' : ?0 }")
     Optional<User> findByActivationToken(String token);
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import {RegisterModel} from './register.model'
-import {Http} from "@angular/http";
-import {CreatedEventRequest} from "../event/eventRequest.model";
+import {Http, Response} from "@angular/http";
 
 @Injectable()
 export class RegisterService {
@@ -10,10 +9,19 @@ export class RegisterService {
 
 
     create(registerModel: RegisterModel) {
-        return this.http.post('/api/registration', registerModel);
+        this.prepareObjectToSend(registerModel);
+        return this.http.post('/api/registration', registerModel).map(
+            (response: Response) => {
+                return response.text();
+            }
+        );
     }
 
-    private completeUndefinedFieldsOfEvent(registerModel: RegisterModel){
+    resendVerificationMail(recipientAddress:string){
+        return this.http.post('/api/registration/token', {email:recipientAddress})
+    }
+
+    private prepareObjectToSend(registerModel: RegisterModel){
         registerModel.phoneNumber = registerModel.phoneNumber === undefined ? "" : registerModel.phoneNumber;
     }
 }

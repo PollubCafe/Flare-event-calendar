@@ -21,7 +21,7 @@ export class EventService {
     }
 
     sendEventData(createdEventRequest: CreatedEventRequest) {
-        this.completeUndefinedFieldsOfEvent(createdEventRequest);
+        this.prepareObjectToSend(createdEventRequest);
         return this.http.post('/api/event', createdEventRequest)
             .map(
                 (response: Response) => {
@@ -30,7 +30,7 @@ export class EventService {
             );
     }
 
-    private completeUndefinedFieldsOfEvent(createdEventRequest: CreatedEventRequest){
+    private prepareObjectToSend(createdEventRequest: CreatedEventRequest){
         createdEventRequest.description = createdEventRequest.description === undefined ?
             "" : createdEventRequest.description;
         createdEventRequest.address_blockNumber = createdEventRequest.address_blockNumber === undefined ?

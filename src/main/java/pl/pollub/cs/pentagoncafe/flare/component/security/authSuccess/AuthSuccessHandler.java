@@ -6,10 +6,9 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import pl.pollub.cs.pentagoncafe.flare.DTO.response.UserResponseDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.AuthUserResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.security.UserDetailsImpl;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,7 +35,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         session.setAttribute("username", userDetails.getUsername());
         session.setAttribute("password", userDetails.getPassword());
 
-        UserResponseDTO user = userDetails.getUserResponseDTO();
+        AuthUserResponseDTO user = userDetails.getUserResponseDTO();
 
         PrintWriter writer = response.getWriter();
         mapper.writeValue(writer, user);

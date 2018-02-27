@@ -1,7 +1,8 @@
 <div id="register" class="col-md-6 col-md-offset-3">
     <div class="panel panel-default">
         <div class="panel-body">
-            <h2>Register</h2>
+            <h2>Registration</h2>
+            <h4>Please sign up your account</h4>
             <form #registerForm="ngForm">
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -139,6 +140,7 @@
                 <div class="form-group">
                     <button type="button" [disabled]="isRegistrationInProgress || !registerForm.valid" class="btn btn-primary" (click)="register()">{{registerButtonName}}</button>
                     <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
+                    <a [routerLink]="['/resendVerificationEMail']" class="btn btn-link">Resend mail</a>
                 </div>
             </form>
         </div>

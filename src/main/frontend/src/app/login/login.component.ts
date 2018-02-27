@@ -29,7 +29,6 @@ export class LoginComponent{
                 data => {
                     this.loginButtonName = "Login";
                     this.isLoginInProgress = false;
-                    console.log(data);
                     this.router.navigate(['events/new']);
                 },
                 error => {

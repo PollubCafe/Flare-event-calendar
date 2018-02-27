@@ -1,44 +1,51 @@
 package pl.pollub.cs.pentagoncafe.flare.controller;
 
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.pollub.cs.pentagoncafe.flare.DTO.request.RegistrationRequestDTO;
-import pl.pollub.cs.pentagoncafe.flare.DTO.request.ResendTokenDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.request.RegistrationReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.request.EmailReqDTO;
 import pl.pollub.cs.pentagoncafe.flare.component.message.Messages;
+import pl.pollub.cs.pentagoncafe.flare.component.validation.RegistrationReqDTOValidator;
 import pl.pollub.cs.pentagoncafe.flare.service.registration.RegistrationService;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/api/registration")
 public class RegistrationController {
 
     private final RegistrationService registrationService;
+    private final RegistrationReqDTOValidator registrationReqDTOValidator;
     private final Messages messages;
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService, Messages messages) {
+    public RegistrationController(RegistrationService registrationService, RegistrationReqDTOValidator registrationReqDTOValidator, Messages messages) {
         this.registrationService = registrationService;
+        this.registrationReqDTOValidator = registrationReqDTOValidator;
         this.messages = messages;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public void registration(@RequestBody @NonNull RegistrationRequestDTO registrationRequestDTO) {
-        registrationService.register(registrationRequestDTO);
+    @InitBinder("registrationReqDTO")
+    public void initValidators(WebDataBinder binder){
+        binder.addValidators(registrationReqDTOValidator);
     }
 
-    @PostMapping(value = "/resendToken")
-    @ResponseStatus(HttpStatus.OK)
-    public void resendToken(@RequestBody ResendTokenDTO resendTokenDTO){
-        registrationService.resendToken(resendTokenDTO);
+    @PostMapping
+    public ResponseEntity registration(@RequestBody @Valid @NotNull RegistrationReqDTO registrationReqDTO) {
+        registrationService.register(registrationReqDTO);
+        return ResponseEntity.ok(messages.get("registration.successful"));
     }
 
-    @GetMapping(value = "/confirm/{token}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity finishRegistration(@PathVariable("token") String token){
+    @PostMapping("/token")
+    public void resendToken(@RequestBody @Valid @NotNull EmailReqDTO emailReqDTO){
+        registrationService.resendToken(emailReqDTO);
+    }
+
+    @GetMapping("/confirm")
+    public ResponseEntity finishRegistration(@RequestParam("token") String token){
         registrationService.finishRegistration(token);
         //return html page
         return ResponseEntity.ok(messages.get("registration.complete"));
