@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventRequestDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.*;
@@ -14,13 +14,13 @@ import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
-import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePoint;
-import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePointType;
+import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePoint;
+import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePointType;
 
-import javax.validation.executable.ValidateOnExecution;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -36,29 +36,29 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public SimplifiedEventResponseDTO createEvent(CreateEventRequestDTO createEventRequestDTO) {
+    public SimplifiedEventResponseDTO createEvent(CreateEventReqDTO createEventReqDTO) {
         String authenticatedUserNick = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User authenticatedUser = userRepository.findByNick(authenticatedUserNick).orElseThrow(()->new ObjectNotFoundException(User.class,"nick",authenticatedUserNick));
 
         Address address = Address.builder()
-                .town(createEventRequestDTO.getAddress_town())
-                .zipCode(createEventRequestDTO.getAddress_zipCode())
-                .street(createEventRequestDTO.getAddress_street())
-                .province(Province.valueOf(createEventRequestDTO.getAddress_province()))
-                .blockNumber(createEventRequestDTO.getAddress_blockNumber())
-                .houseNumber(createEventRequestDTO.getAddress_houseNumber())
-                .additionalInformation(createEventRequestDTO.getAddress_additionalInformation())
+                .town(createEventReqDTO.getAddress_town())
+                .zipCode(createEventReqDTO.getAddress_zipCode())
+                .street(createEventReqDTO.getAddress_street())
+                .province(Province.valueOf(createEventReqDTO.getAddress_province()))
+                .blockNumber(createEventReqDTO.getAddress_blockNumber())
+                .houseNumber(createEventReqDTO.getAddress_houseNumber())
+                .additionalInformation(createEventReqDTO.getAddress_additionalInformation())
                 .build();
 
         Event event = Event.builder()
                 .address(address)
-                .title(createEventRequestDTO.getTitle())
-                .description(createEventRequestDTO.getDescription())
-                .duration(createEventRequestDTO.getDuration())
-                .dateOfEventApproval(createEventRequestDTO.getDateOfEventApproval().toInstant())
+                .title(createEventReqDTO.getTitle())
+                .description(createEventReqDTO.getDescription())
+                .duration(createEventReqDTO.getDuration())
+                .dateOfEventApproval(createEventReqDTO.getDateOfEventApproval().toInstant())
                 .isApproved(false)
-                .onlyForRegisteredUsers(createEventRequestDTO.isOnlyForRegisteredUsers())
+                .onlyForRegisteredUsers(createEventReqDTO.isOnlyForRegisteredUsers())
                 .dateOfCreation(Instant.now())
                 .build();
 
@@ -106,7 +106,7 @@ public class EventServiceImpl implements EventService {
                 if(leftTimePoint.getDayOfTheWeek().equals(tp.getDayOfTheWeek())
                         && participantCurrentCount>0 && !leftTimePoint.getTime().equals(tp.getTime())){
                     Term term=new Term(leftTimePoint.getTime(),tp.getTime(),participantCurrentCount,
-                            leftTimePoint.getDayOfTheWeek(),(Double.valueOf(participantCurrentCount)/participantCount)*100);
+                            leftTimePoint.getDayOfTheWeek(),((double) participantCurrentCount /participantCount)*100);
                     termList.add(term);
                 }
 
@@ -122,9 +122,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<TimePoint> getTimePointsForParticipations(Set<Participation> participations) {
-        return participations.stream().flatMap(p->p.getVotes().stream()).flatMap(v -> Arrays.asList(
+        return participations.stream().flatMap(p->p.getVotes().stream()).flatMap(v -> Stream.of(
                     new TimePoint(v.getDayOfWeek(), v.getFrom(), TimePointType.START),
-                    new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)).stream())
+                    new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)))
                     .sorted().collect(Collectors.toList());
     }
 }

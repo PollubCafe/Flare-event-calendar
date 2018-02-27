@@ -26,7 +26,7 @@ export class RegisterComponent {
         this.registerService.create(this.registerModel)
             .subscribe(
                 data => {
-                    this.messageService.success('Registration successful', true);
+                    this.messageService.success(data, true);
                     this.registerButtonName = "Register";
                     this.isRegistrationInProgress = false;
                     this.router.navigate(['/login']);

@@ -65,22 +65,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.headers().cacheControl();
 
         http.authorizeRequests()
                 .antMatchers(
                         "/api/csrf/index.html",
                         "/api/login",
-                        "/api/register"
+                        "/api/registration"
                 ).permitAll();
 
         http.csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
-        http.authorizeRequests()
-                .antMatchers( "/**").permitAll()
-                .anyRequest().authenticated();
 
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
@@ -101,7 +96,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .maximumSessions(1)
                 .sessionRegistry(sessionRegistry());
-
-        http.authorizeRequests().anyRequest().authenticated();
     }
 }

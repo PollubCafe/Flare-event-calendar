@@ -1,10 +1,10 @@
 package pl.pollub.cs.pentagoncafe.flare.service.registration;
 
-import pl.pollub.cs.pentagoncafe.flare.DTO.request.RegistrationRequestDTO;
-import pl.pollub.cs.pentagoncafe.flare.DTO.request.ResendTokenDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.request.RegistrationReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.request.EmailReqDTO;
 
 public interface RegistrationService {
-    void register(RegistrationRequestDTO registrationRequestDTO);
-    void resendToken(ResendTokenDTO resendTokenDTO);
+    void register(RegistrationReqDTO registrationReqDTO);
+    void resendToken(EmailReqDTO emailReqDTO);
     void finishRegistration(String token);
 }

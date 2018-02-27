@@ -19,7 +19,7 @@ export class ResendVerificationEMailComponent {
         private registerService: RegisterService,
         private messageService: MessageService) { }
 
-    register() {
+    resend() {
         this.resendButtonName = "Resending...";
         this.isResendingInProgress = true;
         this.registerService.resendVerificationMail(this.recipientAddress)
