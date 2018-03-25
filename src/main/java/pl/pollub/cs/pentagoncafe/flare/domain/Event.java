@@ -1,9 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Singular;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +8,7 @@ import java.time.Instant;
 import java.util.Set;
 
 @Document(collection = "Event")
+
 
 @Setter
 @Getter
