@@ -1,0 +1,17 @@
+.panel{
+    display: inline-block;
+    max-width: 80%;
+    float: left;
+}
+
+li{
+    cursor: pointer;
+}
+
+.panel-body{
+    margin:0;
+}
+
+.pagination{
+    margin:0;
+}

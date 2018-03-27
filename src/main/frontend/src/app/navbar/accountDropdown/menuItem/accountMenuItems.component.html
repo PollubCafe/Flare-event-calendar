@@ -1,0 +1,8 @@
+<li role="separator" class="divider"></li>
+<li role="menuitem">
+    <a href="#">
+        <span [ngClass]="['glyphicon glyphicon-'+itemContent.iconName]">
+        </span>  {{itemContent.itemName}} <span *ngIf="itemContent.notificationCount>0" class="badge">
+        {{itemContent.notificationCount}}</span>
+    </a>
+</li>

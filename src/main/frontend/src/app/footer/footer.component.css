@@ -1,0 +1,15 @@
+.footer{
+    width: 90%;
+    position:fixed;
+    bottom:0;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .footer{
+        width: 75%;
+        position:fixed;
+        bottom:0;
+        margin-bottom: 20px;
+    }
+}

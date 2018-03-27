@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Finish registration</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: #F2F4F6;
+        }
+
+        .email-wrapper {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #F2F4F6;
+        }
+
+        .email-masthead {
+            padding: 25px 0;
+            text-align: center;
+        }
+
+        .email-masthead_name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2F3133;
+            text-decoration: none;
+            text-shadow: 0 1px 0 white;
+        }
+        .email-body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border-top: 1px solid #EDEFF2;
+            border-bottom: 1px solid #EDEFF2;
+            background-color: #FFF;
+        }
+
+        .email-body_inner {
+            width: auto;
+            max-width: 570px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .email-footer {
+            width: auto;
+            max-width: 570px;
+            margin: 0 auto;
+            padding: 0;
+            text-align: center;
+        }
+
+        .email-footer_cell {
+            color: #AEAEAE;
+            padding: 35px;
+            text-align: center;
+        }
+
+        .body_action {
+            width: 100%;
+            margin: 30px auto;
+            padding: 0;
+            text-align: center;
+        }
+
+        .body_sub {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #EDEFF2;
+        }
+
+        .anchor {
+            color: #3869D4;
+        }
+
+        .paragraph {
+            margin-top: 0;
+            color: #74787E;
+            font-size: 16px;
+            line-height: 1.5em;
+        }
+
+        .paragraph-sub {
+            margin-top: 0;
+            color: #74787E;
+            font-size: 12px;
+            line-height: 1.5em;
+        }
+
+        .button {
+            display: inline-block;
+            width: 200px;
+            min-height: 20px;
+            padding: 10px;
+            background-color: #3869D4;
+            border-radius: 3px;
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 25px;
+            text-align: center;
+            text-decoration: none;
+            -webkit-text-size-adjust: none;
+        }
+
+        .button--blue {
+            background-color: #3869D4;
+        }
+    </style>
+</head>
+
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="email-wrapper" align="center">
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <!-- Logo -->
+                <tr>
+                    <td class="email-masthead">
+                        <a class="email-masthead_name" href="localhost:4200/" target="_blank">
+                            Pentagon Cafe
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- Email Body -->
+                <tr>
+                    <td class="email-body" width="100%">
+                        <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class=".email-body_cell">
+                                    <!-- Greeting -->
+                                    <h1 class=".header">
+                                        Welcome in Event Calendar!
+                                    </h1>
+                                    <!-- Intro -->
+
+                                    <p class="paragraph">
+                                        Activation Email
+                                    </p>
+                                    <p class="paragraph">
+                                        Thank for Sign Up!
+                                    </p>
+                                    <p class="paragraph">
+                                        If you want use our system you have to activate your account, so please press button below!
+                                    </p>
+
+
+                                    <!-- Action Button -->
+                                    <table class="body_action" align="center" width="100%" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td align="center">
+
+                                                <a th:href="${activationURL}" class="button button--blue" target="_blank">
+                                                Activate
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+
+                                    <!-- Salutation -->
+                                    <p class="paragraph">
+                                        Regards,<br/>Pentagon Cafe
+                                    </p>
+
+                                    <!-- Sub Copy -->
+                                    <table class="body_sub">
+                                        <tr>
+                                            <td>
+                                                <p class="paragraph-sub">
+                                                    If you’re having trouble clicking the button,
+                                                    copy and paste the URL below into your web browser:
+                                                </p>
+
+                                                <p class="paragraph-sub">
+                                                    <a class="anchor" th:text="${activationURL}" th:href="${activationURL}"></a>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td>
+                        <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td  class="email-footer_cell">
+                                    <p  class="paragraph-sub">
+                                        2018
+                                        <a class="anchor" href="localhost:4200/" target="_blank">Pentagon Cafe</a>.
+                                        All rights reserved.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

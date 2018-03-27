@@ -1,0 +1,30 @@
+
+<ul class="event-list">
+    <li *ngFor="let event of events">
+        <div class="time">
+            <span class="day">{{event.dayOfEventApproval}}</span>
+            <span class="month">{{mouthNames[event.mouthOfEventApproval]}}</span>
+            <span class="year">{{event.yearOfEventApproval}}</span>
+            <span class="hour">{{event.hourOfEventApproval}}</span>
+        </div>
+        <img alt="{{event.title}}" src="https://farm5.staticflickr.com/4150/5045502202_1d867c8a41_q.jpg" />
+        <div class="info">
+            <h2 class="title">{{ event.title }}</h2>
+            <h4 class="address">{{ event.address }}</h4>
+            <p class="description">{{ (event.description>50)? (event.description | slice:0:50)+'...':(event.description) }}</p>
+            <ul>
+                <li style="width:33%;">{{event.linksCount}} <span class="glyphicon glyphicon-send"></span></li>
+                <li style="width:34%;">{{event.votesCount}} <span class="glyphicon glyphicon-ok"></span></li>
+                <li style="width:33%;">{{event.duration}} <span class="glyphicon glyphicon-time"></span></li>
+            </ul>
+        </div>
+        <div class="options">
+            <ul>
+                <li class="sideButton" style="width:25%;"><a href="#"><span class="glyphicon glyphicon-arrow-right"></span></a></li>
+                <li class="sideButton" style="width:25%;"><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+                <li class="sideButton" style="width:25%;"><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
+                <li class="sideButton" style="width:25%;"><a href="#"><span class="glyphicon glyphicon-map-marker"></span></a></li>
+            </ul>
+        </div>
+    </li>
+</ul>

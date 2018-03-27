@@ -1,0 +1,15 @@
+<ul class="nav navbar-nav">
+    <li [ngClass]="{'active': location.path()=='/events/new' || location==''}">
+        <a [routerLink] = "['/events/new']"><span class="glyphicon glyphicon-star"></span> New events</a>
+    </li>
+    <li [ngClass]="{'active': location.path()=='/events/approved'}">
+        <a [routerLink] = "['/events/confirmed']"><span class="glyphicon glyphicon-ok"></span> Approved events</a>
+    </li>
+    <li [ngClass]="{'active': location.path()=='/events/past'}">
+        <a [routerLink] = "['/events/past']"><span class="glyphicon glyphicon-backward"></span> Past events</a>
+    </li>
+    <li [ngClass]="{'active': location.path()=='/users'}">
+        <a [routerLink] = "['/users']"><span class="glyphicon glyphicon-user"></span> Users</a>
+    </li>
+</ul>
+

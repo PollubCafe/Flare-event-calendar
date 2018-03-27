@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Potwierdź rejestrację</title>
+</head>
+<body>
+<h1 th:text="${helloMessage}">Witaj użytkowniku!</h1>
+<p>Właśnie ustaliliśmy termin wydarzenia, którym jesteś zainteresowany. Odbędzie się ono:</p>
+<p th:text="${termin}">dd-mm-yyyy hh:mm</p>
+<p>Kliknij w link aby potwierdzić swoją obecność</p>
+<a th:href="@{confirmTermURL}">Link</a>
+</body>
+</html>
