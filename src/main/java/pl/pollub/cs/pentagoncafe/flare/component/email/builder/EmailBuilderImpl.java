@@ -59,6 +59,23 @@ public class EmailBuilderImpl implements EmailBuilder {
     }
 
     @Override
+    public EmailBuilder buildEmailToEventAuthor(String messageContent, String subject) {
+        HtmlEmail instance = new HtmlEmail("PentagonCafe");
+        instance.setSubject(subject);
+
+        Context emailTemplateContext = new Context();
+        emailTemplateContext.setVariable("messageContent", messageContent);
+
+        String templateName = "messageToEventAuthor";
+        String htmlContent = templateEngine.process(templateName, emailTemplateContext);
+        instance.setHtmlContent(htmlContent);
+
+        this.instance = instance;
+
+        return this;
+    }
+
+    @Override
     public Email to(String recipientAddress){
         instance.setTo(recipientAddress);
 

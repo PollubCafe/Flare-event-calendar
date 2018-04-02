@@ -8,6 +8,8 @@ public interface EmailBuilder {
 
     EmailBuilder buildResetPasswordEmail(String temporalPassword);
 
+    EmailBuilder buildEmailToEventAuthor(String messageContent, String subject);
+
     Email to(String recipientAddress);
 
 }
