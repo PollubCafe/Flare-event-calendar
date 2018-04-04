@@ -10,6 +10,7 @@ import pl.pollub.cs.pentagoncafe.flare.domain.Term;
 import pl.pollub.cs.pentagoncafe.flare.domain.Vote;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
+import pl.pollub.cs.pentagoncafe.flare.repository.participation.ParticipationRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.service.event.EventService;
 import pl.pollub.cs.pentagoncafe.flare.service.event.EventServiceImpl;
@@ -33,12 +34,14 @@ public class EventServiceImplTest {
     private UserRepository userRepository;
     @MockBean
     private EventMapper eventMapper;
+    @MockBean
+    private ParticipationRepository participationRepository;
 
     private EventService eventService;
 
     @Before
     public void setup(){
-        eventService=new EventServiceImpl(eventRepository,userRepository,eventMapper);
+        eventService=new EventServiceImpl(eventRepository,userRepository,participationRepository,eventMapper);
     }
 
     @Test

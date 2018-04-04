@@ -14,6 +14,7 @@ import pl.pollub.cs.pentagoncafe.flare.domain.enums.Province;
 import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
+import pl.pollub.cs.pentagoncafe.flare.repository.participation.ParticipationRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePoint;
 import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePointType;
@@ -28,11 +29,13 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final ParticipationRepository participationRepository;
     private final EventMapper eventMapper;
 
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, EventMapper eventMapper) {
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, ParticipationRepository participationRepository, EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.participationRepository = participationRepository;
         this.eventMapper = eventMapper;
     }
 
@@ -131,30 +134,24 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<SimplifiedEventResponseDTO> getNewEvents() {
-        return eventRepository.findAll()
-                .stream()
-                .filter(x -> x.getStatus() == EventStatus.REGISTRATION)
-                .filter(x -> !x.isBanned())
+        List<Event> events = eventRepository.getEventsByBannedIsFalseAndStatusIs(EventStatus.REGISTRATION);
+        return events.stream()
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<SimplifiedEventResponseDTO> getApprovedEvents() {
-        return eventRepository.findAll()
-                .stream()
-                .filter(x -> x.getStatus() == EventStatus.APPROVED)
-                .filter(x -> !x.isBanned())
+        List<Event> events = eventRepository.getEventsByBannedIsFalseAndStatusIs(EventStatus.APPROVED);
+        return events.stream()
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<SimplifiedEventResponseDTO> getEventsWithEndedRegistration() {
-        return eventRepository.findAll()
-                .stream()
-                .filter(x -> x.getStatus() == EventStatus.CLOSED)
-                .filter(x -> !x.isBanned())
+        List<Event> events = eventRepository.getEventsByBannedIsFalseAndStatusIs(EventStatus.CLOSED);
+        return events.stream()
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -162,68 +159,46 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<SimplifiedEventResponseDTO> getEventsWhichUserIsAttending(String userNick) {
 
-        Optional<User> optionalUser = userRepository.findByNick(userNick);
-
-        if (!optionalUser.isPresent()) {
-            throw new ObjectNotFoundException("User with nic: " + userNick + " not found");
-        }
-        User user = optionalUser.get();
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
 
         return user.getParticipation()
                 .stream()
-                .map(x -> x.getEvent())
-                .filter(x -> !x.isBanned())
+                .map(Participation::getEvent)
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
-
     }
 
     @Override
     public List<SimplifiedEventResponseDTO> getEventsWhichWasCreatedByUser(String userNick) {
 
-        Optional<User> optionalUser = userRepository.findByNick(userNick);
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
 
-        if (!optionalUser.isPresent()) {
-            throw new ObjectNotFoundException("User with nic: " + userNick + " not found");
-        }
-
-        User user = optionalUser.get();
-
-        return user.getOrganizedEvents()
+        return eventRepository.getEventsByOrganizerAndBannedIsFalse(user)
                 .stream()
-                .filter(x -> !x.isBanned())
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<SimplifiedEventResponseDTO> adminGetNewEvents() {
-        return eventRepository.findAll()
+        return eventRepository.getEventsByStatusIs(EventStatus.REGISTRATION)
                 .stream()
-                .filter(x -> x.getStatus() == EventStatus.REGISTRATION)
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<SimplifiedEventResponseDTO> adminGetApprovedEvents() {
-        List <SimplifiedEventResponseDTO> list =  eventRepository.findAll()
+        return eventRepository.getEventsByStatusIs(EventStatus.APPROVED)
                 .stream()
-                .filter(x -> x.getStatus() == EventStatus.APPROVED)
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
-
-        return list;
     }
 
     @Override
     public List<SimplifiedEventResponseDTO> adminGetEventWhichUserIsAttending(String userNick) {
-        Optional<User> optionalUser = userRepository.findByNick(userNick);
 
-        if (!optionalUser.isPresent()) {
-            throw new ObjectNotFoundException("User with nic: " + userNick + " not found");
-        }
-        User user = optionalUser.get();
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
 
         return user.getParticipation()
                 .stream()
@@ -235,15 +210,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<SimplifiedEventResponseDTO> adminGetEventsWhichWasCreatedByUser(String userNick) {
-        Optional<User> optionalUser = userRepository.findByNick(userNick);
 
-        if (!optionalUser.isPresent()) {
-            throw new ObjectNotFoundException("User with nic: " + userNick + " not found");
-        }
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
 
-        User user = optionalUser.get();
-
-        return user.getOrganizedEvents()
+        return eventRepository.getEventsByOrganizer(user)
                 .stream()
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());

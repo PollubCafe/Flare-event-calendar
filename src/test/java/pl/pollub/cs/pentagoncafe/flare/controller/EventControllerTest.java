@@ -5,19 +5,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.EventCalendarApplication;
 import pl.pollub.cs.pentagoncafe.flare.domain.Address;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
@@ -25,23 +20,16 @@ import pl.pollub.cs.pentagoncafe.flare.domain.Participation;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.EventStatus;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.Province;
-import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.participation.ParticipationRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
-import pl.pollub.cs.pentagoncafe.flare.service.event.EventService;
 
 import java.nio.charset.Charset;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,7 +39,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EventCalendarApplication.class)
 @TestPropertySource(properties = {"application-test.properties"})
-@WebAppConfiguration
 public class EventControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -148,6 +135,7 @@ public class EventControllerTest {
         participation.setId(new ObjectId());
 
         user = User.builder().nick("testnick").organizedEvents(newEvent).participation(participation).build();
+        participation.setUser(user);
 
         newEvent.setId(new ObjectId());
         approvedEvent.setId(new ObjectId());
@@ -156,6 +144,9 @@ public class EventControllerTest {
         user.setId(new ObjectId());
 
         newEvent.setOrganizer(user);
+        Set<Participation> set = new HashSet<>();
+        set.add(participation);
+        newEvent.setParticipation(set);
 
         userRepository.save(user);
         eventRepository.save(newEvent);
