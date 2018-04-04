@@ -39,7 +39,8 @@ public class EventServiceImpl implements EventService {
     public SimplifiedEventResponseDTO createEvent(CreateEventReqDTO createEventReqDTO) {
         String authenticatedUserNick = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User authenticatedUser = userRepository.findByNick(authenticatedUserNick).orElseThrow(()->new ObjectNotFoundException(User.class,"nick",authenticatedUserNick));
+        User authenticatedUser = userRepository.findByNick(authenticatedUserNick)
+                .orElseThrow(()->new ObjectNotFoundException(User.class,"nick",authenticatedUserNick));
 
         Address address = Address.builder()
                 .town(createEventReqDTO.getAddress_town())

@@ -71,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/api/csrf/index.html",
                         "/api/login",
-                        "/api/registration"
+                        "/api/registration",
+                        "/api/send"
                 ).permitAll();
 
         http.csrf()
@@ -80,6 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
+                .csrf().disable()
                 .formLogin()
                 .permitAll()
                 .loginProcessingUrl("/api/login")

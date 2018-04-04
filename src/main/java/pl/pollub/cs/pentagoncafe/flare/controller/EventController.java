@@ -44,7 +44,7 @@ public class EventController {
         return new ResponseEntity<>(pageResponseDTO, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @Valid @NotNull CreateEventReqDTO eventRequestDTO){
         return new ResponseEntity<>(eventService.createEvent(eventRequestDTO), HttpStatus.OK);
