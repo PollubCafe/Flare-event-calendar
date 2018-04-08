@@ -27,7 +27,7 @@ public class CreateEventReqDTO {
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Future(message = "validation.event.dateOfEventApproval.future")
-    private Date dateOfEventApproval;
+    private Date dateOfEndRegistration;
 
     private boolean onlyForRegisteredUsers;
 

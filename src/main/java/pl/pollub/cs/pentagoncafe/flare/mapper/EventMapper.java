@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
 @Component
 public class EventMapper {
     public SimplifiedEventResponseDTO mapToResponseDTO(Event event){
-        LocalDateTime timeOfApproval = LocalDateTime.ofInstant(event.getDateOfEventApproval(), ZoneId.systemDefault());
+       LocalDateTime timeOfApproval = LocalDateTime.ofInstant(event.getDateOfEventApproval(), ZoneId.systemDefault());
 
         return SimplifiedEventResponseDTO.builder().
                 id(event.getId().toString()).

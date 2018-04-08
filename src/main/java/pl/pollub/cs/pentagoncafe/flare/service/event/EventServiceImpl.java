@@ -9,10 +9,12 @@ import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.*;
+import pl.pollub.cs.pentagoncafe.flare.domain.enums.EventStatus;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.Province;
 import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
+import pl.pollub.cs.pentagoncafe.flare.repository.participation.ParticipationRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePoint;
 import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePointType;
@@ -32,6 +34,14 @@ public class EventServiceImpl implements EventService {
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+
+    private final ParticipationRepository participationRepository;
+    private final EventMapper eventMapper;
+
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, ParticipationRepository participationRepository, EventMapper eventMapper) {
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
+        this.participationRepository = participationRepository;
         this.eventMapper = eventMapper;
     }
 
@@ -39,8 +49,8 @@ public class EventServiceImpl implements EventService {
     public SimplifiedEventResponseDTO createEvent(CreateEventReqDTO createEventReqDTO) {
         String authenticatedUserNick = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User authenticatedUser = userRepository.findByNick(authenticatedUserNick)
-                .orElseThrow(()->new ObjectNotFoundException(User.class,"nick",authenticatedUserNick));
+        User authenticatedUser = userRepository.findByNick(authenticatedUserNick).orElseThrow(() -> new ObjectNotFoundException(User.class, "nick", authenticatedUserNick));
+
 
         Address address = Address.builder()
                 .town(createEventReqDTO.getAddress_town())
@@ -59,6 +69,8 @@ public class EventServiceImpl implements EventService {
                 .duration(createEventReqDTO.getDuration())
                 .dateOfEventApproval(createEventReqDTO.getDateOfEventApproval().toInstant())
                 .isApproved(false)
+                .dateOfEndRegistration(createEventReqDTO.getDateOfEndRegistration().toInstant())
+                .status(EventStatus.NEW)
                 .onlyForRegisteredUsers(createEventReqDTO.isOnlyForRegisteredUsers())
                 .dateOfCreation(Instant.now())
                 .build();
@@ -74,7 +86,11 @@ public class EventServiceImpl implements EventService {
     public PageResponseDTO<SimplifiedEventResponseDTO> getPageOfNotApprovedEventsByPageNumber(int pageNumber) {
         int defaultPageSize = 7;
         String sortBy = "dateOfCreation";
+<<<<<<< HEAD
         PageRequest pageRequest = new PageRequest(pageNumber, defaultPageSize, Sort.Direction.DESC,sortBy);
+=======
+        PageRequest pageRequest = new PageRequest(pageNumber, defaultPageSize, Sort.Direction.DESC, sortBy);
+>>>>>>> origin/task/#42
         Page<Event> eventsPage = eventRepository.getPageOfNotApprovedEventsByPageNumber(pageRequest);
 
         return new PageResponseDTO<>(
@@ -85,14 +101,21 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+<<<<<<< HEAD
     public Event generateStatisticForEvent(Event event){
         List<TimePoint> timePointsForParticipations = getTimePointsForParticipations(event.getParticipation());
         Set<Term> eventStatistic = generateStatisticForTimePoints(timePointsForParticipations,event.getParticipation().size());
+=======
+    public Event generateStatisticForEvent(Event event) {
+        List<TimePoint> timePointsForParticipations = getTimePointsForParticipations(event.getParticipation());
+        Set<Term> eventStatistic = generateStatisticForTimePoints(timePointsForParticipations, event.getParticipation().size());
+>>>>>>> origin/task/#42
         event.setEventStatistic(eventStatistic);
         return event;
     }
 
     @Override
+<<<<<<< HEAD
     public Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints,int participantCount){
 
         Set<Term> termList=new HashSet<>();
@@ -114,6 +137,29 @@ public class EventServiceImpl implements EventService {
                 leftTimePoint=tp;
 
                 if(tp.getType()==TimePointType.START) participantCurrentCount++ ;
+=======
+    public Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints, int participantCount) {
+
+        Set<Term> termList = new HashSet<>();
+        TimePoint leftTimePoint = null;
+        int participantCurrentCount = 0;
+
+        for (TimePoint tp : timePoints) {
+            if (Objects.isNull(leftTimePoint)) {
+                leftTimePoint = tp;
+                participantCurrentCount++;
+            } else {
+                if (leftTimePoint.getDayOfTheWeek().equals(tp.getDayOfTheWeek())
+                        && participantCurrentCount > 0 && !leftTimePoint.getTime().equals(tp.getTime())) {
+                    Term term = new Term(leftTimePoint.getTime(), tp.getTime(), participantCurrentCount,
+                            leftTimePoint.getDayOfTheWeek(), ((double) participantCurrentCount / participantCount) * 100);
+                    termList.add(term);
+                }
+
+                leftTimePoint = tp;
+
+                if (tp.getType() == TimePointType.START) participantCurrentCount++;
+>>>>>>> origin/task/#42
                 else participantCurrentCount--;
             }
         }
@@ -123,9 +169,106 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<TimePoint> getTimePointsForParticipations(Set<Participation> participations) {
+<<<<<<< HEAD
         return participations.stream().flatMap(p->p.getVotes().stream()).flatMap(v -> Stream.of(
                     new TimePoint(v.getDayOfWeek(), v.getFrom(), TimePointType.START),
                     new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)))
                     .sorted().collect(Collectors.toList());
     }
+=======
+        return participations.stream().flatMap(p -> p.getVotes().stream()).flatMap(v -> Stream.of(
+                new TimePoint(v.getDayOfWeek(), v.getFrom(), TimePointType.START),
+                new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)))
+                .sorted().collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> getNewEvents() {
+        List<Event> events = eventRepository.getEventsByBannedIsFalseAndStatusIs(EventStatus.REGISTRATION);
+        return events.stream()
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> getApprovedEvents() {
+        List<Event> events = eventRepository.getEventsByBannedIsFalseAndStatusIs(EventStatus.APPROVED);
+        return events.stream()
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> getEventsWithEndedRegistration() {
+        List<Event> events = eventRepository.getEventsByBannedIsFalseAndStatusIs(EventStatus.CLOSED);
+        return events.stream()
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> getEventsWhichUserIsAttending(String userNick) {
+
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+
+        return user.getParticipation()
+                .stream()
+                .map(Participation::getEvent)
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> getEventsWhichWasCreatedByUser(String userNick) {
+
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+
+        return eventRepository.getEventsByOrganizerAndBannedIsFalse(user)
+                .stream()
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> adminGetNewEvents() {
+        return eventRepository.getEventsByStatusIs(EventStatus.REGISTRATION)
+                .stream()
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> adminGetApprovedEvents() {
+        return eventRepository.getEventsByStatusIs(EventStatus.APPROVED)
+                .stream()
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> adminGetEventWhichUserIsAttending(String userNick) {
+
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+
+        return user.getParticipation()
+                .stream()
+                .map(x -> x.getEvent())
+                .filter(x -> x.getStatus() == EventStatus.NEW)
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SimplifiedEventResponseDTO> adminGetEventsWhichWasCreatedByUser(String userNick) {
+
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+
+        return eventRepository.getEventsByOrganizer(user)
+                .stream()
+                .map(eventMapper::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+
+>>>>>>> origin/task/#42
 }

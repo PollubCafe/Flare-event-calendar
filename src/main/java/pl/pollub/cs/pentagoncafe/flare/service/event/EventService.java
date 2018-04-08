@@ -20,4 +20,17 @@ public interface EventService {
     Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints, int participantCount);
 
     List<TimePoint> getTimePointsForParticipations(Set<Participation> participations);
+
+    List<SimplifiedEventResponseDTO> getNewEvents();
+    List<SimplifiedEventResponseDTO> getApprovedEvents();
+    List<SimplifiedEventResponseDTO> getEventsWithEndedRegistration();
+
+    List<SimplifiedEventResponseDTO> getEventsWhichUserIsAttending(String userNick);
+    List<SimplifiedEventResponseDTO> getEventsWhichWasCreatedByUser(String userNick);
+
+    List<SimplifiedEventResponseDTO> adminGetNewEvents();
+    List<SimplifiedEventResponseDTO> adminGetApprovedEvents();
+    List<SimplifiedEventResponseDTO> adminGetEventWhichUserIsAttending(String userNick);
+    List<SimplifiedEventResponseDTO> adminGetEventsWhichWasCreatedByUser(String userNick);
+
 }
