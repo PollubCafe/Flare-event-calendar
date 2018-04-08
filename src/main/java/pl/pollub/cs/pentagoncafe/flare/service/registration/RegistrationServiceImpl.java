@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.service.registration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
     public RegistrationServiceImpl(UserRepository userRepository,
                                    EmailSender emailSender,
                                    EmailBuilder emailBuilder,

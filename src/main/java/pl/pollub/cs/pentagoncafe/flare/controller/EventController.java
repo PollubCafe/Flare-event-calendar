@@ -2,13 +2,9 @@ package pl.pollub.cs.pentagoncafe.flare.controller;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/12/12
  */
-<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
-=======
->>>>>>> origin/task/#42
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,21 +27,16 @@ public class EventController {
     private final CreateEventReqDTOValidator createEventReqDTOValidator;
 
     @Autowired
-    public EventController(EventService eventService, CreateEventReqDTOValidator createEventReqDTOValidator){
+    public EventController(EventService eventService, CreateEventReqDTOValidator createEventReqDTOValidator) {
         this.eventService = eventService;
         this.createEventReqDTOValidator = createEventReqDTOValidator;
     }
-
 
     @InitBinder("createEventReqDTO")
     public void initValidators(WebDataBinder binder){
         binder.addValidators(createEventReqDTOValidator);
     }
 
-
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
-    }
 
     @GetMapping("/page/{pageNumber}")
     public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfNotApprovedEventsByPageNumber(

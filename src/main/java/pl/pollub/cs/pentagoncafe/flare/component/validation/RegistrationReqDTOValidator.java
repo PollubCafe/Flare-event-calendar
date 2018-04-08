@@ -37,7 +37,7 @@ public class RegistrationReqDTOValidator implements Validator{
             errors.rejectValue("nick",errorCode,messages.get(errorCode));
         }
 
-        boolean emailAlreadyUsed  = userRepository.findByEmail(registrationReqDTO.getEmail()).orElse(null) != null;
+        boolean emailAlreadyUsed  = false; //userRepository.findByEmail(registrationReqDTO.getEmail()).orElse(null) != null;
 
         if(emailAlreadyUsed){
             String errorCode = "validation.registration.email.alreadyUsed";

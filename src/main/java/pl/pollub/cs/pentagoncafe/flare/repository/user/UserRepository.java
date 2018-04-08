@@ -17,8 +17,4 @@ public interface UserRepository extends MongoRepository<User,ObjectId> {
     Optional<User> findByEmail(String email);
     @Query(value="{ 'activationToken.token' : ?0 }")
     Optional<User> findByActivationToken(String token);
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/task/#42
 }

@@ -24,7 +24,6 @@ public class Event extends BaseEntity{
     private String title;
     private String description;
     private int duration;
-    private Instant dateOfEventApproval;
     private boolean isApproved;
     private Instant dateOfEndRegistration;
     private EventStatus status;

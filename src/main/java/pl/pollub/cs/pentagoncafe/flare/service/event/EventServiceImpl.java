@@ -30,20 +30,15 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final EventMapper eventMapper;
-
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, EventMapper eventMapper) {
-        this.eventRepository = eventRepository;
-        this.userRepository = userRepository;
-
     private final ParticipationRepository participationRepository;
-    private final EventMapper eventMapper;
 
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, ParticipationRepository participationRepository, EventMapper eventMapper) {
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, EventMapper eventMapper, ParticipationRepository participationRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
-        this.participationRepository = participationRepository;
         this.eventMapper = eventMapper;
+        this.participationRepository = participationRepository;
     }
+
 
     @Override
     public SimplifiedEventResponseDTO createEvent(CreateEventReqDTO createEventReqDTO) {
@@ -67,7 +62,6 @@ public class EventServiceImpl implements EventService {
                 .title(createEventReqDTO.getTitle())
                 .description(createEventReqDTO.getDescription())
                 .duration(createEventReqDTO.getDuration())
-                .dateOfEventApproval(createEventReqDTO.getDateOfEventApproval().toInstant())
                 .isApproved(false)
                 .dateOfEndRegistration(createEventReqDTO.getDateOfEndRegistration().toInstant())
                 .status(EventStatus.NEW)
@@ -86,11 +80,8 @@ public class EventServiceImpl implements EventService {
     public PageResponseDTO<SimplifiedEventResponseDTO> getPageOfNotApprovedEventsByPageNumber(int pageNumber) {
         int defaultPageSize = 7;
         String sortBy = "dateOfCreation";
-<<<<<<< HEAD
         PageRequest pageRequest = new PageRequest(pageNumber, defaultPageSize, Sort.Direction.DESC,sortBy);
-=======
-        PageRequest pageRequest = new PageRequest(pageNumber, defaultPageSize, Sort.Direction.DESC, sortBy);
->>>>>>> origin/task/#42
+
         Page<Event> eventsPage = eventRepository.getPageOfNotApprovedEventsByPageNumber(pageRequest);
 
         return new PageResponseDTO<>(
@@ -101,43 +92,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-<<<<<<< HEAD
     public Event generateStatisticForEvent(Event event){
         List<TimePoint> timePointsForParticipations = getTimePointsForParticipations(event.getParticipation());
         Set<Term> eventStatistic = generateStatisticForTimePoints(timePointsForParticipations,event.getParticipation().size());
-=======
-    public Event generateStatisticForEvent(Event event) {
-        List<TimePoint> timePointsForParticipations = getTimePointsForParticipations(event.getParticipation());
-        Set<Term> eventStatistic = generateStatisticForTimePoints(timePointsForParticipations, event.getParticipation().size());
->>>>>>> origin/task/#42
         event.setEventStatistic(eventStatistic);
         return event;
     }
 
-    @Override
-<<<<<<< HEAD
-    public Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints,int participantCount){
-
-        Set<Term> termList=new HashSet<>();
-        TimePoint leftTimePoint=null;
-        int participantCurrentCount=0;
-
-        for(TimePoint tp:timePoints){
-            if(Objects.isNull(leftTimePoint)){
-                leftTimePoint=tp;
-                participantCurrentCount++;
-            }else{
-                if(leftTimePoint.getDayOfTheWeek().equals(tp.getDayOfTheWeek())
-                        && participantCurrentCount>0 && !leftTimePoint.getTime().equals(tp.getTime())){
-                    Term term=new Term(leftTimePoint.getTime(),tp.getTime(),participantCurrentCount,
-                            leftTimePoint.getDayOfTheWeek(),((double) participantCurrentCount /participantCount)*100);
-                    termList.add(term);
-                }
-
-                leftTimePoint=tp;
-
-                if(tp.getType()==TimePointType.START) participantCurrentCount++ ;
-=======
     public Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints, int participantCount) {
 
         Set<Term> termList = new HashSet<>();
@@ -159,7 +120,6 @@ public class EventServiceImpl implements EventService {
                 leftTimePoint = tp;
 
                 if (tp.getType() == TimePointType.START) participantCurrentCount++;
->>>>>>> origin/task/#42
                 else participantCurrentCount--;
             }
         }
@@ -169,17 +129,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<TimePoint> getTimePointsForParticipations(Set<Participation> participations) {
-<<<<<<< HEAD
         return participations.stream().flatMap(p->p.getVotes().stream()).flatMap(v -> Stream.of(
                     new TimePoint(v.getDayOfWeek(), v.getFrom(), TimePointType.START),
                     new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)))
                     .sorted().collect(Collectors.toList());
-    }
-=======
-        return participations.stream().flatMap(p -> p.getVotes().stream()).flatMap(v -> Stream.of(
-                new TimePoint(v.getDayOfWeek(), v.getFrom(), TimePointType.START),
-                new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)))
-                .sorted().collect(Collectors.toList());
     }
 
     @Override
@@ -269,6 +222,4 @@ public class EventServiceImpl implements EventService {
                 .collect(Collectors.toList());
     }
 
-
->>>>>>> origin/task/#42
 }
