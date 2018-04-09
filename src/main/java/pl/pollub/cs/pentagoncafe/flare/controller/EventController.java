@@ -2,12 +2,13 @@ package pl.pollub.cs.pentagoncafe.flare.controller;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/12/12
  */
-import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.service.event.EventService;
@@ -38,4 +39,13 @@ public class EventController {
     public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @Valid @NotNull CreateEventReqDTO eventRequestDTO){
         return new ResponseEntity<>(eventService.createEvent(eventRequestDTO), HttpStatus.OK);
     }
+
+    @GetMapping
+    public EventResDTO showEvent(@PathVariable("id") String id) {
+        EventResDTO eventToShow = eventService.readEvent(id);
+
+        return eventToShow;
+    }
+
+
 }

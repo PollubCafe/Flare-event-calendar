@@ -9,9 +9,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 
+import java.util.Optional;
+
 @Repository
 @Transactional
 public interface EventRepository extends MongoRepository<Event,ObjectId> {
     @Query(value="{ 'isApproved' : false }")
     Page<Event> getPageOfNotApprovedEventsByPageNumber(Pageable page);
+    Optional<Event> findById(ObjectId id);
 }

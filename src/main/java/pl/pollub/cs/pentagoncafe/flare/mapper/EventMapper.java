@@ -1,19 +1,13 @@
 package pl.pollub.cs.pentagoncafe.flare.mapper;
 
 import org.springframework.stereotype.Component;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
-import pl.pollub.cs.pentagoncafe.flare.domain.Address;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoField;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 @Component
 public class EventMapper {
@@ -34,6 +28,25 @@ public class EventMapper {
                 duration(event.getDuration()).
                 imageURL(event.getImageURL()).
                 build();
+    }
+
+    public EventResDTO mapToResDTO(Event event) {
+
+        return EventResDTO.builder()
+                .title(event.getTitle())
+                .description(event.getDescription() == null? "":event.getDescription())
+                .duration(event.getDuration())
+                .dateOfApproval(event.getDateOfEventApproval())
+                .isApproved(event.isApproved())
+                .onlyForRegisteredUsers(event.isOnlyForRegisteredUsers())
+                .address_town(event.getAddress().getTown())
+                .address_zipcode(event.getAddress().getZipCode())
+                .address_street(event.getAddress().getStreet())
+                .address_province(event.getAddress().getProvince())
+                .address_blockNumber(event.getAddress().getBlockNumber())
+                .address_houseNumber(event.getAddress().getHouseNumber())
+                .address_additionalInformation(event.getAddress().getAdditionalInformation() == null? "":event.getAddress().getAdditionalInformation())
+                .build();
     }
 
     private String parseDateToHoursWithMinutes(LocalDateTime timeOfApproval){

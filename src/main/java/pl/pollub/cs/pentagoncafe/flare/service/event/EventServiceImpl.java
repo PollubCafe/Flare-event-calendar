@@ -1,11 +1,13 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.*;
@@ -18,7 +20,10 @@ import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePoint;
 import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePointType;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -126,5 +131,12 @@ public class EventServiceImpl implements EventService {
                     new TimePoint(v.getDayOfWeek(), v.getFrom(), TimePointType.START),
                     new TimePoint(v.getDayOfWeek(), v.getTo(), TimePointType.END)))
                     .sorted().collect(Collectors.toList());
+    }
+
+    @Override
+    public EventResDTO readEvent(String id) {
+        Event foundEvent = eventRepository.findById(new ObjectId(id)).orElseThrow(()->new ObjectNotFoundException(User.class,"nick",id));
+
+        return eventMapper.mapToResDTO(foundEvent);
     }
 }

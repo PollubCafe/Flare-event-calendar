@@ -1,6 +1,7 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
@@ -20,4 +21,6 @@ public interface EventService {
     Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints, int participantCount);
 
     List<TimePoint> getTimePointsForParticipations(Set<Participation> participations);
+
+    EventResDTO readEvent(String id);
 }
