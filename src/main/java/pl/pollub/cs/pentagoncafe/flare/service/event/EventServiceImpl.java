@@ -135,7 +135,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventResDTO readEvent(String id) {
-        Event foundEvent = eventRepository.findById(new ObjectId(id)).orElseThrow(()->new ObjectNotFoundException(User.class,"nick",id));
+        Event foundEvent = eventRepository.findById(new ObjectId(id)).orElseThrow(()->new ObjectNotFoundException(Event.class,"id", id));
 
         return eventMapper.mapToResDTO(foundEvent);
     }
