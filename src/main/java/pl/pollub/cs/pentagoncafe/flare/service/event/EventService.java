@@ -1,6 +1,7 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.Event;
@@ -12,6 +13,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface EventService {
+
+    EventResDTO readEvent(String id);
+
     SimplifiedEventResponseDTO createEvent(CreateEventReqDTO event);
     PageResponseDTO<SimplifiedEventResponseDTO> getPageOfNotApprovedEventsByPageNumber(int pageNumber);
 

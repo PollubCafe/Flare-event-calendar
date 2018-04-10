@@ -30,4 +30,5 @@ public interface EventRepository extends MongoRepository<Event,ObjectId> {
     List<Event> getEventsByOrganizer(User user);
 
     List<Event> getEventsByOrganizerAndBannedIsFalse(User user);
+
 }

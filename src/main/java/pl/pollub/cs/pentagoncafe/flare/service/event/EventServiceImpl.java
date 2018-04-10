@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.*;
@@ -14,7 +15,6 @@ import pl.pollub.cs.pentagoncafe.flare.domain.enums.Province;
 import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
-import pl.pollub.cs.pentagoncafe.flare.repository.participation.ParticipationRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePoint;
 import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePointType;
@@ -30,22 +30,25 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final EventMapper eventMapper;
-    private final ParticipationRepository participationRepository;
 
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, EventMapper eventMapper, ParticipationRepository participationRepository) {
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.eventMapper = eventMapper;
-        this.participationRepository = participationRepository;
     }
 
+    @Override
+    public EventResDTO readEvent(String id) {
+        Event foundEvent = eventRepository.findById(new ObjectId(id)).orElseThrow(()->new ObjectNotFoundException(Event.class,"id", id));
+
+        return eventMapper.mapToResDTO(foundEvent);
+    }
 
     @Override
     public SimplifiedEventResponseDTO createEvent(CreateEventReqDTO createEventReqDTO) {
         String authenticatedUserNick = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User authenticatedUser = userRepository.findByNick(authenticatedUserNick).orElseThrow(() -> new ObjectNotFoundException(User.class, "nick", authenticatedUserNick));
-
+        User authenticatedUser = userRepository.findByNick(authenticatedUserNick).orElseThrow(()->new ObjectNotFoundException(User.class,"nick",authenticatedUserNick));
 
         Address address = Address.builder()
                 .town(createEventReqDTO.getAddress_town())
@@ -62,8 +65,7 @@ public class EventServiceImpl implements EventService {
                 .title(createEventReqDTO.getTitle())
                 .description(createEventReqDTO.getDescription())
                 .duration(createEventReqDTO.getDuration())
-                .isApproved(false)
-                .dateOfEndRegistration(createEventReqDTO.getDateOfEndRegistration().toInstant())
+                .dateOfEndRegistration(createEventReqDTO.getDateOfEventApproval().toInstant())
                 .status(EventStatus.NEW)
                 .onlyForRegisteredUsers(createEventReqDTO.isOnlyForRegisteredUsers())
                 .dateOfCreation(Instant.now())
@@ -81,7 +83,6 @@ public class EventServiceImpl implements EventService {
         int defaultPageSize = 7;
         String sortBy = "dateOfCreation";
         PageRequest pageRequest = new PageRequest(pageNumber, defaultPageSize, Sort.Direction.DESC,sortBy);
-
         Page<Event> eventsPage = eventRepository.getPageOfNotApprovedEventsByPageNumber(pageRequest);
 
         return new PageResponseDTO<>(
@@ -99,27 +100,28 @@ public class EventServiceImpl implements EventService {
         return event;
     }
 
-    public Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints, int participantCount) {
+    @Override
+    public Set<Term> generateStatisticForTimePoints(List<TimePoint> timePoints,int participantCount){
 
-        Set<Term> termList = new HashSet<>();
-        TimePoint leftTimePoint = null;
-        int participantCurrentCount = 0;
+        Set<Term> termList=new HashSet<>();
+        TimePoint leftTimePoint=null;
+        int participantCurrentCount=0;
 
-        for (TimePoint tp : timePoints) {
-            if (Objects.isNull(leftTimePoint)) {
-                leftTimePoint = tp;
+        for(TimePoint tp:timePoints){
+            if(Objects.isNull(leftTimePoint)){
+                leftTimePoint=tp;
                 participantCurrentCount++;
-            } else {
-                if (leftTimePoint.getDayOfTheWeek().equals(tp.getDayOfTheWeek())
-                        && participantCurrentCount > 0 && !leftTimePoint.getTime().equals(tp.getTime())) {
-                    Term term = new Term(leftTimePoint.getTime(), tp.getTime(), participantCurrentCount,
-                            leftTimePoint.getDayOfTheWeek(), ((double) participantCurrentCount / participantCount) * 100);
+            }else{
+                if(leftTimePoint.getDayOfTheWeek().equals(tp.getDayOfTheWeek())
+                        && participantCurrentCount>0 && !leftTimePoint.getTime().equals(tp.getTime())){
+                    Term term=new Term(leftTimePoint.getTime(),tp.getTime(),participantCurrentCount,
+                            leftTimePoint.getDayOfTheWeek(),((double) participantCurrentCount /participantCount)*100);
                     termList.add(term);
                 }
 
-                leftTimePoint = tp;
+                leftTimePoint=tp;
 
-                if (tp.getType() == TimePointType.START) participantCurrentCount++;
+                if(tp.getType()==TimePointType.START) participantCurrentCount++ ;
                 else participantCurrentCount--;
             }
         }
@@ -221,5 +223,4 @@ public class EventServiceImpl implements EventService {
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
-
 }

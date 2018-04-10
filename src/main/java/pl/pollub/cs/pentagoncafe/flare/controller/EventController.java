@@ -2,21 +2,19 @@ package pl.pollub.cs.pentagoncafe.flare.controller;
 /** Twórca: Konrad Gryczko
  *  Data Start 2017/12/12
  */
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
-import pl.pollub.cs.pentagoncafe.flare.component.validation.CreateEventReqDTOValidator;
 import pl.pollub.cs.pentagoncafe.flare.service.event.EventService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import java.util.List;
 
 @RestController
@@ -24,19 +22,17 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
-    private final CreateEventReqDTOValidator createEventReqDTOValidator;
 
-    @Autowired
-    public EventController(EventService eventService, CreateEventReqDTOValidator createEventReqDTOValidator) {
+    public EventController(EventService eventService) {
         this.eventService = eventService;
-        this.createEventReqDTOValidator = createEventReqDTOValidator;
     }
 
-    @InitBinder("createEventReqDTO")
-    public void initValidators(WebDataBinder binder){
-        binder.addValidators(createEventReqDTOValidator);
-    }
+    @GetMapping
+    public ResponseEntity<EventResDTO> showEvent(@PathVariable("id") String id) {
+        EventResDTO eventToShow = eventService.readEvent(id);
 
+        return new ResponseEntity<>(eventToShow, HttpStatus.OK);
+    }
 
     @GetMapping("/page/{pageNumber}")
     public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfNotApprovedEventsByPageNumber(
@@ -100,4 +96,5 @@ public class EventController {
     public ResponseEntity<List<SimplifiedEventResponseDTO>> adminListEventsThatWasCreatedByUser(@PathVariable String userNick){
         return new ResponseEntity<>(eventService.adminGetEventsWhichWasCreatedByUser(userNick), HttpStatus.OK);
     }
+
 }
