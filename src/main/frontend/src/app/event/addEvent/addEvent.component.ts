@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {CreatedEventRequest} from "../eventRequest.model";
 import {EventService} from "../event.service";
 import {SimplifiedEvent} from "../simplifiedEvent.model";
@@ -8,7 +8,6 @@ import {MessageService} from "../../message/message.service";
 
 
 @Component({
-    moduleId: module.id,
     selector: 'addEventButton',
     templateUrl: 'addEvent.component.html',
     styleUrls: ['addEvent.component.css']

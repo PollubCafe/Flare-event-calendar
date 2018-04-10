@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -65,7 +66,7 @@ public class EventServiceImpl implements EventService {
                 .title(createEventReqDTO.getTitle())
                 .description(createEventReqDTO.getDescription())
                 .duration(createEventReqDTO.getDuration())
-                .dateOfEndRegistration(createEventReqDTO.getDateOfEventApproval().toInstant())
+                .dateOfEndRegistration(createEventReqDTO.getDateOfEndRegistration().toInstant())
                 .status(EventStatus.NEW)
                 .onlyForRegisteredUsers(createEventReqDTO.isOnlyForRegisteredUsers())
                 .dateOfCreation(Instant.now())
@@ -207,7 +208,7 @@ public class EventServiceImpl implements EventService {
 
         return user.getParticipation()
                 .stream()
-                .map(x -> x.getEvent())
+                .map(Participation::getEvent)
                 .filter(x -> x.getStatus() == EventStatus.NEW)
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());

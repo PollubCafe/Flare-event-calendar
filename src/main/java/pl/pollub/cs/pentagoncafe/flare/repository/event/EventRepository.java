@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 public interface EventRepository extends MongoRepository<Event,ObjectId> {
     Optional<Event> findByTitle(String event);
-    Optional<Event> findById(String id);
+    Optional<Event> findById(ObjectId id);
 
     @Query(value="{ 'isApproved' : false }")
     Page<Event> getPageOfNotApprovedEventsByPageNumber(Pageable page);

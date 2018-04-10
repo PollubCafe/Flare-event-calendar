@@ -1,14 +1,11 @@
 package pl.pollub.cs.pentagoncafe.flare.domain;
 
-import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Singular;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.EventStatus;
 
 
@@ -24,7 +21,6 @@ public class Event extends BaseEntity{
     private String title;
     private String description;
     private int duration;
-    private boolean isApproved;
     private Instant dateOfEndRegistration;
     private EventStatus status;
     private boolean banned;
