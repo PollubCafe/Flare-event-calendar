@@ -37,8 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = EventCalendarApplication.class)
-@TestPropertySource(properties = {"application-test.properties"})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {EventCalendarApplication.class},properties = "spring.profiles.active=test")
 public class EventControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -158,12 +157,9 @@ public class EventControllerTest {
 
     @After
     public void tearDown() throws Exception {
-        eventRepository.delete(newEvent);
-        eventRepository.delete(approvedEvent);
-        eventRepository.delete(endedEvent);
-        eventRepository.delete(bannedEvent);
-        userRepository.delete(user);
-        participationRepository.delete(participation);
+        eventRepository.deleteAll();
+        userRepository.deleteAll();
+        participationRepository.deleteAll();
     }
 
     @Test

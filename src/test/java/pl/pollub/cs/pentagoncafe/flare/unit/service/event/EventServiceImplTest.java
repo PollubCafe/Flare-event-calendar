@@ -14,8 +14,8 @@ import pl.pollub.cs.pentagoncafe.flare.repository.participation.ParticipationRep
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.service.event.EventService;
 import pl.pollub.cs.pentagoncafe.flare.service.event.EventServiceImpl;
-import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePoint;
-import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePointType;
+import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePoint;
+import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePointType;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -34,15 +34,13 @@ public class EventServiceImplTest {
     private UserRepository userRepository;
     @MockBean
     private EventMapper eventMapper;
-    @MockBean
-    private ParticipationRepository participationRepository;
 
 
     private EventService eventService;
 
     @Before
     public void setup(){
-        eventService=new EventServiceImpl(eventRepository,userRepository, eventMapper, participationRepository);
+        eventService = new EventServiceImpl(eventRepository,userRepository, eventMapper);
     }
 
     @Test

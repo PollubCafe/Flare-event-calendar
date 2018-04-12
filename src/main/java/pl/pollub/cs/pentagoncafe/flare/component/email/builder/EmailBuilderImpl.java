@@ -60,7 +60,7 @@ public class EmailBuilderImpl implements EmailBuilder {
 
     @Override
     public EmailBuilder buildEmailToEventAuthor(String messageContent, String subject) {
-        HtmlEmail instance = new HtmlEmail("PentagonCafe");
+        HtmlEmail instance = new HtmlEmail("from@no-spam.com");
         instance.setSubject(subject);
 
         Context emailTemplateContext = new Context();

@@ -15,9 +15,8 @@ public class EventResDTO {
     private String title;
     private String description;
     private int duration;
-    private Instant dateOfApproval;
+    private Instant dateOfEndRegistration;
 
-    private boolean isApproved;
     private boolean onlyForRegisteredUsers;
 
     private String address_town;

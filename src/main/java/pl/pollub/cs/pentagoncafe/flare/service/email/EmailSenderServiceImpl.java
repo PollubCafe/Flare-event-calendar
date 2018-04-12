@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.service.email;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.EmailToEventAuthorReqDTO;
 import pl.pollub.cs.pentagoncafe.flare.component.email.HtmlEmail;
@@ -32,7 +33,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void sendEmail(EmailToEventAuthorReqDTO emailToEventAuthorReqDTO) {
-        Event event = eventRepository.findById(emailToEventAuthorReqDTO.getEventID())
+        Event event = eventRepository.findById(new ObjectId(emailToEventAuthorReqDTO.getEventID()))
                 .orElseThrow(() -> new ObjectNotFoundException(Event.class, "id", emailToEventAuthorReqDTO.getEventID()));
 
 

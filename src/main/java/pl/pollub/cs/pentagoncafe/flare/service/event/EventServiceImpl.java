@@ -17,8 +17,8 @@ import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
-import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePoint;
-import pl.pollub.cs.pentagoncafe.flare.unit.service.event.related.TimePointType;
+import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePoint;
+import pl.pollub.cs.pentagoncafe.flare.service.event.related.TimePointType;
 
 import java.time.Instant;
 import java.util.*;
@@ -165,7 +165,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<SimplifiedEventResponseDTO> getEventsWhichUserIsAttending(String userNick) {
 
-        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException(User.class, "nick", userNick) );
 
         return user.getParticipation()
                 .stream()
@@ -177,7 +177,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<SimplifiedEventResponseDTO> getEventsWhichWasCreatedByUser(String userNick) {
 
-        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException(User.class, "nick", userNick) );
 
         return eventRepository.getEventsByOrganizerAndBannedIsFalse(user)
                 .stream()
@@ -204,7 +204,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<SimplifiedEventResponseDTO> adminGetEventWhichUserIsAttending(String userNick) {
 
-        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException(User.class, "nick", userNick) );
 
         return user.getParticipation()
                 .stream()
@@ -217,7 +217,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<SimplifiedEventResponseDTO> adminGetEventsWhichWasCreatedByUser(String userNick) {
 
-        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException("User with nick: " + userNick + " not found") );
+        User user = userRepository.findByNick(userNick).orElseThrow( () ->  new ObjectNotFoundException(User.class, "nick", userNick) );
 
         return eventRepository.getEventsByOrganizer(user)
                 .stream()

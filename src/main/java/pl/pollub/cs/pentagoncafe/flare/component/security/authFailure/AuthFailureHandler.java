@@ -16,13 +16,10 @@ import java.util.Map;
 @Component
 public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    private final Messages messages;
-
     private Map<String,String> messagesMap = new HashMap<>();
 
     @Autowired
     public AuthFailureHandler(Messages messages) {
-        this.messages = messages;
         messagesMap.put("Bad credentials", messages.get("login.badCredentials"));
         messagesMap.put("User is disabled", messages.get("login.userAccount.disabled"));
         messagesMap.put("User account is locked", messages.get("login.userAccount.locked"));
