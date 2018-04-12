@@ -15,11 +15,8 @@ public class UserController {
 
     private final UserService userService;
 
-    private final UserRepository userRepository;
-
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping(value = "/{id}")
@@ -27,7 +24,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/name/{name}")
+    @GetMapping(value = "/nick/{nick}")
     public ResponseEntity<UserResponseDTO> getUserByNick(@PathVariable("nick") String nick) {
         return new ResponseEntity<>(userService.getUserByNick(nick), HttpStatus.OK);
     }
