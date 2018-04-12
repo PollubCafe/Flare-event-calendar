@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface UserRepository extends MongoRepository<User,ObjectId> {
+    Optional<User> findById(ObjectId id);
     Optional<User> findByNick(String nick);
     Optional<User> findByEmail(String email);
     @Query(value="{ 'activationToken.token' : ?0 }")

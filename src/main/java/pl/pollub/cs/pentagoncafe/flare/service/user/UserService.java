@@ -7,5 +7,5 @@ import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 
 public interface UserService {
     UserResponseDTO getUser(ObjectId id);
-    UserResponseDTO getUserByName(String name);
+    UserResponseDTO getUserByNick(String nick);
 }
