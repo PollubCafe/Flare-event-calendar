@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -78,7 +79,7 @@ public class EventServiceImpl implements EventService {
         int defaultPageSize = 7;
         String sortBy = "dateOfCreation";
         PageRequest pageRequest = new PageRequest(pageNumber, defaultPageSize, Sort.Direction.DESC, sortBy);
-        Page<Event> eventsPage = eventRepository.getPageOfNotApprovedEventsByPageNumber(pageRequest);
+        Page<Event> eventsPage = eventRepository.findAll(pageRequest);
 
         return new PageResponseDTO<>(
                 eventsPage.getTotalPages(),
@@ -218,6 +219,5 @@ public class EventServiceImpl implements EventService {
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
-
 
 }

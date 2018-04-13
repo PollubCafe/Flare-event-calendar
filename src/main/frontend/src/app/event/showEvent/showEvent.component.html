@@ -1,0 +1,53 @@
+<a href="#" (click)="openModal()">
+    <span class="glyphicon glyphicon-arrow-right"></span>
+</a>
+
+<bs-modal #showEventPopup>
+    <bs-modal-header>
+        Event info
+    </bs-modal-header>
+    <bs-modal-body class="modal-body">
+       <div class="pre-scrollable">
+            <div class="form-group">
+            Title: <input type="text" placeholder="{{model.title}}" disabled="disabled" class="form-control">
+            </div>
+            <div class="form-group">
+                Description: <input type="text" placeholder="{{model.description}}" disabled="disabled" class="form-control">
+            </div>
+            <div class="form-group">
+                Adress: <input type="text" placeholder="{{model.address}}" disabled="disabled" class="form-control">
+            </div>
+            <div class="form-group">
+                Organizer: <input type="text" placeholder="{{model.organizerName}}" disabled="disabled" class="form-control">
+            </div>
+            <div class="form-group">
+                Links count: <input type="text" placeholder="{{model.linksCount}}" disabled="disabled" class="form-control">
+            </div>
+            <div class="form-group">
+                Votes count: <input type="text" placeholder="{{model.votesCount}}" disabled="disabled" class="form-control">
+            </div>
+
+
+            <div class="form-group">
+                Only for registered users: <div *ngIf="model.onlyForRegisteredUsers; then trueSpan else elseSpan">yes</div>
+                <ng-template #trueSpan><input type="checkbox" disabled="disabled" checked="checked"></ng-template>
+                <ng-template #elseSpan><input type="checkbox" disabled="disabled"></ng-template>
+            </div>
+
+
+            <div class="form-group">
+                Date of approval: <input type="date" placeholder="{{model.dayOfEventApproval}}.{{model.mouthOfEventApproval}}.{{model.yearOfEventApproval}} {{model.hourOfEventApproval}}" disabled="disabled" class="form-control">
+            </div>
+            <div class="form-group">
+                Duration: <input type="text" placeholder="{{model.duration}}h" disabled="disabled" class="form-control">
+            </div>
+
+           <div>
+               Image: <img src="https://farm5.staticflickr.com/4150/5045502202_1d867c8a41_q.jpg">
+           </div>
+       </div>
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn-default btn" (click)="closeModal()">Close</button>
+    </bs-modal-footer>
+</bs-modal>
