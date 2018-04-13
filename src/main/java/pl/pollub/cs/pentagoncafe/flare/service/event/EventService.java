@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.service.event;
 
+import org.bson.types.ObjectId;
 import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
@@ -37,4 +38,5 @@ public interface EventService {
     List<SimplifiedEventResponseDTO> adminGetEventWhichUserIsAttending(String userNick);
     List<SimplifiedEventResponseDTO> adminGetEventsWhichWasCreatedByUser(String userNick);
 
+    void deleteEvent(ObjectId id);
 }
