@@ -123,7 +123,7 @@ public class EventControllerTest {
                 .dateOfEndRegistration(Instant.ofEpochSecond(40000L))
                 .status(EventStatus.REGISTRATION)
                 .banned(true)
-                .onlyForRegisteredUsers(false)
+                .onlyForRegisteredUsers(true)
                 .imageURL("abc")
                 .dateOfCreation(Instant.now())
                 .address(address)

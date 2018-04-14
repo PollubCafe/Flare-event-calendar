@@ -32,6 +32,7 @@ import {RegisterService} from "./register/register.service";
 import {RegisterComponent} from "./register/register.component";
 import {ResendVerificationEMailComponent} from "./register/resendVerficationEmail/resend.component";
 import {ForgotPasswordComponent} from "./login/forgotPassword/forgot.component";
+import {SingleEventComponent} from "./event/showEvent/showEvent.component";
 
 const appRoutes: Routes = [
     { path: '', component: EventsComponent },
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
         LoginComponent,
         RegisterComponent,
         ResendVerificationEMailComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        SingleEventComponent
     ],
     imports: [
         RouterModule.forRoot(appRoutes),
