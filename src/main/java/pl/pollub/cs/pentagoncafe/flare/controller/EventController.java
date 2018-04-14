@@ -33,39 +33,40 @@ public class EventController {
     }
 
     @GetMapping("/page/{pageNumber}")
-    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfEventsByPageNumber(
+    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfNotApprovedEventsByPageNumber(
             @PathVariable("pageNumber") int pageNumber){
         PageResponseDTO<SimplifiedEventResponseDTO> pageResponseDTO = eventService.getPageOfEventsByPageNumber(pageNumber);
         return new ResponseEntity<>(pageResponseDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping()
-    public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @Valid @NotNull CreateEventReqDTO eventRequestDTO){
+    public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @Valid @NotNull CreateEventReqDTO eventRequestDTO) {
         return new ResponseEntity<>(eventService.createEvent(eventRequestDTO), HttpStatus.OK);
     }
 
     @GetMapping("/new")
-    public ResponseEntity<List<SimplifiedEventResponseDTO>> getNewEvents(){
+    public ResponseEntity<List<SimplifiedEventResponseDTO>> getNewEvents() {
         return new ResponseEntity<>(eventService.getNewEvents(), HttpStatus.OK);
     }
 
     @GetMapping("/approved")
-    public ResponseEntity<List<SimplifiedEventResponseDTO>> getApprovedEvents(){
+    public ResponseEntity<List<SimplifiedEventResponseDTO>> getApprovedEvents() {
         return new ResponseEntity<>(eventService.getApprovedEvents(), HttpStatus.OK);
     }
 
     @GetMapping("/ended")
-    public ResponseEntity<List<SimplifiedEventResponseDTO>> getEndedEvents(){
+    public ResponseEntity<List<SimplifiedEventResponseDTO>> getEndedEvents() {
         return new ResponseEntity<>(eventService.getEventsWithEndedRegistration(), HttpStatus.OK);
     }
 
     @GetMapping("/{userNick}/attending")
-    public ResponseEntity<List<SimplifiedEventResponseDTO>> getUserAttendingEvents(@PathVariable String userNick){
+    public ResponseEntity<List<SimplifiedEventResponseDTO>> getUserAttendingEvents(@PathVariable String userNick) {
         return new ResponseEntity<>(eventService.getEventsWhichUserIsAttending(userNick), HttpStatus.OK);
     }
 
     @GetMapping("/{userNick}/created")
-    public ResponseEntity<List<SimplifiedEventResponseDTO>> getEventsOfUser(@PathVariable String userNick){
+    public ResponseEntity<List<SimplifiedEventResponseDTO>> getEventsOfUser(@PathVariable String userNick) {
         List<SimplifiedEventResponseDTO> events = eventService.getEventsWhichWasCreatedByUser(userNick);
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
@@ -84,14 +85,19 @@ public class EventController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/{userNick}/attending")
-    public ResponseEntity<List<SimplifiedEventResponseDTO>> adminListOfEventsThatUserIsAttending(@PathVariable String userNick){
+    public ResponseEntity<List<SimplifiedEventResponseDTO>> adminListOfEventsThatUserIsAttending(@PathVariable String userNick) {
         return new ResponseEntity<>(eventService.adminGetEventWhichUserIsAttending(userNick), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/{userNick}/created")
-    public ResponseEntity<List<SimplifiedEventResponseDTO>> adminListEventsThatWasCreatedByUser(@PathVariable String userNick){
+    public ResponseEntity<List<SimplifiedEventResponseDTO>> adminListEventsThatWasCreatedByUser(@PathVariable String userNick) {
         return new ResponseEntity<>(eventService.adminGetEventsWhichWasCreatedByUser(userNick), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEvent(@PathVariable ObjectId id) {
+        eventService.deleteEvent(id);
     }
 
 }

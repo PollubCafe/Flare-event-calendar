@@ -13,6 +13,7 @@ import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.domain.*;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.EventStatus;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.Province;
+import pl.pollub.cs.pentagoncafe.flare.domain.enums.Role;
 import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
 import pl.pollub.cs.pentagoncafe.flare.mapper.EventMapper;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
@@ -223,5 +224,17 @@ public class EventServiceImpl implements EventService {
                 .stream()
                 .map(eventMapper::mapToResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteEvent(ObjectId id) {
+        String authenticatedUserNick = SecurityContextHolder.getContext().getAuthentication().getName();
+        User authenticatedUser = (User)SecurityContextHolder.getContext().getAuthentication().getDetails();
+
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(Event.class));
+
+        if(authenticatedUserNick.equals(event.getOrganizer().getNick()) || authenticatedUser.getRole() == Role.ADMIN)
+            eventRepository.delete(id);
     }
 }
