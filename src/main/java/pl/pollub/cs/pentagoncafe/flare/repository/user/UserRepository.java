@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
+import pl.pollub.cs.pentagoncafe.flare.domain.enums.Role;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,4 +20,7 @@ public interface UserRepository extends MongoRepository<User,ObjectId> {
     Optional<User> findByEmail(String email);
     @Query(value="{ 'activationToken.token' : ?0 }")
     Optional<User> findByActivationToken(String token);
+
+    List<User> findAllByBannedIsFalse();
+    List<User> findAllByRoleIs(Role role);
 }
