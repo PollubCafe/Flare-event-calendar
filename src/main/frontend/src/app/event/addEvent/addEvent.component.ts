@@ -36,7 +36,6 @@ export class AddEventComponent{
     }
 
     sendEventData(){
-        console.log(this.createdEvent);
         this.saveButtonName = "Saving...";
         this.isSavingEventInProgress = true;
         this.eventService.sendEventData(this.createdEvent).subscribe(

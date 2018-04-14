@@ -1,7 +1,5 @@
 package pl.pollub.cs.pentagoncafe.flare.controller;
-/** Twórca: Konrad Gryczko
- *  Data Start 2017/12/12
- */
+
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
@@ -35,13 +33,12 @@ public class EventController {
     }
 
     @GetMapping("/page/{pageNumber}")
-    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfNotApprovedEventsByPageNumber(
+    public ResponseEntity<PageResponseDTO<SimplifiedEventResponseDTO>> getPageOfEventsByPageNumber(
             @PathVariable("pageNumber") int pageNumber){
-        PageResponseDTO<SimplifiedEventResponseDTO> pageResponseDTO = eventService.getPageOfNotApprovedEventsByPageNumber(pageNumber);
+        PageResponseDTO<SimplifiedEventResponseDTO> pageResponseDTO = eventService.getPageOfEventsByPageNumber(pageNumber);
         return new ResponseEntity<>(pageResponseDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<SimplifiedEventResponseDTO> createEvent(@RequestBody @Valid @NotNull CreateEventReqDTO eventRequestDTO){
         return new ResponseEntity<>(eventService.createEvent(eventRequestDTO), HttpStatus.OK);

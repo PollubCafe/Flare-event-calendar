@@ -21,7 +21,9 @@ export class EventService {
     }
 
     sendEventData(createdEventRequest: CreatedEventRequest) {
+        console.log(createdEventRequest);
         this.prepareObjectToSend(createdEventRequest);
+        console.log(createdEventRequest);
         return this.http.post('/api/event', createdEventRequest)
             .map(
                 (response: Response) => {

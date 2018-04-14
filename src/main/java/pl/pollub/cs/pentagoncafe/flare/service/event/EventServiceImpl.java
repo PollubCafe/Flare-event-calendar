@@ -80,11 +80,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public PageResponseDTO<SimplifiedEventResponseDTO> getPageOfNotApprovedEventsByPageNumber(int pageNumber) {
+    public PageResponseDTO<SimplifiedEventResponseDTO> getPageOfEventsByPageNumber(int pageNumber) {
         int defaultPageSize = 7;
         String sortBy = "dateOfCreation";
         PageRequest pageRequest = new PageRequest(pageNumber, defaultPageSize, Sort.Direction.DESC,sortBy);
-        Page<Event> eventsPage = eventRepository.getPageOfNotApprovedEventsByPageNumber(pageRequest);
+        Page<Event> eventsPage = eventRepository.findAll(pageRequest);
 
         return new PageResponseDTO<>(
                 eventsPage.getTotalPages(),

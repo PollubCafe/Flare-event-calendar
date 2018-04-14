@@ -71,26 +71,26 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="dateOfEventApproval">Date of approval</label>
+                    <label for="dateOfEndRegistration">Date of end registration</label>
                     <div class='input-group date'>
                         <input type='datetime-local'
-                               [(ngModel)]="createdEvent.dateOfEventApproval"
+                               [(ngModel)]="createdEvent.dateOfEndRegistration"
                                required isNotPast
-                               name="dateOfEventApproval"
+                               name="dateOfEndRegistration"
                                class="form-control"
-                               id="dateOfEventApproval"
-                               #dateOfEventApproval="ngModel"/>
+                               id="dateOfEndRegistration"
+                               #dateOfEndRegistration="ngModel"/>
                         <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                     </div>
                 </div>
-                <div *ngIf="dateOfEventApproval.errors && (dateOfEventApproval.dirty || dateOfEventApproval.touched)" class="error-block">
-                    <div [hidden]="!dateOfEventApproval.errors.required">
-                        Date of approval is required
+                <div *ngIf="dateOfEndRegistration.errors && (dateOfEndRegistration.dirty || dateOfEndRegistration.touched)" class="error-block">
+                    <div [hidden]="!dateOfEndRegistration.errors.required">
+                        Date of end registration approval is required
                     </div>
-                    <div [hidden]="!dateOfEventApproval.errors.isNotPast">
-                        Date of approval must be a future date
+                    <div [hidden]="!dateOfEndRegistration.errors.isNotPast">
+                        Date of end registration must be a future date
                     </div>
                 </div>
                 <div class="form-group">

@@ -17,7 +17,7 @@ public interface EventService {
     EventResDTO readEvent(String id);
 
     SimplifiedEventResponseDTO createEvent(CreateEventReqDTO event);
-    PageResponseDTO<SimplifiedEventResponseDTO> getPageOfNotApprovedEventsByPageNumber(int pageNumber);
+    PageResponseDTO<SimplifiedEventResponseDTO> getPageOfEventsByPageNumber(int pageNumber);
 
     Event generateStatisticForEvent(Event event);
 

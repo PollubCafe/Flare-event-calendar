@@ -20,9 +20,6 @@ public interface EventRepository extends MongoRepository<Event,ObjectId> {
     Optional<Event> findByTitle(String event);
     Optional<Event> findById(ObjectId id);
 
-    @Query(value="{ 'isApproved' : false }")
-    Page<Event> getPageOfNotApprovedEventsByPageNumber(Pageable page);
-
     List<Event> getEventsByBannedIsFalseAndStatusIs(EventStatus status);
 
     List<Event> getEventsByStatusIs(EventStatus status);

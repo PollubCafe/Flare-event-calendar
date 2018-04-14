@@ -1,4 +1,3 @@
-import monthsNames from "../const/monthsNames";
 
 export class SimplifiedEvent {
     public id: string;
