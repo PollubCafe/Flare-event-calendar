@@ -1,5 +1,6 @@
 package pl.pollub.cs.pentagoncafe.flare.controller;
 
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
@@ -95,6 +96,7 @@ public class EventController {
         return new ResponseEntity<>(eventService.adminGetEventsWhichWasCreatedByUser(userNick), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DeleteMapping("/{id}")
     public void deleteEvent(@PathVariable ObjectId id) {
         eventService.deleteEvent(id);

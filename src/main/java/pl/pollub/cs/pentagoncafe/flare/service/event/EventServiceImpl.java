@@ -10,6 +10,7 @@ import pl.pollub.cs.pentagoncafe.flare.DTO.request.CreateEventReqDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.EventResDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.PageResponseDTO;
 import pl.pollub.cs.pentagoncafe.flare.DTO.response.SimplifiedEventResponseDTO;
+import pl.pollub.cs.pentagoncafe.flare.DTO.security.UserDetailsImpl;
 import pl.pollub.cs.pentagoncafe.flare.domain.*;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.EventStatus;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.Province;
@@ -229,7 +230,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteEvent(ObjectId id) {
         String authenticatedUserNick = SecurityContextHolder.getContext().getAuthentication().getName();
-        User authenticatedUser = (User)SecurityContextHolder.getContext().getAuthentication().getDetails();
+        UserDetailsImpl authenticatedUser = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(Event.class));

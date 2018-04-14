@@ -80,6 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
+                .csrf().disable()
                 .formLogin()
                 .permitAll()
                 .loginProcessingUrl("/api/login")
