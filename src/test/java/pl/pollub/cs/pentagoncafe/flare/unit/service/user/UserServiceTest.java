@@ -1,6 +1,5 @@
 package pl.pollub.cs.pentagoncafe.flare.unit.service.user;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.bson.types.ObjectId;
@@ -15,7 +14,7 @@ import pl.pollub.cs.pentagoncafe.flare.domain.Event;
 import pl.pollub.cs.pentagoncafe.flare.domain.Participation;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.Role;
-import pl.pollub.cs.pentagoncafe.flare.mapper.UserMapper;
+import pl.pollub.cs.pentagoncafe.flare.mapper.UserMapperImpl;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 import pl.pollub.cs.pentagoncafe.flare.service.user.UserService;
@@ -31,7 +30,7 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private UserMapper userMapper;
+    private UserMapperImpl userMapper;
     @Mock
     private EventRepository eventRepository;
 
@@ -45,6 +44,7 @@ public class UserServiceTest {
     @Test
     public void whenIReadUserById_thenThisUserIsReadAndMapped() {
 
+        //given
         User testUser = TestUserFactory.createTestUser();
         ObjectId testUserId = ObjectId.get();
 
@@ -57,6 +57,7 @@ public class UserServiceTest {
         //when
         userService.getUser(testUserId);
 
+        //then
         Mockito.verify(userRepository, Mockito.times(1)).findById(testUserId);
         Mockito.verify(userMapper, Mockito.times(1)).mapToResponseDTO(testUser);
 
@@ -65,6 +66,7 @@ public class UserServiceTest {
     @Test
     public void whenIReadUserByNick_thenThisUserIsReadAndMapped() {
 
+        //given
         User testUser = TestUserFactory.createTestUser();
         String testUserNick = "janek";
 
@@ -77,6 +79,7 @@ public class UserServiceTest {
         //when
         userService.getUserByNick(testUserNick);
 
+        //then
         Mockito.verify(userRepository, Mockito.times(1)).findByNick(testUserNick);
         Mockito.verify(userMapper, Mockito.times(1)).mapToResponseDTO(testUser);
 
@@ -85,6 +88,7 @@ public class UserServiceTest {
     @Test
     public void whenIReadAllUsersAssignedToEvent_thenTheseUsersAreReadAndMapped() {
 
+        //given
         Event testEvent = TestEventFactory.createTestEvent();
         ObjectId testEventId = ObjectId.get();
 
@@ -107,6 +111,7 @@ public class UserServiceTest {
         //when
         userService.getAllUsersAssignedToEvent(testEventId);
 
+        //then
         Mockito.verify(eventRepository, Mockito.times(1)).findById(testEventId);
         Mockito.verify(userMapper, Mockito.times(2)).mapToResponseDTO(Matchers.anyObject());
 
@@ -114,7 +119,7 @@ public class UserServiceTest {
 
     @Test
     public void whenIReadAllAdmins_thenTheseAdminsAreReadAndMapped() {
-
+        //given
         List<User> testAdminsList = Lists.newArrayList();
 
         int adminsAmount = 3;
@@ -130,6 +135,7 @@ public class UserServiceTest {
         //when
         userService.getAllAdmins();
 
+        //then
         Mockito.verify(userRepository, Mockito.times(1)).findAllByRoleIs(Role.ADMIN);
         Mockito.verify(userMapper, Mockito.times(adminsAmount)).mapToResponseDTO(Matchers.anyObject());
 
@@ -137,7 +143,7 @@ public class UserServiceTest {
 
     @Test
     public void whenIReadAllUsers_thenTheseUsersAreReadAndMapped() {
-
+        //given
         List<User> testUsers = Lists.newArrayList(TestUserFactory.createTestUser(),
                 TestUserFactory.createTestUser(),
                 TestUserFactory.createTestUser());
@@ -147,6 +153,7 @@ public class UserServiceTest {
         //when
         userService.getAllUsers();
 
+        //then
         Mockito.verify(userRepository, Mockito.times(1)).findAll();
         Mockito.verify(userMapper, Mockito.times(3)).mapToResponseDTO(Matchers.anyObject());
 
@@ -154,7 +161,7 @@ public class UserServiceTest {
 
     @Test
     public void whenIReadAllUnbannedUsers_thenTheseUsersAreReadAndMapped() {
-
+        //given
         List<User> testUnbannedUsers = Lists.newArrayList();
 
         int unbannedUsersAmount = 3;
@@ -170,6 +177,7 @@ public class UserServiceTest {
         //when
         userService.getAllUnBannedUsers();
 
+        //then
         Mockito.verify(userRepository, Mockito.times(1)).findAllByBannedIsFalse();
         Mockito.verify(userMapper, Mockito.times(unbannedUsersAmount)).mapToResponseDTO(Matchers.anyObject());
 
