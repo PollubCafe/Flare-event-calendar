@@ -8,7 +8,7 @@ import pl.pollub.cs.pentagoncafe.flare.domain.Participation;
 import pl.pollub.cs.pentagoncafe.flare.domain.User;
 import pl.pollub.cs.pentagoncafe.flare.domain.enums.Role;
 import pl.pollub.cs.pentagoncafe.flare.exception.ObjectNotFoundException;
-import pl.pollub.cs.pentagoncafe.flare.mapper.UserMapper;
+import pl.pollub.cs.pentagoncafe.flare.mapper.UserMapperImpl;
 import pl.pollub.cs.pentagoncafe.flare.repository.event.EventRepository;
 import pl.pollub.cs.pentagoncafe.flare.repository.user.UserRepository;
 
@@ -20,9 +20,9 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private EventRepository eventRepository;
-    private UserMapper userMapper;
+    private UserMapperImpl userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, EventRepository eventRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapperImpl userMapper, EventRepository eventRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.eventRepository = eventRepository;
